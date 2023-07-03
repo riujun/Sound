@@ -2,14 +2,13 @@ import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthMiddleware } from './middlewares/auth.middleware';
-import { UserModule } from './user/user.module';
 import { AuthJwtModule } from './auth-jwt/auth-jwt.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(), // Importa el ConfigModule sin argumentos
     MongooseModule.forRoot(process.env.DB_HOST), // Ejemplo de uso de una variable de entorno
-    UserModule,
+    
     AuthJwtModule,
   ],
 })
