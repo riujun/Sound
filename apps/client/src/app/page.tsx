@@ -1,10 +1,10 @@
-import Image from "next/image";
-import React from "react";
-import Header from "./Components/header/Header";
+import React from 'react';
+
+import Header from '@/app/Components/header/Header';
 export default function Home() {
   return (
     <main className="">
-      <Header/>
+      <Header />
     </main>
   );
 }

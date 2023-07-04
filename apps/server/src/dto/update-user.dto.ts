@@ -1,14 +1,19 @@
-import { IsString, MinLength, Matches,IsEmail, IsOptional } from 'class-validator';
+import {
+  IsString,
+  MinLength,
+  Matches,
+  IsEmail,
+  IsOptional,
+} from 'class-validator';
 
 export class UpdateUserDto {
-@IsOptional()
+  @IsOptional()
   @IsString()
   name?: string;
 
   @IsOptional()
   @IsString()
   surname?: string;
-
 
   @IsOptional()
   @IsString()
@@ -18,12 +23,15 @@ export class UpdateUserDto {
   @IsEmail()
   email?: string;
 
-
   @IsOptional()
   @IsString()
   @MinLength(8)
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/, {
-    message: 'La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.',
-  })
+  @Matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+    {
+      message:
+        'La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.',
+    },
+  )
   password?: string;
 }

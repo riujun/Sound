@@ -8,7 +8,7 @@ import { AuthJwtModule } from './auth-jwt/auth-jwt.module';
   imports: [
     ConfigModule.forRoot(), // Importa el ConfigModule sin argumentos
     MongooseModule.forRoot(process.env.DB_HOST), // Ejemplo de uso de una variable de entorno
-    
+
     AuthJwtModule,
   ],
 })
