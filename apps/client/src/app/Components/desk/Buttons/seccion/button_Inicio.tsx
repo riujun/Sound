@@ -1,5 +1,7 @@
 /* eslint-disable prettier/prettier */
 // eslint-disable-next-line prettier/prettier
+'use client';
+import { signIn } from 'next-auth/react';
 import React, { type ReactNode } from 'react';
 interface ButtonInicioProps {
   children: ReactNode;
@@ -7,7 +9,10 @@ interface ButtonInicioProps {
 
 export function ButtonInicio({ children }: ButtonInicioProps) {
   return (
-    <button className="text-center text-[18px] font-normal leading-10 text-black">
+    <button
+      onClick={() => signIn()}
+      className="text-center text-[18px] font-normal leading-10 text-black"
+    >
       {children}
     </button>
   );

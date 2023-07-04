@@ -1,14 +1,11 @@
 {
   "private": true,
-  "name": "monorepo-nextjs-tailwindcss-template",
-  "version": "1.6.17",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/myopic-design/monorepo-nextjs-tailwindcss-template.git"
-  },
+  "name": "soundwave",
+  "version": "0.0.1",
   "scripts": {
     "clean": "turbo run clean --no-daemon",
-    "dev": "turbo run dev --no-daemon --concurrency 20",
+    "dev": "dotenv -- turbo run dev --no-daemon --concurrency 20",
+    "dc": "dotenv -- turbo run dc --no-daemon --concurrency 20",
     "build": "turbo run build --no-daemon",
     "check": "turbo run check --no-daemon",
     "storybook:dev": "turbo run storybook:dev --no-daemon",
@@ -43,6 +40,7 @@
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@types/testing-library__jest-dom": "5.14.6",
+    "dotenv-cli": "^7.2.1",
     "eslint": "8.43.0",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
@@ -55,5 +53,8 @@
     "turbo": "1.10.6",
     "typescript": "5.1.6"
   },
-  "packageManager": "pnpm@8.6.5"
+  "packageManager": "pnpm@8.6.5",
+  "dependencies": {
+    "next-auth": "^4.22.1"
+  }
 }

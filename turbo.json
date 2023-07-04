@@ -1,12 +1,17 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["CI", "NODE_ENV"],
+  "globalEnv": ["CI", "NODE_ENV", "DB_NAME"],
   "pipeline": {
     "clean": {
       "cache": false
     },
     "dev": {
+      "cache": false,
+      "dependsOn": ["^build"],
+      "persistent": true
+    },
+    "dc": {
       "cache": false,
       "dependsOn": ["^build"],
       "persistent": true
