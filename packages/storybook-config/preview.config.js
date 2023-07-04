@@ -1,39 +1,39 @@
-import "./preview.css";
+import './preview.css';
 
-import { withThemeByClassName } from "@storybook/addon-styling";
-import { MINIMAL_VIEWPORTS as viewports } from "@storybook/addon-viewport";
+import { withThemeByClassName } from '@storybook/addon-styling';
+import { MINIMAL_VIEWPORTS as viewports } from '@storybook/addon-viewport';
 
-import * as themes from "./themes";
+import * as themes from './themes';
 
 /** @type { import('@storybook/react').Preview } */
 const config = {
   decorators: [
     withThemeByClassName({
       themes: {
-        Light: "",
-        Dark: "dark",
+        Light: '',
+        Dark: 'dark',
       },
-      defaultTheme: "Dark",
+      defaultTheme: 'Dark',
     }),
   ],
   parameters: {
     actions: {
-      argTypesRegex: "^on[A-Z].*",
+      argTypesRegex: '^on[A-Z].*',
     },
     backgrounds: {
-      default: "Theme",
+      default: 'Theme',
       values: [
         {
-          name: "Theme",
-          value: "var(--storybook-background-color)",
+          name: 'Theme',
+          value: 'var(--storybook-background-color)',
         },
         {
-          name: "Light",
-          value: "var(--storybook-background-color-light)",
+          name: 'Light',
+          value: 'var(--storybook-background-color-light)',
         },
         {
-          name: "Dark",
-          value: "var(--storybook-background-color-dark)",
+          name: 'Dark',
+          value: 'var(--storybook-background-color-dark)',
         },
       ],
     },

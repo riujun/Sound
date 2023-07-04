@@ -1,17 +1,17 @@
-import { resolve } from "node:path";
+import { resolve } from 'node:path';
 
 /** @type { import('@storybook/nextjs').StorybookConfig } */
 const config = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.{ts,tsx}"],
+  stories: ['../src/**/*.mdx', '../src/**/*.stories.{ts,tsx}'],
   addons: [
-    "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-a11y",
-    "@storybook/addon-styling",
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@storybook/addon-a11y',
+    '@storybook/addon-styling',
   ],
   framework: {
-    name: "@storybook/nextjs",
+    name: '@storybook/nextjs',
     options: {},
   },
   core: {
@@ -21,7 +21,7 @@ const config = {
   docs: {
     autodocs: true,
   },
-  staticDirs: [resolve(__dirname, "static")],
+  staticDirs: [resolve(__dirname, 'static')],
 };
 
 export default config;

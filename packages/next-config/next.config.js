@@ -1,4 +1,4 @@
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: !!process.env.ANALYZE,
 });
 
@@ -7,10 +7,10 @@ module.exports = ({ basePath }) => {
   const config = {
     basePath,
     images: { unoptimized: true },
-    output: "export",
-    pageExtensions: ["page.tsx", "page.ts", "page.jsx", "page.js"],
+    output: 'export',
+    pageExtensions: ['page.tsx', 'page.ts', 'page.jsx', 'page.js'],
     reactStrictMode: true,
-    transpilePackages: ["ui", "utils"],
+    transpilePackages: ['ui', 'utils'],
   };
 
   return withBundleAnalyzer(config);

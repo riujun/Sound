@@ -4,15 +4,15 @@ module.exports = ({ staticDistDir }) => ({
       staticDistDir,
     },
     assert: {
-      preset: "lighthouse:no-pwa",
+      preset: 'lighthouse:no-pwa',
       assertions: {
-        "bf-cache": "off",
-        "csp-xss": "off",
-        "tap-targets": "off",
+        'bf-cache': 'off',
+        'csp-xss': 'off',
+        'tap-targets': 'off',
       },
     },
     upload: {
-      target: "temporary-public-storage",
+      target: 'temporary-public-storage',
     },
   },
 });

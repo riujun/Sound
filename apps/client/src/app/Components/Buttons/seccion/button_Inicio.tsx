@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 
-type ButtonInicioProps = {
+interface ButtonInicioProps {
   children: ReactNode;
-};
+}
 
 export function ButtonInicio({ children }: ButtonInicioProps) {
   return (
-    <button className='text-center text-black text-[18px] font-normal leading-10'>
+    <button className="text-center text-[18px] font-normal leading-10 text-black">
       {children}
     </button>
   );
