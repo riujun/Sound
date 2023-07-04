@@ -1,9 +1,11 @@
+/* eslint-disable prettier/prettier */
+// eslint-disable-next-line prettier/prettier
 import Image from 'next/image';
 
 import logo from '@/app/assets/landingpage/soundwave.png';
 
-import { ButtonCreate } from '../Buttons/seccion/Button_Create';
-import { ButtonInicio } from '../Buttons/seccion/button_Inicio';
+import { ButtonCreate } from '../desk/Buttons/seccion/Button_Create';
+import { ButtonInicio } from '../desk/Buttons/seccion/button_Inicio';
 export default function Header() {
   return (
     <div>

@@ -1,10 +1,12 @@
+/* eslint-disable prettier/prettier */
+// eslint-disable-next-line prettier/prettier
 import React from 'react';
 
-import Header from '@/app/Components/header/Header';
+import Landing from './Pages/Landing';
 export default function Home() {
   return (
     <main className="">
-      <Header />
+      <Landing />
     </main>
   );
 }

@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+// eslint-disable-next-line prettier/prettier
 import React, { type ReactNode } from 'react';
 
 interface ButtonInicioProps {
