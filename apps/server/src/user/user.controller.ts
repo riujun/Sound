@@ -24,7 +24,7 @@ export class UserController {
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Error interno del servidor' });
+        .json({ message: 'Internal server error' });
     }
   }
 
@@ -35,13 +35,13 @@ export class UserController {
       if (!user) {
         return res
           .status(HttpStatus.NOT_FOUND)
-          .json({ message: 'Usuario no encontrado' });
+          .json({ message: 'User not found' });
       }
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Error interno del servidor' });
+        .json({ message: 'Internal server error' });
     }
   }
 
@@ -52,13 +52,13 @@ export class UserController {
       if (!deletedUser) {
         return res
           .status(HttpStatus.NOT_FOUND)
-          .json({ message: 'Usuario no encontrado' });
+          .json({ message: 'User not found' });
       }
       return res.status(HttpStatus.OK).json(deletedUser);
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Error interno del servidor' });
+        .json({ message: 'Internal server error' });
     }
   }
 
@@ -73,13 +73,13 @@ export class UserController {
       if (!updatedUser) {
         return res
           .status(HttpStatus.NOT_FOUND)
-          .json({ message: 'Usuario no encontrado' });
+          .json({ message: 'User not found' });
       }
       return res.status(HttpStatus.OK).json(updatedUser);
     } catch (error) {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ message: 'Error interno del servidor' });
+        .json({ message: 'Internal server error' });
     }
   }
 }
