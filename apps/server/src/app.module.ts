@@ -9,10 +9,7 @@ import { PlaylistModule } from './playlist/playlist.module';
 @Module({
   imports: [
     ConfigModule.forRoot(), // Importa el ConfigModule sin argumentos
-    MongooseModule.forRoot(
-      `mongodb+srv://sebastiantorreiro:R1wbQ2SmKg4L3Vqj@soundawave.1sm8mt0.mongodb.net/?retryWrites=true&w=majority`,
-    ), // Ejemplo de uso de una variable de entorno
-
+    MongooseModule.forRoot(process.env.DB_HOST), // Ejemplo de uso de una variable de entorno
     AuthJwtModule,
     UserModule,
     PlaylistModule,
