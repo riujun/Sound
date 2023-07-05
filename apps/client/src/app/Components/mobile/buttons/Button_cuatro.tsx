@@ -7,7 +7,7 @@ interface ButtonInicioProps {
 
 export function ButtonCuatro({ children }: ButtonInicioProps) {
   return (
-    <button className="h-[48px] w-[320px] bg-orange-500 hover:bg-orange-400  md:hidden">
+    <button className="h-[48px] w-[420px] bg-orange-500 hover:bg-orange-400  md:hidden">
       {children}
     </button>
   );
