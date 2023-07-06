@@ -11,7 +11,7 @@ import { ButtonInicio } from '../desk/Buttons/seccion/button_Inicio';
 export default function Header() {
   const [navbar, setNavbar] = useState(false);
   return (
-    <div className='row-span-1 col-span-full max-h-2'>
+    <div>
       <header className="border-b-2 border-gray-400 md:border-none">
         <nav>
           <div className="items-center justify-between px-4 pt-5 md:flex md:items-center ">
