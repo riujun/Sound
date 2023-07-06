@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { AuthJwtModule } from './auth-jwt/auth-jwt.module';
 import { SongsModule } from './songs/songs.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { SongsModule } from './songs/songs.module';
     MongooseModule.forRoot(process.env.DB_HOST), // Ejemplo de uso de una variable de entorno
     AuthJwtModule,
     SongsModule,
+    UserModule,
   ],
 })
 export class AppModule implements NestModule {

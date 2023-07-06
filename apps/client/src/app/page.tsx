@@ -1,10 +1,8 @@
-import React from 'react';
-
-import Header from '@/app/Components/header/Header';
+import Landing from './Components/Landing';
 export default function Home() {
   return (
     <main className="">
-      <Header />
+      <Landing />
     </main>
   );
 }
