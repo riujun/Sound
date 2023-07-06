@@ -1,6 +1,6 @@
 import './globals.css';
 
-import { Glory, Inter } from 'next/font/google';
+import { Glory } from 'next/font/google';
 import React from 'react';
 
 const glory = Glory({ subsets: ['latin'] });

@@ -1,14 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// Se ha desactivado el eslint de tipos porque me lansaba error el staticImages de nextjs
 'use client';
-import { useState } from 'react';
 import Image from 'next/image';
-import logo from '@/app/assets/landingpage/soundwave.png';
-import showEye from '@/app/assets/auth/show-eye.svg';
-import hideEye from '@/app/assets/auth/hide-eye.svg';
-import btnGoogle from '@/app/assets/auth/Google.svg';
+import Link from 'next/link';
+import { useState } from 'react';
+
 import btnApple from '@/app/assets/auth/Apple.svg';
 import btnFacebook from '@/app/assets/auth/Facebook.svg';
+import btnGoogle from '@/app/assets/auth/Google.svg';
+import hideEye from '@/app/assets/auth/hide-eye.svg';
+import showEye from '@/app/assets/auth/show-eye.svg';
 import btnTwitter from '@/app/assets/auth/Twitter.svg';
-import Link from 'next/link';
+import logo from '@/app/assets/landingpage/soundwave.png';
 
 export default function FormLogin() {
   const [visible, setVisible] = useState(false);
@@ -43,7 +46,7 @@ export default function FormLogin() {
             />
             <label
               htmlFor="floating_outlined"
-              className="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[16px] text-sm  text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-orange-500 md:text-[16px]"
+              className="absolute left-1 top-2 z-10  origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[16px] text-sm  text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-orange-500 md:text-[16px]"
             >
               Contraseña
             </label>
@@ -54,7 +57,9 @@ export default function FormLogin() {
                 height={25}
                 alt=""
                 className="absolute right-4 top-[15%] cursor-pointer"
-                onClick={() => setVisible(false)}
+                onClick={() => {
+                  setVisible(false);
+                }}
               />
             ) : (
               <Image
@@ -63,7 +68,9 @@ export default function FormLogin() {
                 height={25}
                 alt=""
                 className="absolute right-4 top-[15%] cursor-pointer"
-                onClick={() => setVisible(true)}
+                onClick={() => {
+                  setVisible(true);
+                }}
               />
             )}
           </div>

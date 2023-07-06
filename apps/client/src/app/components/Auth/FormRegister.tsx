@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// Se ha desactivado el eslint de tipos porque me lansaba error el staticImages de nextjs
 'use client';
-import { useState } from 'react';
 import Image from 'next/image';
-import logo from '@/app/assets/landingpage/soundwave.png';
-import showEye from '@/app/assets/auth/show-eye.svg';
+import { useState } from 'react';
+
 import hideEye from '@/app/assets/auth/hide-eye.svg';
+import showEye from '@/app/assets/auth/show-eye.svg';
+import logo from '@/app/assets/landingpage/soundwave.png';
 
 export default function FormRegister() {
   const [visible, setVisible] = useState(false);
@@ -119,7 +122,9 @@ export default function FormRegister() {
                 height={25}
                 alt=""
                 className="absolute right-4 top-[15%] cursor-pointer"
-                onClick={() => setVisible(false)}
+                onClick={() => {
+                  setVisible(false);
+                }}
               />
             ) : (
               <Image
@@ -128,7 +133,9 @@ export default function FormRegister() {
                 height={25}
                 alt=""
                 className="absolute right-4 top-[15%] cursor-pointer"
-                onClick={() => setVisible(true)}
+                onClick={() => {
+                  setVisible(true);
+                }}
               />
             )}
           </div>
@@ -152,7 +159,9 @@ export default function FormRegister() {
                 height={25}
                 alt=""
                 className="absolute right-4 top-[15%] cursor-pointer"
-                onClick={() => setVisible(false)}
+                onClick={() => {
+                  setVisible(false);
+                }}
               />
             ) : (
               <Image
@@ -161,7 +170,9 @@ export default function FormRegister() {
                 height={25}
                 alt=""
                 className="absolute right-4 top-[15%] cursor-pointer"
-                onClick={() => setVisible(true)}
+                onClick={() => {
+                  setVisible(true);
+                }}
               />
             )}
           </div>

@@ -1,7 +1,9 @@
-import React from 'react';
 import Image from 'next/image';
+import React from 'react';
+
 import background from '@/app/assets/auth/soundwave-bg.png';
-import FormRegister from '../Components/Auth/FormRegister';
+
+import FormRegister from '../components/Auth/FormRegister';
 
 export default function Register() {
   return (
