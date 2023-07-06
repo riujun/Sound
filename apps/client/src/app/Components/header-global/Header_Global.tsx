@@ -9,8 +9,8 @@ import logo from '@/app/assets/landingpage/soundwave.png';
 export default function HeaderGlobal() {
   const [navbar, setNavbar] = useState(false);
   return (
-    <div className='row-span-1 col-span-full max-h-2'>
-      <header className="border-b-2 border-gray-400 ">
+    <div>
+      <header className="border-b-2 border-gray-400">
         <nav>
           <div className="items-center justify-between px-4 pt-5 md:flex md:items-center ">
             <div>
