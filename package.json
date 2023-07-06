@@ -55,6 +55,7 @@
   },
   "packageManager": "pnpm@8.6.5",
   "dependencies": {
-    "next-auth": "^4.22.1"
+    "next-auth": "^4.22.1",
+    "react-icons": "^4.10.1"
   }
 }
