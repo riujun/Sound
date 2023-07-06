@@ -1,7 +1,12 @@
+/* eslint-disable prettier/prettier */
+// eslint-disable-next-line prettier/prettier
 import React from 'react';
+
+import Buscador from '@/app/Components/Buscador/Buscador';
 import HeaderGlobal from '@/app/Components/header-global/Header_Global';
+import Top from '@/app/Components/top10/Topdies';
+
 import Menu from '../Components/menu/Menu';
-import Buscador from '../Components/buscador/Buscador';
 
 function home() {
   return (
@@ -11,12 +16,10 @@ function home() {
         <Menu />
         <section className="p-5">
           <Buscador />
-          <div>
-            linea
-          </div>
-          
+          <div className="m-10 h-px bg-black"></div>
+          <Top />
 
-          <article>
+          {/* <article>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti repudiandae suscipit,
             aspernatur voluptatem beatae id possimus aliquid nostrum, dolor mollitia placeat a et
             inventore totam. Aliquid voluptatem maxime iusto in.Lorem ipsum, dolor sit amet
@@ -195,7 +198,7 @@ function home() {
             voluptatem maxime iusto in.Lorem ipsum, dolor sit amet consectetur adipisicing elit.
             Corrupti repudiandae suscipit, aspernatur voluptatem beatae id possimus aliquid nostrum,
             dolor mollitia placeat a et inventore totam. Aliquid voluptatem maxime iusto in.
-          </article>
+          </article> */}
         </section>
       </div>
     </>
