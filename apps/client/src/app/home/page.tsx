@@ -11,6 +11,10 @@ function home() {
         <Menu />
         <section className="p-5">
           <Buscador />
+          <div>
+            linea
+          </div>
+          
 
           <article>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti repudiandae suscipit,
