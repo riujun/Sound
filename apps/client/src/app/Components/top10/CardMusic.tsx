@@ -58,6 +58,7 @@ export default function CardMusic() {
         <IoIosMore className="cursor-pointer" />
         {/* <TbPlaystationSquare /> */}
       </div>
+      <br />
     </>
   );
 }
