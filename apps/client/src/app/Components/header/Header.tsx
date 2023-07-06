@@ -11,10 +11,10 @@ import { ButtonInicio } from '../desk/Buttons/seccion/button_Inicio';
 export default function Header() {
   const [navbar, setNavbar] = useState(false);
   return (
-    <div>
-      <header className=" border-b-2 border-gray-400 md:border-none">
+    <div className='row-span-1 col-span-full max-h-2'>
+      <header className="border-b-2 border-gray-400 md:border-none">
         <nav>
-          <div className="items-center justify-between px-4  pt-5 md:flex md:items-center ">
+          <div className="items-center justify-between px-4 pt-5 md:flex md:items-center ">
             <div>
               <div className="flex items-center justify-between ">
                 <div className="flex">
@@ -22,7 +22,7 @@ export default function Header() {
                 </div>
                 <div className="md:hidden">
                   <button
-                    className="rounded-md p-2 text-white outline-none focus:border focus:border-gray-400"
+                    className="p-2 text-white rounded-md outline-none focus:border focus:border-gray-400"
                     onClick={() => {
                       setNavbar(!navbar);
                     }}
@@ -66,7 +66,7 @@ export default function Header() {
                   navbar ? 'block' : 'hidden'
                 }`}
               >
-                <nav className="flex flex-col items-center md:flex-row md:gap-8  ">
+                <nav className="flex flex-col items-center md:flex-row md:gap-8 ">
                   <ButtonInicio>Iniciar Seccion</ButtonInicio>
                   <ButtonCreate>Crear Cuenta</ButtonCreate>
                 </nav>
