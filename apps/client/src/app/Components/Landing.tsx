@@ -17,7 +17,7 @@ export default function Landing() {
   return (
     <div>
       <Header />
-      <section className="md:gab-10 md:width-[100%] flex ">
+      <section className="md:gab-10 md:width-[100%] mt-10 flex ">
         <section className="md:flex md:flex-col md:justify-evenly">
           <h2 className=" pr-5 pt-10 text-end text-[20px] font-bold text-orange-500 md:w-[595px] md:text-center md:text-[42px]">
             Explora, compra y descubre la música de talentosos artistas de todo el mundo.
@@ -88,45 +88,54 @@ export default function Landing() {
         </div>
       </section>
       {/* tercera */}
-      <div className="hidden flex-col items-center justify-center md:flex">
-        <h5 className="w-[1104px] text-center text-[28px] font-medium text-zinc-700">
+      <div className=" flex items-center justify-center text-center md:flex-col">
+        <h5 className="hidden  text-center font-medium text-zinc-700 md:block md:w-[1104px] md:text-[28px]">
           Si eres un creador de música, has llegado al lugar correcto.
         </h5>
-        <h2 className="w-[711px] text-center text-[38px] font-bold text-orange-500">
+        <h2 className="mb-10 w-[311px] text-center  text-[20px] font-bold text-orange-500 md:w-[711px] md:text-[38px]">
           Tu música es la protagonista y tú tienes el control total sobre su valor.
         </h2>
       </div>
 
-      <section className="hidden h-[740px] items-center justify-evenly md:flex">
+      <section className=" md:flex md:h-[740px] md:items-center md:justify-evenly">
         <div>
-          <div className="w-[506px]">
-            <span className="text-[32px] font-normal leading-10 text-black">
+          <div className="flex items-center justify-center gap-7 px-5 md:w-[506px]  md:flex-col">
+            <span className=" text-end font-normal leading-10 text-black md:text-left md:text-[32px]">
               Tú decides el valor de tu música y lo mejor de todo es que recibirás el 100% de las
               ganancias.
               <br />
               <br />
             </span>
-            <span className="text-[32px] font-bold leading-10 text-black">
+            <Image className="h-[178px] w-[156px] md:hidden" src={perrito} alt="perrito" />
+
+            <span className="hidden text-[32px] font-bold leading-10 text-black md:block">
               ¡Sí, lo has leído bien, el 100% de cada venta es para ti!
             </span>
           </div>
-          <div className="mb-20 hidden pt-5 text-center md:block">
-            <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
-          </div>
         </div>
-        <Image className="h-[410px] w-[559px]" src={perrito} alt="perrito" />
+        <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
       </section>
+      <div className="flex items-center justify-center px-10 pt-10 text-center text-[20px] font-semibold text-orange-500 md:hidden">
+        ¡Sí, lo has leído bien, el 100% de cada venta es para ti!
+      </div>
+      <div className="mb-20 flex items-center justify-center  ">
+        <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+      </div>
+      <div className="flex items-center justify-center">
+        <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
+      </div>
 
-      <div className="hidden flex-col items-center justify-center bg-yellow-50 md:flex">
+      {/* curta */}
+      <div className=" mt-10 bg-yellow-50 md:flex md:h-[740px] md:flex-col md:items-center md:justify-center">
         <section className="ite flex items-center justify-evenly gap-20">
-          <Image className="h-[410px] w-[559px]" src={perrito} alt="perrito" />
+          <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
           <div>
-            <div className="flex w-[643px] flex-col justify-evenly gap-2">
-              <span className="text-[32px] font-bold leading-10 text-orange-500">
-                SoundWave Marketplace
+            <div className="flex flex-col  items-start px-10 pt-10 text-[20px] md:w-[643px] md:justify-evenly md:gap-2">
+              <span className="text-[20px]  font-bold leading-10 text-orange-500 md:text-[32px]">
+                SoundWave Marketplac
                 <br />
               </span>
-              <span className="m text-[26px] font-normal leading-10 text-zinc-700">
+              <span className="text-[20px] font-normal leading-10 text-zinc-700 md:text-[26px]">
                 Comparte tu talento con el mundo y obtén el 100% de las ganancias sin cargos ocultos
                 ni comisiones abusivas. Valora tu música y benefíciate directamente de tu esfuerzo.
               </span>
@@ -138,38 +147,38 @@ export default function Landing() {
         </section>
       </div>
 
-      <section className="hidden h-[740px] items-center justify-evenly md:flex">
-        <div className="flex flex-col justify-evenly gap-2">
-          <div className="SoundwaveSocialElEspacioIdeaDondePuedesPuedeInteractuarDirectamenteConSuAudienciaPromocionarSuMSicaYCompartirInformaciNSobreSusPresentacionesEnVivo w-[575px]">
-            <span className="text-[32px] font-bold leading-10 text-orange-500">
+      <section className=" md:flex md:h-[740px] md:items-center md:justify-evenly">
+        <div className="ms:justify-evenly flex flex-col md:gap-2">
+          <div className="px-10 pt-5 text-end md:w-[575px] md:text-left">
+            <span className="text-[20px] font-bold leading-10 text-orange-500 md:text-[32px]">
               SoundWave Social
               <br />
             </span>
-            <span className="text-[26px] font-normal leading-10 text-zinc-700">
+            <span className="text-[20px] font-normal leading-10 text-zinc-700 md:text-[26px]">
               El espacio ideal donde puedes interactuar directamente con tu audiencia, promocionar
               tu música y compartir información sobre tus presentaciones en vivo
             </span>
-            <span className="text-[26px] font-normal leading-10 text-black">.</span>
           </div>
-          <div className="pt-10">
+
+          <div className="pl-10 pt-10">
             <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
           </div>
         </div>
-        <Image className="h-[410px] w-[559px]" src={perrito} alt="perrito" />
+        <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
       </section>
 
-      <div className="hidden flex-col items-center justify-center bg-yellow-50 md:flex">
+      <div className=" mt-10 bg-yellow-50 md:flex md:h-[740px] md:flex-col md:items-center md:justify-center">
         <section className="ite flex items-center justify-evenly gap-20">
-          <Image className="h-[410px] w-[559px]" src={perrito} alt="perrito" />
+          <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
           <div>
-            <div className="w-[643px]">
-              <span className="text-[32px] font-bold leading-10 text-orange-500">
-                SoundWave Marketplace
+            <div className="flex flex-col  items-start px-10 pt-10 text-[20px] md:w-[643px] md:justify-evenly md:gap-2">
+              <span className="text-[20px]  font-bold leading-10 text-orange-500 md:text-[32px]">
+                SoundWave Connect
                 <br />
               </span>
-              <span className="text-[26px] font-normal leading-10 text-zinc-700">
-                Comparte tu talento con el mundo y obtén el 100% de las ganancias sin cargos ocultos
-                ni comisiones abusivas. Valora tu música y benefíciate directamente de tu esfuerzo.
+              <span className="text-[20px] font-normal leading-10 text-zinc-700 md:text-[26px]">
+                Conéctate y colabora con otros músicos independientes para crear una comunidad
+                sólida y apoyarnos mutuamente en este emocionante viaje musical.
               </span>
               <div className="pt-20 text-start">
                 <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
@@ -179,15 +188,15 @@ export default function Landing() {
         </section>
       </div>
 
-      <section className="flex flex-col items-center justify-evenly gap-10 md:h-[809px]">
-        <h3 className=" text-center font-semibold text-zinc-700 md:w-[755px] md:text-[38px]">
+      <section className="flex h-[280px] flex-col items-center justify-evenly gap-10 pt-8 md:h-[809px]">
+        <h3 className=" mt-10 px-5 text-center text-[20px] font-semibold text-zinc-700 md:w-[755px] md:text-[38px]">
           Únete de forma gratuita a SoundWave, la comunidad que te llevará a vivir la experiencia de
           ser un músico exitoso.
         </h3>
-        <div className="text-center">
+        <div className="text-center ">
           <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
         </div>
-        <div>
+        <div className="mb-12">
           <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
         </div>
       </section>
