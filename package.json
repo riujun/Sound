@@ -55,5 +55,9 @@
     "turbo": "1.10.6",
     "typescript": "5.1.6"
   },
-  "packageManager": "pnpm@8.6.5"
+  "packageManager": "pnpm@8.6.5",
+  "dependencies": {
+    "flowbite": "^1.7.0",
+    "flowbite-react": "^0.4.10"
+  }
 }
