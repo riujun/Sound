@@ -12,7 +12,7 @@ export default function Header() {
   const [navbar, setNavbar] = useState(false);
   return (
     <div>
-      <header>
+      <header className=" border-b-2 border-gray-400 md:border-none">
         <nav>
           <div className="items-center justify-between px-4  pt-5 md:flex md:items-center ">
             <div>
@@ -66,7 +66,7 @@ export default function Header() {
                   navbar ? 'block' : 'hidden'
                 }`}
               >
-                <nav className="flex gap-8">
+                <nav className="flex flex-col items-center md:flex-row md:gap-8  ">
                   <ButtonInicio>Iniciar Seccion</ButtonInicio>
                   <ButtonCreate>Crear Cuenta</ButtonCreate>
                 </nav>
