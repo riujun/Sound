@@ -9,10 +9,10 @@ import logo from '@/app/assets/landingpage/soundwave.png';
 export default function HeaderGlobal() {
   const [navbar, setNavbar] = useState(false);
   return (
-    <div>
-      <header className=" border-b-2 border-gray-400 ">
+    <div className='row-span-1 col-span-full max-h-2'>
+      <header className="border-b-2 border-gray-400 ">
         <nav>
-          <div className="items-center justify-between px-4  pt-5 md:flex md:items-center ">
+          <div className="items-center justify-between px-4 pt-5 md:flex md:items-center ">
             <div>
               <div className="flex items-center justify-between ">
                 <div className="flex">
@@ -20,7 +20,7 @@ export default function HeaderGlobal() {
                 </div>
                 <div className="md:hidden">
                   <button
-                    className="rounded-md p-2 text-white outline-none focus:border focus:border-gray-400"
+                    className="p-2 text-white rounded-md outline-none focus:border focus:border-gray-400"
                     onClick={() => {
                       setNavbar(!navbar);
                     }}

@@ -1,14 +1,14 @@
 import React from "react";
-import Header from "../Components/header/Header";
+import HeaderGlobal from "@/app/Components/header-global/Header_Global";
 import Menu from "../Components/menu/Menu";
 
 function home() {
   return (
     <div className="min-h-screen">
     <main className="grid h-screen grid-cols-10 ">
-      <Header />
+      <HeaderGlobal />
       <Menu />
-      <section className="col-span-8 p-5 border-t-2 border-t-gray-500">
+      <section className="col-span-8 p-5">
         <article className="p-5">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero nemo, distinctio iusto
           consectetur iure est veniam dolor facere repellat voluptas harum tempore nihil! Fuga,
