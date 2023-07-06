@@ -6,5 +6,9 @@ interface ButtonInicioProps {
 }
 
 export function ButtonTres({ children }: ButtonInicioProps) {
-  return <button className="h-[48px] w-[420px] border-[2px] border-orange-500 ">{children}</button>;
+  return (
+    <button className="h-[48px] w-[420px] border-[2px] border-orange-500 hover:bg-orange-50 ">
+      {children}
+    </button>
+  );
 }
