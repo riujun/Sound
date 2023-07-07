@@ -5,6 +5,7 @@ import { TokenService } from '../helpers/token_creator';
 
 import { AuthJwtService } from '../auth-jwt/auth-jwt.service';
 import * as bcrypt from 'bcrypt';
+import { User } from 'src/schemas/user.schema';
 
 @Controller('auth-jwt')
 export class AuthJwtController {
@@ -67,9 +68,9 @@ export class AuthJwtController {
 
       const token = this.tokenService.createToken(user);
 
-      const { id, username } = user;
+      const { _id, username } = user;
 
-      return res.status(HttpStatus.OK).json({ id, username, token });
+      return res.status(HttpStatus.OK).json({ _id, username, token });
     } catch (err) {
       console.log(err.message);
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);

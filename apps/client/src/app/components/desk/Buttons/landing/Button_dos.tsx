@@ -3,9 +3,9 @@ interface ButtonInicioProps {
   children: ReactNode;
 }
 
-export function ButtonInicio({ children }: ButtonInicioProps) {
+export function ButtonDos({ children }: ButtonInicioProps) {
   return (
-    <button className="text-center text-[18px] font-normal leading-10 text-black">
+    <button className="hidden bg-orange-500 p-[16px] hover:bg-orange-400 md:block">
       {children}
     </button>
   );
