@@ -11,6 +11,9 @@
       "dependsOn": ["^build"],
       "persistent": true
     },
+    "start": {
+      "persistent": true
+    },
     "build": {
       "dependsOn": ["^build"],
       "env": ["ANALYZE", "GITHUB_REPOSITORY"],

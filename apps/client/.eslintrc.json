@@ -19,7 +19,10 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/triple-slash-reference": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unsafe-assignment": "error",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/prefer-ts-expect-error": "warn"
   },
   "ignorePatterns": [
     "node_modules/",

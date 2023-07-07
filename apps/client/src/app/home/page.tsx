@@ -1,12 +1,10 @@
-/* eslint-disable prettier/prettier */
-// eslint-disable-next-line prettier/prettier
 import React from 'react';
 
-import Buscador from '@/app/Components/Buscador/Buscador';
-import HeaderGlobal from '@/app/Components/header-global/Header_Global';
-import Top from '@/app/Components/top10/Topdies';
+import Buscador from '@/app/components/Buscador/Buscador';
+import HeaderGlobal from '@/app/components/header-global/Header_Global';
+import Top from '@/app/components/top10/Topdies';
 
-import Menu from '../Components/menu/Menu';
+import Menu from '../components/menu/Menu';
 
 function home() {
   return (
