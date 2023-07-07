@@ -1,30 +1,25 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
-import * as autoIncrement from 'mongoose-plugin-autoinc';
+import { Document } from 'mongoose';
+
 @Schema({ timestamps: true })
-export class User {
-  @Prop({ required: true })
-  id: number;
-  @Prop({ required: true })
+export class User extends Document {
+  @Prop()
   name: string;
 
-  @Prop({ required: true })
+  @Prop()
   surname: string;
 
-  @Prop({ unique: true, required: true })
+  @Prop({ default: false })
+  artist: boolean;
+
+  @Prop({ unique: true })
   username: string;
 
-  @Prop({ unique: true, required: true })
+  @Prop({ unique: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop()
   password: string;
 }
-export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.plugin(autoIncrement.plugin, {
-  model: 'User',
-  field: 'id',
-  startAt: 1,
-  incrementBy: 1,
-});
+export const UserSchema = SchemaFactory.createForClass(User);
