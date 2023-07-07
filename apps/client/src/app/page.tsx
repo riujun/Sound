@@ -1,5 +1,4 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
-import Landing from './Pages/Landing';
+import Landing from './components/Landing';
 export default function Home() {
   return (
     <main className="">
