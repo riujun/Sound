@@ -1,7 +1,7 @@
 import Image from 'next/image';
-// @ts-expect-error
+// @ts-ignore
 import { IoIosMore, IoIosPodium } from 'react-icons/io';
-// @ts-expect-error
+// @ts-ignore
 import { TbPlayerPlayFilled, TbPlaystationSquare } from 'react-icons/tb';
 
 import img from '@/app/assets/landingpage/p.jpg';

@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-// @ts-expect-error
+// @ts-ignore
 import { FiBell, FiUpload, FiUser } from 'react-icons/fi';
 
 import logo from '@/app/assets/landingpage/soundwave.png';
