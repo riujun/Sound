@@ -20,6 +20,7 @@ export class UserService {
     return this.userModel.find().skip(offset).limit(limit).exec();
   }
 
+
   async getById(id: string): Promise<User | null> {
     return this.userModel.findById(id).exec();
   }

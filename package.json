@@ -55,6 +55,9 @@
   },
   "packageManager": "pnpm@8.6.5",
   "dependencies": {
-    "next-auth": "^4.22.1"
+    "flowbite": "^1.7.0",
+    "flowbite-react": "^0.4.10",
+    "next-auth": "^4.22.1",
+    "react-icons": "^4.10.1"
   }
 }

@@ -25,6 +25,7 @@ export class UserController {
     private readonly songService: SongsService,
   ) {}
 
+
   @Get()
   async getAll(@Res() res) {
     try {
@@ -64,7 +65,6 @@ export class UserController {
         .json({ message: 'Internal server error' });
     }
   }
-
   @Get(':id')
   async getById(@Param('id') id: string, @Res() res) {
     try {
