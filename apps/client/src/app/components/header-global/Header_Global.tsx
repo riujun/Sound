@@ -1,17 +1,25 @@
+/* eslint-disable prettier/prettier */
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-// @ts-ignore
-import { FiBell, FiUpload, FiUser } from 'react-icons/fi';
 
+import bell from '@/app/assets/bell.png';
+import dw from '@/app/assets/dw.png';
+import exit from '@/app/assets/exit.png';
 import logo from '@/app/assets/landingpage/soundwave.png';
+import user from '@/app/assets/user.png';
 export default function HeaderGlobal() {
   const [navbar, setNavbar] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <div>
       <header className="border-b-2 border-gray-400">
         <nav>
-          <div className="items-center justify-between px-4 pt-5 md:flex md:items-center ">
+          <div className="items-center justify-between px-4 pb-3  pt-3 md:flex md:items-center ">
             <div>
               <div className="flex items-center justify-between ">
                 <div className="flex">
@@ -87,9 +95,52 @@ export default function HeaderGlobal() {
                       </main>
                     ) : (
                       <div className="flex items-center gap-8 pr-10">
-                        <FiBell className="h-[30px] w-[30px] cursor-pointer md:block" />
-                        <FiUpload className="h-[30px] w-[30px] cursor-pointer md:block" />
-                        <FiUser className="h-[30px] w-[30px] cursor-pointer md:block" />
+                        <Image
+                          src={dw}
+                          alt="descarga"
+                          className="h-[25px] w-[23px] cursor-pointer md:block"
+                        />
+                        <Image
+                          src={bell}
+                          alt="campana"
+                          className="h-[25px] w-[25px] cursor-pointer md:block"
+                        />
+                        <div className="relative">
+                          <div onClick={toggleMenu} className="flex cursor-pointer items-center">
+                            <Image src={user} alt="user" className="h-6 w-6 text-white md:block" />
+                          </div>
+                          {isOpen && (
+                            <div className="absolute right-0 z-10 mt-2 h-[160px] w-[284px]  border-2 border-orange-300 bg-white pl-2 pt-2 shadow-lg">
+                              <a
+                                href="#"
+                                className="block px-4 py-3 text-gray-800 hover:bg-gray-200"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Image className="h-[14px] w-[14px]" src={user} alt="user" />
+                                  <button>Mis Datos</button>
+                                </div>
+                              </a>
+                              <a
+                                href="#"
+                                className="block px-4 py-3 text-gray-800 hover:bg-gray-200"
+                              >
+                                <div className="flex items-end gap-2">
+                                  <Image className="h-[14px] w-[14px]" src={bell} alt="bell" />
+                                  <button>Notificaciones</button>
+                                </div>
+                              </a>
+                              <a
+                                href="#"
+                                className="block px-4 py-3 text-gray-800 hover:bg-gray-200"
+                              >
+                                <div className="flex items-center gap-2">
+                                  <Image className="h-[14px] w-[14px]" src={exit} alt="exit" />
+                                  <button>Cerrar Sesion</button>
+                                </div>
+                              </a>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     )}
                   </div>

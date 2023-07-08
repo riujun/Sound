@@ -2,6 +2,7 @@
 // eslint-disable-next-line prettier/prettier
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import logo from '@/app/assets/landingpage/soundwave.png';
@@ -67,8 +68,16 @@ export default function Header() {
                 }`}
               >
                 <nav className="flex flex-col items-center md:flex-row md:gap-8 ">
-                  <ButtonInicio>Iniciar Seccion</ButtonInicio>
-                  <ButtonCreate>Crear Cuenta</ButtonCreate>
+                  <div>
+                    <Link href={`/login`}>
+                      <ButtonInicio>Iniciar Sesión</ButtonInicio>
+                    </Link>
+                  </div>
+                  <div>
+                    <Link href={`/register`}>
+                      <ButtonCreate>Crear Cuenta</ButtonCreate>
+                    </Link>
+                  </div>
                 </nav>
               </div>
             </div>
