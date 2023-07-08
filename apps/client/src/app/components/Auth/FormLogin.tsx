@@ -3,6 +3,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 
 import btnApple from '@/app/assets/auth/Apple.svg';
@@ -89,10 +90,16 @@ export default function FormLogin() {
           <button className=" inline-flex h-12 w-[52px] items-center justify-center gap-2 rounded border border-black px-4 py-3.5">
             <Image src={btnApple} alt="btn-google" width={348} height={53} priority className="" />
           </button>
-          <button className=" inline-flex h-12 w-[52px] items-center justify-center gap-2 rounded border border-black px-4 py-3.5">
+          <button
+            onClick={() => signIn('google')}
+            className=" inline-flex h-12 w-[52px] items-center justify-center gap-2 rounded border border-black px-4 py-3.5"
+          >
             <Image src={btnGoogle} alt="btn-google" width={348} height={53} priority className="" />
           </button>
-          <button className=" inline-flex h-12 w-[52px] items-center justify-center gap-2 rounded border border-black px-4 py-3.5">
+          <button
+            onClick={() => signIn('facebook')}
+            className=" inline-flex h-12 w-[52px] items-center justify-center gap-2 rounded border border-black px-4 py-3.5"
+          >
             <Image
               src={btnFacebook}
               alt="btn-google"
