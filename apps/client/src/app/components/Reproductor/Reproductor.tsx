@@ -3,10 +3,14 @@
 
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { HiChevronLeft, HiChevronRight, HiStop } from 'react-icons/hi2';
+import { HiStop } from 'react-icons/hi2';
 import { TbPlayerPlayFilled } from 'react-icons/tb';
 
+import rendom from '@/app/assets/Aleatorio.png';
+import ant from '@/app/assets/Anterior.png';
 import img from '@/app/assets/landingpage/p.jpg';
+import repet from '@/app/assets/Repeat.png';
+import next from '@/app/assets/Siguiente.png';
 
 interface Song {
   title: string;
@@ -113,13 +117,16 @@ const Reproductor: React.FC<ReproductorProps> = ({ songs, onSongSelect }) => {
   return (
     <div>
       <audio ref={audioRef} />
-      <section className="flex h-[140px] w-[800px] flex-col items-center justify-center rounded-3xl border-2 border-orange-400 bg-orange-100">
+      <section className="flex h-[100px] w-[800px] flex-col items-center justify-center rounded-3xl border-2 border-orange-400 bg-orange-100">
         <div className="flex h-[52px] w-[206px] justify-evenly">
+          <button className="mr-2">
+            <Image src={rendom} alt="alt" className=" relative top-5 text-[18px]" />
+          </button>
           <button onClick={handlePreviousSong}>
-            <HiChevronLeft className="text-[18px]" />
+            <Image src={ant} alt="alt" className=" relative top-5 text-[18px]" />
           </button>
           <button
-            className="relative bottom-7 h-[80px] w-[80px] rounded-full border-[4px] border-orange-400 bg-orange-300"
+            className="relative bottom-2 h-[60px] w-[60px] rounded-full border-[4px] border-orange-400 bg-orange-300"
             onClick={handlePlayPause}
           >
             {isPlaying ? (
@@ -133,40 +140,45 @@ const Reproductor: React.FC<ReproductorProps> = ({ songs, onSongSelect }) => {
             )}
           </button>
           <button onClick={handleNextSong}>
-            <HiChevronRight />
+            <Image src={next} alt="alt" className="relative top-5 text-[18px]" />
+          </button>
+          <button className="ml-2">
+            <Image src={repet} alt="alt" className="relative top-5  text-[18px]" />
           </button>
         </div>
-        <div className="flex items-center gap-3">
-          <div>
-            <Image className="h-[62px] w-[62px]" src={img} alt="img" />
-          </div>
-          <div>
-            <input
-              className="w-[447px]"
-              type="range"
-              min={0}
-              max={duration}
-              value={currentTime}
-              step={0.01}
-              onChange={handleSeek}
-            />
-            <span>{formatTime(currentTime)}</span> / <span>{formatTime(duration)}</span>
-          </div>
-          <div>
+        <div className="relative bottom-2">
+          <div className="flex items-center gap-3">
+            <div>
+              <Image className="h-[62px] w-[62px]" src={img} alt="img" />
+            </div>
             <div>
               <input
-                className="w-[100px] bg-gray-300"
+                className="w-[447px]"
                 type="range"
                 min={0}
-                max={1}
+                max={duration}
+                value={currentTime}
                 step={0.01}
-                value={volume}
-                onChange={handleVolumeChange}
+                onChange={handleSeek}
               />
+              <span>{formatTime(currentTime)}</span> / <span>{formatTime(duration)}</span>
+            </div>
+            <div>
+              <div>
+                <input
+                  className="w-[100px]   "
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={volume}
+                  onChange={handleVolumeChange}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <p className="pb-4">{songs[currentSongIndex].title}</p>
+        <p className="relative bottom-5">{songs[currentSongIndex].title}</p>
       </section>
     </div>
   );
