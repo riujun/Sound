@@ -1,7 +1,6 @@
+/* eslint-disable prettier/prettier */
 import Image from 'next/image';
-// @ts-ignore
 import { IoIosMore, IoIosPodium } from 'react-icons/io';
-// @ts-ignore
 import { TbPlayerPlayFilled, TbPlaystationSquare } from 'react-icons/tb';
 
 import img from '@/app/assets/landingpage/p.jpg';
