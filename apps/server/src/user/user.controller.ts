@@ -1,6 +1,5 @@
 import {
   Controller,
-  Post,
   Body,
   Res,
   HttpStatus,
@@ -9,16 +8,13 @@ import {
   Put,
   Param,
   Query,
-  Search,
 } from '@nestjs/common';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
 import { UserService } from './user.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
 import { GetArtirtsFilterDto } from 'src/dto/get-artists-filter.dto';
 import { SongsService } from 'src/songs/songs.service';
-import { serialize } from 'v8';
-
 
 @ApiTags('User')
 @Controller('user')
@@ -28,7 +24,7 @@ export class UserController {
     private readonly songService: SongsService,
   ) {}
 
-
+  @ApiOperation({ summary: 'Obtener todos los usuarios.' })
   @Get()
   async getAll(@Res() res) {
     try {
@@ -41,6 +37,7 @@ export class UserController {
     }
   }
 
+  @ApiOperation({ summary: 'Busqueda de artistas y canciones' })
   @Get('/search')
   async getAllArtits(
     @Query() pagination: PaginationQueryDto,
@@ -68,6 +65,9 @@ export class UserController {
         .json({ message: 'Internal server error' });
     }
   }
+
+  @ApiParam({ name: 'id', description: 'ID del user' })
+  @ApiOperation({ summary: 'Obtener un usuario por su id' })
   @Get(':id')
   async getById(@Param('id') id: string, @Res() res) {
     try {
@@ -85,6 +85,8 @@ export class UserController {
     }
   }
 
+  @ApiParam({ name: 'id', description: 'ID del user a eliminar' })
+  @ApiOperation({ summary: 'Borrar un usuario por su id' })
   @Delete(':id')
   async deleteById(@Param('id') id: string, @Res() res) {
     try {
@@ -102,6 +104,8 @@ export class UserController {
     }
   }
 
+  @ApiParam({ name: 'id', description: 'ID del user a actualizar' })
+  @ApiOperation({ summary: 'Actualizar un usuario por su id' })
   @Put(':id')
   async update(
     @Param('id') id: string,
