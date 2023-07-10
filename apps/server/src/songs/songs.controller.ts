@@ -8,10 +8,12 @@ import {
   Post,
   Put,
   Res,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateSongDto } from 'src/dto/create-song.dto';
 import { SongsService } from './songs.service';
+import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
 
 @ApiTags('Songs')
 @Controller('songs')
@@ -19,9 +21,9 @@ export class SongsController {
   constructor(private songsService: SongsService) {}
 
   @Get()
-  async getAllSongs(@Res() res) {
+  async getAllSongs(@Query() pagination: PaginationQueryDto, @Res() res) {
     try {
-      const songs = await this.songsService.getAllSongs();
+      const songs = await this.songsService.getAllSongs(pagination);
       return res.status(HttpStatus.OK).json(songs);
     } catch (err) {
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);

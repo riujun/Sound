@@ -11,6 +11,7 @@ export class PlaylistService {
     @InjectModel(Playlist.name) private playlistModel: Model<Playlist>,
   ) {}
 
+
   async findAllPlaylist(): Promise<Playlist[]> {
     return this.playlistModel.find().populate({ path: 'songs', model: 'Song' });
   }
