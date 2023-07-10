@@ -2,6 +2,8 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
+import { FaPlay } from 'react-icons/fa';
+import { IoIosPodium } from 'react-icons/io';
 
 import vector from '@/app/assets/Vector.png';
 import HeaderGlobal from '@/app/components/header-global/Header_Global';
@@ -9,7 +11,6 @@ import HeaderGlobal from '@/app/components/header-global/Header_Global';
 import { ButtonCreate } from '../components/Buttons/seccion/Button_Create';
 import Menu from '../components/menu/Menu';
 import Reproductor from '../components/Reproductor/Reproductor';
-
 interface Song {
   title: string;
   src: string;
@@ -113,6 +114,7 @@ export default function Page() {
   ];
 
   const [selectedSongIndex, setSelectedSongIndex] = useState<number | null>(null);
+  const colors = ['bg-orange-200', 'bg-white'];
 
   const handleSongSelect = (index: number) => {
     setSelectedSongIndex(index);
@@ -126,33 +128,33 @@ export default function Page() {
 
         {songs.length > 0 ? (
           <div className="flex w-full flex-col">
-            <div className="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
-              <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+            <div className="overflow-x-auto " style={{ maxHeight: '400px' }}>
+              <div className="inline-block w-full py-2 sm:px-6 lg:px-8">
                 <div className="overflow-hidden">
-                  <table className="min-w-full">
+                  <table className="w-[100%]">
                     <thead className="border-b bg-white">
                       <tr>
                         <th
                           scope="col"
-                          className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                          className="pb-2 text-left text-sm font-medium text-gray-900"
                         >
                           Nombre
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                          className="pb-2 text-left text-sm font-medium text-gray-900"
                         >
                           Artista
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                          className=" pb-2 text-left text-sm font-medium text-gray-900"
                         >
                           Disco
                         </th>
                         <th
                           scope="col"
-                          className="px-6 py-4 text-left text-sm font-medium text-gray-900"
+                          className="pb-2 text-left text-sm font-medium text-gray-900"
                         >
                           Duracion
                         </th>
@@ -162,23 +164,33 @@ export default function Page() {
                       {songs.map((song, index) => (
                         <tr
                           key={index}
-                          className={`border-b ${
-                            selectedSongIndex === index ? 'bg-orange-50' : 'bg-white'
-                          }`}
+                          className={`border-b ${colors[index % colors.length]}`}
                           onClick={() => {
                             handleSongSelect(index);
                           }}
                         >
-                          <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                            {song.title}
+                          <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
+                            <div className="flex items-center gap-1">
+                              {selectedSongIndex === index && (
+                                <td className="whitespace-nowrap  text-[8px] text-gray-900">
+                                  <FaPlay />
+                                </td>
+                              )}
+                              <div>{song.title}</div>
+                              {selectedSongIndex === index && (
+                                <td className="whitespace-nowrap  text-[15px] text-gray-900">
+                                  <IoIosPodium />
+                                </td>
+                              )}
+                            </div>
                           </td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                          <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
                             {song.artista}
                           </td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                          <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
                             {song.disco}
                           </td>
-                          <td className="whitespace-nowrap px-6 py-4 text-sm font-light text-gray-900">
+                          <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
                             {song.duracion}
                           </td>
                         </tr>
@@ -188,7 +200,7 @@ export default function Page() {
                 </div>
               </div>
             </div>
-            <nav className="flex items-center justify-center pt-10">
+            <nav className="flex items-center  justify-center pt-10">
               <Reproductor songs={songs} onSongSelect={handleSongSelect} />
             </nav>
           </div>
