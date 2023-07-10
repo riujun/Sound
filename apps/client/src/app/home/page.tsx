@@ -10,11 +10,11 @@ function home() {
   return (
     <>
       <HeaderGlobal />
-      <div className="flex">
+      <div className="flex gap-4">
         <Menu />
-        <section className="p-5">
+        <div className="flex flex-col flex-grow">
           <Buscador />
-          <div className="m-10 h-px bg-black"></div>
+          <div className="h-px my-10 mr-3 bg-black"></div>
           <Top />
 
           {/* <article>
@@ -197,7 +197,7 @@ function home() {
             Corrupti repudiandae suscipit, aspernatur voluptatem beatae id possimus aliquid nostrum,
             dolor mollitia placeat a et inventore totam. Aliquid voluptatem maxime iusto in.
           </article> */}
-        </section>
+        </div>
       </div>
     </>
   );
