@@ -1,13 +1,17 @@
-import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+import { Song } from './song.schema';
+import { User } from './user.schema';
 
 @Schema({ timestamps: true })
 export class Playlist {
-  // @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: Song.name }] })
-  // songs: Song[]; // Relación con el esquema de songs
+  [x: string]: any;
 
-  @Prop({ required: true })
-  songs: string[]; // Relación con el esquema de songs
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: Song.name }] })
+  songs: Song[]; // Relación con el esquema de songs
+
+  // @Prop({ required: true })
+  // songs: string[]; // Relación con el esquema de songs
 
   @Prop({ required: true })
   duration: number;
@@ -21,11 +25,11 @@ export class Playlist {
   @Prop()
   image: string;
 
-  // @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
-  // user: User; // Relación con el esquema de users
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
+  user: User; // Relación con el esquema de users
 
-  @Prop({ required: true })
-  user: string;
+  // @Prop({ required: true })
+  // user: string;
 
   @Prop({ default: Date.now })
   creationDate: Date;

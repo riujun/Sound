@@ -1,18 +1,19 @@
 import {
-  Controller,
-  HttpStatus,
-  Get,
-  Res,
   Body,
-  Post,
-  Param,
-  Put,
+  Controller,
   Delete,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Res,
 } from '@nestjs/common';
-import { SongsService } from './songs.service';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateSongDto } from 'src/dto/create-song.dto';
-import { UpdateSongDto } from 'src/dto/update-songs';
+import { SongsService } from './songs.service';
 
+@ApiTags('Songs')
 @Controller('songs')
 export class SongsController {
   constructor(private songsService: SongsService) {}
