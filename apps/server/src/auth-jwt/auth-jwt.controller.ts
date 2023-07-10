@@ -2,7 +2,7 @@ import { Controller, Post, Body, Res, HttpStatus, Get } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { TokenService } from '../helpers/token_creator';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AuthJwtService } from '../auth-jwt/auth-jwt.service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/schemas/user.schema';
@@ -15,6 +15,7 @@ export class AuthJwtController {
     private tokenService: TokenService,
   ) {}
 
+  @ApiOperation({ summary: 'Registrarse en la web.' })
   @Post('/register')
   async register(@Body() registerDto: CreateUserDto, @Res() res) {
     try {
@@ -50,6 +51,8 @@ export class AuthJwtController {
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @ApiOperation({ summary: 'Iniciar sesión en la web.' })
   @Post('/login')
   async login(@Body() loginDto: LoginUserDto, @Res() res) {
     try {
