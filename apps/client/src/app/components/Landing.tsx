@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import Image from 'next/image';
+import Link from 'next/link';
 
 import Audifonos from '@/app/assets/landingpage/audifonos.png';
 import Mujer from '@/app/assets/landingpage/mujer.png';
@@ -15,20 +17,24 @@ export default function Landing() {
   return (
     <div>
       <Header />
-      <section className="md:gab-10 md:width-[100%] mt-10 flex ">
-        <section className="md:flex md:flex-col md:justify-evenly">
-          <h2 className=" pr-5 pt-10 text-end text-[20px] font-bold text-orange-500 md:w-[595px] md:text-center md:text-[42px]">
-            Explora, compra y descubre la música de talentosos artistas de todo el mundo.
-          </h2>
-          <div className="hidden  md:flex md:w-full md:justify-evenly md:pb-36">
-            <ButtonUno>CONOCE MAS</ButtonUno>
-            <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+      <div className="flex items-center justify-center">
+        <section className="md:gab-10 md:width-[100%] mt-10 flex ">
+          <section className="md:flex md:flex-col md:justify-evenly">
+            <h2 className=" pr-5 pt-10 text-end text-[20px] font-bold text-orange-500 md:w-[595px] md:text-center md:text-[42px]">
+              Explora, compra y descubre la música de talentosos artistas de todo el mundo.
+            </h2>
+            <div className="hidden  md:flex md:w-full md:justify-evenly md:pb-36">
+              <ButtonUno>CONOCE MAS</ButtonUno>
+              <Link href={`/login`}>
+                <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+              </Link>
+            </div>
+          </section>
+          <div className=" z-10 md:relative md:h-[765.35px] md:w-[680.32px]">
+            <Image src={Audifonos} alt="audifonos" />
           </div>
         </section>
-        <div className=" z-10 md:relative md:h-[765.35px] md:w-[680.32px]">
-          <Image src={Audifonos} alt="audifonos" />
-        </div>
-      </section>
+      </div>
       <section className="flex flex-col items-center justify-center gap-5 pt-7">
         <ButtonTres>CONOCE MAS</ButtonTres>
         <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
@@ -77,12 +83,14 @@ export default function Landing() {
             </div>
             <div className="z-10 flex justify-center pt-10">
               <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
-              <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+              <Link href={`/login`}>
+                <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+              </Link>
             </div>
           </div>
         </section>
         <div className="absolute z-0 md:top-[700px]">
-          <Image className="h-[800px]  md:h-[1200px] md:w-[1440px]" src={ola} alt="ola" />
+          <Image className="h-[800px]  md:h-[1200px] md:w-[1540px]" src={ola} alt="ola" />
         </div>
       </section>
       {/* tercera */}
@@ -117,7 +125,9 @@ export default function Landing() {
         ¡Sí, lo has leído bien, el 100% de cada venta es para ti!
       </div>
       <div className="mb-20 flex items-center justify-center  ">
-        <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+        <Link href={`/login`}>
+          <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+        </Link>
       </div>
       <div className="flex items-center justify-center">
         <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
@@ -138,7 +148,9 @@ export default function Landing() {
                 ni comisiones abusivas. Valora tu música y benefíciate directamente de tu esfuerzo.
               </span>
               <div className="pt-20 text-start">
-                <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+                <Link href={`/login`}>
+                  <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+                </Link>
               </div>
             </div>
           </div>
@@ -159,7 +171,9 @@ export default function Landing() {
           </div>
 
           <div className="pl-10 pt-10">
-            <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+            <Link href={`/login`}>
+              <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+            </Link>
           </div>
         </div>
         <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
@@ -179,7 +193,9 @@ export default function Landing() {
                 sólida y apoyarnos mutuamente en este emocionante viaje musical.
               </span>
               <div className="pt-20 text-start">
-                <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+                <Link href={`/login`}>
+                  <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+                </Link>
               </div>
             </div>
           </div>
@@ -192,7 +208,9 @@ export default function Landing() {
           ser un músico exitoso.
         </h3>
         <div className="text-center ">
-          <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+          <Link href={`/login`}>
+            <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+          </Link>
         </div>
         <div className="mb-12">
           <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>

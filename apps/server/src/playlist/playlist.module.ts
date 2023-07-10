@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PlaylistController } from './playlist.controller';
+import { PlaylistController } from './controllers/playlist.controller';
 import { PlaylistService } from './playlist.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PlaylistSchema, Playlist } from 'src/schemas/playlist.schema';

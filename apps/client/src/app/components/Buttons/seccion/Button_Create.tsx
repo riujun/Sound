@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { type ReactNode } from 'react';
 
 interface ButtonInicioProps {
@@ -6,7 +7,7 @@ interface ButtonInicioProps {
 
 export function ButtonCreate({ children }: ButtonInicioProps) {
   return (
-    <button className="inline-flex h-[52px] w-[150px] items-center justify-center gap-2.5 p-4 text-[16px] lowercase text-black hover:bg-orange-400 md:bg-orange-500  md:text-[18px] md:font-semibold">
+    <button className=" h-[52px] w-[150px] items-center justify-center gap-2.5 p-4 text-[16px]  text-black hover:bg-orange-400 md:bg-orange-500  md:text-[18px] md:font-semibold">
       {children}
     </button>
   );
