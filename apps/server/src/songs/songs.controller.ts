@@ -40,7 +40,7 @@ export class SongsController {
       if (!song) {
         return res
           .status(HttpStatus.NOT_FOUND)
-          .json({ message: 'User not found' });
+          .json({ message: 'Song not found' });
       }
       return res.status(HttpStatus.OK).json(song);
     } catch (error) {

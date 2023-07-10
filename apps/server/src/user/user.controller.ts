@@ -11,6 +11,7 @@ import {
   Put,
   Get,
   Query,
+  Post,
 } from '@nestjs/common';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
 import { UserService } from './user.service';
