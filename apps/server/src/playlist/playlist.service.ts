@@ -12,19 +12,26 @@ export class PlaylistService {
   ) {}
 
   async findAllPlaylist(): Promise<Playlist[]> {
-    return this.playlistModel.find();
+    return this.playlistModel.find().populate({ path: 'songs', model: 'Song' });
   }
 
-  async createPlaylist(createPlaylist: CreatePlaylistDto): Promise<Playlist> {
-    const newPlaylist = await this.playlistModel.create(createPlaylist);
+  async createPlaylist(
+    createPlaylist: CreatePlaylistDto,
+  ): Promise<PlaylistDocument> {
+    const newPlaylist: PlaylistDocument = await this.playlistModel.create(
+      createPlaylist,
+    );
     return newPlaylist;
   }
 
-  async findOnePlaylist(id: string): Promise<Playlist> {
-    return this.playlistModel.findById(id).exec();
+  async findOnePlaylist(id: string): Promise<PlaylistDocument> {
+    return await this.playlistModel
+      .findById(id)
+      .populate({ path: 'songs', model: 'Song' })
+      .exec();
   }
 
-  async deletePlaylist(id: string): Promise<Playlist> {
+  async deletePlaylist(id: string): Promise<PlaylistDocument> {
     return this.playlistModel.findByIdAndDelete(id);
   }
 
@@ -32,8 +39,10 @@ export class PlaylistService {
     id: string,
     updatePlaylistDto: UpdatePlaylistDto,
   ): Promise<Playlist> {
-    return this.playlistModel.findByIdAndUpdate(id, updatePlaylistDto, {
-      new: true,
-    });
+    return this.playlistModel
+      .findByIdAndUpdate(id, updatePlaylistDto, {
+        new: true,
+      })
+      .populate({ path: 'songs', model: 'Song' });
   }
 }
