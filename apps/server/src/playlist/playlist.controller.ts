@@ -17,12 +17,12 @@ export class PlaylistController {
 
   @Get()
   findAll() {
-    return this.playlistService.findAll();
+    return this.playlistService.findAllPlaylist();
   }
 
   @Get(':id')
   async finOne(@Param('id') id: string) {
-    const playlist = this.playlistService.findOne(id);
+    const playlist = this.playlistService.findOnePlaylist(id);
     if (!playlist) throw new NotFoundException('Playlist does not exist');
     return playlist;
   }
@@ -30,7 +30,7 @@ export class PlaylistController {
   @Post()
   create(@Body() body: any) {
     try {
-      return this.playlistService.create(body);
+      return this.playlistService.createPlaylist(body);
     } catch (error) {
       if (error.code === 11000) {
         throw new ConflictException('Playlist already exist');
@@ -41,7 +41,7 @@ export class PlaylistController {
 
   @Delete(':id')
   delete(@Param('id') id: string) {
-    const playlist = this.playlistService.delete(id);
+    const playlist = this.playlistService.deletePlaylist(id);
     if (!playlist) throw new NotFoundException('Playlist does not exist');
   }
 }
