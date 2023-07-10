@@ -20,7 +20,7 @@ export class AuthJwtController {
   async register(@Body() registerDto: CreateUserDto, @Res() res) {
     try {
       const { name, surname, username, email, password, artist } = registerDto;
-      if (!name || !surname || !username || !email || !artist) {
+      if (!name || !surname || !username || !email) {
         console.log(res.sendStatus(HttpStatus.BAD_REQUEST));
         return res.sendStatus(HttpStatus.BAD_REQUEST);
       }

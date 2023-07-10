@@ -15,6 +15,12 @@ export class User extends Document {
   @Prop({ unique: true })
   username: string;
 
+  @Prop({
+    default:
+      'https://asset.cloudinary.com/dnemqmc7a/05b35cf73934f1746f6a2845259369f5',
+  })
+  profilePhotoUrl: string;
+
   @Prop({ unique: true })
   email: string;
 

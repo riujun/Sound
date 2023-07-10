@@ -3,10 +3,13 @@ import {
   Body,
   Res,
   HttpStatus,
-  Get,
+  Param,
+  UploadedFile,
+  UseInterceptors,
+  Req,
   Delete,
   Put,
-  Param,
+  Get,
   Query,
 } from '@nestjs/common';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
@@ -15,6 +18,11 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
 import { GetArtirtsFilterDto } from 'src/dto/get-artists-filter.dto';
 import { SongsService } from 'src/songs/songs.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { v2 as cloudinary } from 'cloudinary';
+import { ConfigService } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @ApiTags('User')
 @Controller('user')
@@ -22,7 +30,14 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly songService: SongsService,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    cloudinary.config({
+      cloud_name: this.configService.get<string>('cloudinary.cloudName'),
+      api_key: this.configService.get<string>('cloudinary.apiKey'),
+      api_secret: this.configService.get<string>('cloudinary.apiSecret'),
+    });
+  }
 
   @ApiOperation({ summary: 'Obtener todos los usuarios.' })
   @Get()
@@ -124,6 +139,47 @@ export class UserController {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ message: 'Internal server error' });
+    }
+  }
+
+  @Post(':id/profile-photo')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads', // Directorio de destino para guardar los archivos
+        filename: (req, file, cb) => {
+          const uniqueSuffix = `${Date.now()}-${Math.round(
+            Math.random() * 1e9,
+          )}`;
+          cb(null, `${file.fieldname}-${uniqueSuffix}`);
+        },
+      }),
+    }),
+  )
+  async uploadProfilePhoto(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+    @Res() res,
+  ) {
+    try {
+      const result = await cloudinary.uploader.upload(file.path);
+      const profilePhotoUrl = result.secure_url;
+
+      const updatedUser = await this.userService.updateProfilePhotoUrl(
+        id,
+        profilePhotoUrl,
+      );
+
+      if (!updatedUser) {
+        return res
+          .status(HttpStatus.NOT_FOUND)
+          .json({ message: 'User not found' });
+      }
+
+      return res.status(HttpStatus.OK).json(updatedUser);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error uploading profile photo');
     }
   }
 }
