@@ -2,11 +2,12 @@ import { Controller, Post, Body, Res, HttpStatus, Get } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { TokenService } from '../helpers/token_creator';
-
+import { ApiTags } from '@nestjs/swagger';
 import { AuthJwtService } from '../auth-jwt/auth-jwt.service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/schemas/user.schema';
 
+@ApiTags('Auth-jwt')
 @Controller('auth-jwt')
 export class AuthJwtController {
   constructor(
@@ -18,7 +19,7 @@ export class AuthJwtController {
   async register(@Body() registerDto: CreateUserDto, @Res() res) {
     try {
       const { name, surname, username, email, password, artist } = registerDto;
-      if (!name || !surname || !username || !email || !artist) {
+      if (!name || !surname || !username || !email) {
         console.log(res.sendStatus(HttpStatus.BAD_REQUEST));
         return res.sendStatus(HttpStatus.BAD_REQUEST);
       }

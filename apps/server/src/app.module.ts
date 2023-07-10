@@ -6,6 +6,7 @@ import { AuthJwtModule } from './auth-jwt/auth-jwt.module';
 import { SongsModule } from './songs/songs.module';
 import { UserModule } from './user/user.module';
 import { PlaylistModule } from './playlist/playlist.module';
+import cloudinaryConfig from './cloudinary.config';
 
 @Module({
   imports: [
@@ -15,12 +16,16 @@ import { PlaylistModule } from './playlist/playlist.module';
     SongsModule,
     UserModule,
     PlaylistModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [cloudinaryConfig],
+    }),
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes('aut');
-    consumer.apply(AuthMiddleware).forRoutes('user');
+    consumer.apply(AuthMiddleware).forRoutes('u');
     consumer.apply(AuthMiddleware).forRoutes('songs');
   }
 }

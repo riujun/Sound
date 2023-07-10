@@ -5,6 +5,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsBoolean,
+  IsOptional,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -20,6 +21,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   username: string;
 
+  @IsOptional()
   @IsBoolean()
   artist: boolean;
 
