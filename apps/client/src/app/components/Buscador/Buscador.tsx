@@ -1,8 +1,10 @@
 'use client';
 import Image from 'next/image';
-import CardArtist from './CardArtist';
-import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
 import { useState } from 'react';
+
+import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
+
+import CardArtist from './CardArtist';
 
 export default function Buscador() {
   // Estado para almacenar la página actual
@@ -11,6 +13,7 @@ export default function Buscador() {
   const pageSize = 10;
   const totalItems = 95;
   // Cálculo del número total de páginas
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   const totalPages = Math.ceil(totalItems / pageSize) || 1;
   const maxVisiblePages = 5;
 
@@ -30,7 +33,7 @@ export default function Buscador() {
   const generatePageNumbers = () => {
     let startPage: number;
     let endPage: number;
-
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (totalPages <= maxVisiblePages) {
       startPage = 1;
       endPage = totalPages;
@@ -69,15 +72,15 @@ export default function Buscador() {
   };
 
   return (
-    <div className="flex-grow my-5 mr-3 overflow-auto">
+    <div className="my-5 mr-3 flex-grow overflow-auto">
       <div className="flex justify-between">
         <Image className="hidden w-auto md:block" src={logoMarketPlace} alt="logo market place" />
         <div className="w-[100%] items-center md:w-[50%]">
-          <div className="relative flex h-12 overflow-auto bg-white border border-gray-500 rounded-full focus-within:shadow-lg">
-            <div className="grid w-12 h-full text-gray-600 place-items-center">
+          <div className="relative flex h-12 overflow-auto rounded-full border border-gray-500 bg-white focus-within:shadow-lg">
+            <div className="grid h-full w-12 place-items-center text-gray-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-6 h-6"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -116,7 +119,7 @@ export default function Buscador() {
             } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handlePreviousPage}
           >
-            <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
+            <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
           </div>
           {/* Renderización de los números de página */}
           {generatePageNumbers().map((pageNumber) => (
@@ -127,9 +130,11 @@ export default function Buscador() {
                   ? 'border-orange-600 bg-orange-300'
                   : 'border-orange-500 p-[5px]'
               }`}
-              onClick={() => setCurrentPage(pageNumber)}
+              onClick={() => {
+                setCurrentPage(pageNumber);
+              }}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">
+              <div className="text-base font-semibold uppercase leading-none text-black">
                 {pageNumber}
               </div>
             </div>
@@ -141,7 +146,7 @@ export default function Buscador() {
             } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handleNextPage}
           >
-            <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
+            <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
           </div>
         </div>
       </div>

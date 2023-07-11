@@ -13,9 +13,11 @@ import Menu from '../components/menu/Menu';
 import Reproductor from '../components/Reproductor/Reproductor';
 
 interface Song {
+  id: number;
   title: string;
   src: string;
   artista: string;
+  price: string;
   disco: string;
   duracion: string;
 }
@@ -128,7 +130,7 @@ export default function Page() {
         <Menu />
 
         {songs.length > 0 ? (
-          <div className="flex w-full flex-col">
+          <div className="flex w-[100%] flex-col">
             <div className="overflow-x-auto " style={{ maxHeight: '75%' }}>
               <div className="inline-block w-full py-2 sm:px-6 lg:px-8">
                 <div className="overflow-hidden">
@@ -149,7 +151,7 @@ export default function Page() {
                         </th>
                         <th
                           scope="col"
-                          className=" pb-2 text-left text-sm font-medium text-gray-900"
+                          className="pb-2 text-left text-sm font-medium text-gray-900 "
                         >
                           Disco
                         </th>
@@ -207,8 +209,8 @@ export default function Page() {
             </nav>
           </div>
         ) : (
-          <div className="flex  w-full items-center justify-center">
-            <section className="flex flex-col items-center  gap-10">
+          <div className="flex w-full items-center justify-center">
+            <section className="flex flex-col items-center gap-10">
               <Image src={vector} alt="logo vector" />
               <h2 className="ANNoTienesMSicaEnTuListaDeReproducciN w-[449px] text-center text-[32px] font-semibold text-zinc-700">
                 Aún no tienes música en tu lista de reproducción
