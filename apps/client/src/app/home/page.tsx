@@ -3,18 +3,20 @@ import React from 'react';
 import Buscador from '@/app/components/Buscador/Buscador';
 import HeaderGlobal from '@/app/components/header-global/Header_Global';
 import Top from '@/app/components/top10/Topdies';
+import { useStore } from '@/app/store';
 
 import Menu from '../components/menu/Menu';
 
 function home() {
+  console.log(useStore.getState().name);
   return (
     <>
       <HeaderGlobal />
       <div className="flex gap-4">
         <Menu />
-        <div className="flex flex-col flex-grow">
+        <div className="flex flex-grow flex-col">
           <Buscador />
-          <div className="h-px my-10 mr-3 bg-black"></div>
+          <div className="my-10 mr-3 h-px bg-black"></div>
           <Top />
 
           {/* <article>
