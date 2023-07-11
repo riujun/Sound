@@ -1,8 +1,8 @@
-
-import { useStore } from '@/app/store';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/components/utils/authOptions';
+
 import Landing from '@/app/components/Landing';
+import { authOptions } from '@/app/components/utils/authOptions';
+import { useStore } from '@/app/store';
 
 export default async function Home() {
   useStore.setState({ name: 'PEPERONI' });
