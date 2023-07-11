@@ -1,31 +1,31 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
-import * as autoIncrement from 'mongoose-plugin-autoinc';@Schema({timestamps:true})
-export class User {
-    @Prop({ required: true })
-    id: number;
-    @Prop({required:true})
-    name:string
+import { Document } from 'mongoose';
 
-    @Prop({required:true})
-    surname:string
+@Schema({ timestamps: true })
+export class User extends Document {
+  @Prop()
+  name: string;
 
-    @Prop({unique:true,required:true})
-    username:string
+  @Prop()
+  surname: string;
 
-    @Prop({unique:true,required:true})
-    email:string
+  @Prop({ default: false })
+  artist: boolean;
 
-    @Prop({required:true})
-    password:string
+  @Prop({ unique: true })
+  username: string;
+
+  @Prop({
+    default:
+      'https://asset.cloudinary.com/dnemqmc7a/05b35cf73934f1746f6a2845259369f5',
+  })
+  profilePhotoUrl: string;
+
+  @Prop({ unique: true })
+  email: string;
+
+  @Prop()
+  password: string;
 }
-export const UserSchema = SchemaFactory.createForClass(User)
 
-UserSchema.plugin(autoIncrement.plugin, {
-    model: 'User',
-    field: 'id',
-    startAt: 1,
-    incrementBy: 1,
-  });
-
-
+export const UserSchema = SchemaFactory.createForClass(User);

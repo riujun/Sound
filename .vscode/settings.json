@@ -8,5 +8,7 @@
   "editor.tabSize": 2,
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "prettier.jsxSingleQuote": false,
+  "conventionalCommits.scopes": ["auth", "zustand"]
 }
