@@ -11,7 +11,7 @@ import HeaderGlobal from '@/app/components/header-global/Header_Global';
 import { ButtonCreate } from '../components/Buttons/seccion/Button_Create';
 import Menu from '../components/menu/Menu';
 import Reproductor from '../components/Reproductor/Reproductor';
-import Repromobile from '../components/Repromobile/Repromobile';
+
 interface Song {
   title: string;
   src: string;
@@ -129,7 +129,7 @@ export default function Page() {
 
         {songs.length > 0 ? (
           <div className="flex w-full flex-col">
-            <div className="overflow-x-auto " style={{ maxHeight: '400px' }}>
+            <div className="overflow-x-auto " style={{ maxHeight: '75%' }}>
               <div className="inline-block w-full py-2 sm:px-6 lg:px-8">
                 <div className="overflow-hidden">
                   <table className="w-[100%]">
@@ -203,13 +203,7 @@ export default function Page() {
             </div>
 
             <nav className="flex items-center justify-center pt-10">
-              <div className="hidden md:block">
-                <Reproductor songs={songs} onSongSelect={handleSongSelect} />
-              </div>
-
-              <div className="md:hidden">
-                <Repromobile songs={songs} onSongSelect={handleSongSelect} />
-              </div>
+              <Reproductor songs={songs} onSongSelect={handleSongSelect} />
             </nav>
           </div>
         ) : (
