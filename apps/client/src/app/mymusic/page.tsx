@@ -11,6 +11,7 @@ import HeaderGlobal from '@/app/components/header-global/Header_Global';
 import { ButtonCreate } from '../components/Buttons/seccion/Button_Create';
 import Menu from '../components/menu/Menu';
 import Reproductor from '../components/Reproductor/Reproductor';
+import Repromobile from '../components/Repromobile/Repromobile';
 interface Song {
   title: string;
   src: string;
@@ -200,8 +201,15 @@ export default function Page() {
                 </div>
               </div>
             </div>
-            <nav className="flex items-center  justify-center pt-10">
-              <Reproductor songs={songs} onSongSelect={handleSongSelect} />
+
+            <nav className="flex items-center justify-center pt-10">
+              <div className="hidden md:block">
+                <Reproductor songs={songs} onSongSelect={handleSongSelect} />
+              </div>
+
+              <div className="md:hidden">
+                <Repromobile songs={songs} onSongSelect={handleSongSelect} />
+              </div>
             </nav>
           </div>
         ) : (
