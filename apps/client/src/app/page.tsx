@@ -1,14 +1,14 @@
-// import { getServerSession } from 'next-auth';
 
-// import { authOptions } from '@/app/components/utils/authOptions';
 import { useStore } from '@/app/store';
-
-import Landing from './components/Landing';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/components/utils/authOptions';
+import Landing from '@/app/components/Landing';
 
 export default async function Home() {
-  // const session = await getServerSession(authOptions);
   useStore.setState({ name: 'PEPERONI' });
-  // console.log('[SECCION]', session);
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
   return (
     <main>
       <Landing />

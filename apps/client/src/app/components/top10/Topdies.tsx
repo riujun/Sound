@@ -1,6 +1,10 @@
 /* eslint-disable prettier/prettier */
+'use client';
+import { useEffect, useState } from 'react';
+
 import ReproductorP from '@/app/components/reprodutorpequeño/ReproductorP';
 
+import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 const songs: Song[] = [
   {
     id: 1,
@@ -95,17 +99,45 @@ const songs: Song[] = [
 ];
 
 export default function Topdies() {
+  const [showAll, setShowAll] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleShowMore = () => {
+    setShowAll(true);
+  };
+
+  const visibleSongs = showAll || !isSmallScreen ? songs : songs.slice(0, 5);
+
   return (
-    <div>
-      <h2 className=" text-[32px] font-semibold leading-normal text-zinc-700">
+    <div className='mb-10'>
+      <h2 className="ml-5 text-2xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
         Top 10 - Lo más vendido por nuestros artistas
       </h2>
-      <div className="w-[1000px] ">
-        <section className="mt-20 flex flex-wrap gap-5 ">
-          {songs.map((song, index) => (
+      <div className="w-full ">
+        <section className="mx-[5%] mt-10 flex flex-wrap justify-between gap-5">
+          {visibleSongs.map((song, index) => (
             <ReproductorP key={index} songs={[song]} />
           ))}
         </section>
+        {!showAll && isSmallScreen && (
+          <div onClick={handleShowMore} className="flex justify-center mt-4">
+            <ButtonCuatro>Ver Mas</ButtonCuatro>
+          </div>
+        )}
       </div>
     </div>
   );

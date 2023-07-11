@@ -15,6 +15,15 @@ export class SongsService {
     return this.songModel.find().skip(offset).limit(limit).exec();
   }
 
+  async getById(id: string): Promise<Song | null> {
+    try {
+      const song = this.songModel.findById(id).exec();
+      return song;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async createSong(createSong: CreateSongDto): Promise<Song | null> {
     const newSong = new this.songModel(createSong);
     try {
