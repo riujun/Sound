@@ -14,6 +14,9 @@ importers:
       '@nestjs/swagger':
         specifier: ^7.1.1
         version: 7.1.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)
+      client:
+        specifier: workspace:^
+        version: link:apps/client
       cloudinary:
         specifier: ^1.37.3
         version: 1.37.3
@@ -35,6 +38,9 @@ importers:
       react-icons:
         specifier: ^4.10.1
         version: 4.10.1(react@18.2.0)
+      zustand:
+        specifier: ^4.3.9
+        version: 4.3.9(react@18.2.0)
     devDependencies:
       '@commitlint/cli':
         specifier: 17.6.6
@@ -13910,6 +13916,14 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
+  /use-sync-external-store@1.2.0(react@18.2.0):
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -14349,3 +14363,19 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+
+  /zustand@4.3.9(react@18.2.0):
+    resolution: {integrity: sha512-Tat5r8jOMG1Vcsj8uldMyqYKC5IZvQif8zetmLHs9WoZlntTHmIoNM8TpLRY31ExncuUvUOXehd0kvahkuHjDw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
