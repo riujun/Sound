@@ -14,8 +14,13 @@ import repet from '@/app/assets/Repeat.png';
 import next from '@/app/assets/Siguiente.png';
 
 interface Song {
+  id: number;
   title: string;
   src: string;
+  artista: string;
+  price: string;
+  disco: string;
+  duracion: string;
 }
 
 interface ReproductorProps {
@@ -48,6 +53,10 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   useEffect(() => {
     const audioElement = audioRef.current;
 
+    if (audioElement == null) {
+      return;
+    }
+
     const handleLoadedData = () => {
       setDuration(audioElement.duration);
     };
@@ -67,6 +76,11 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
 
   useEffect(() => {
     const audioElement = audioRef.current;
+
+    if (audioElement == null) {
+      return;
+    }
+
     audioElement.src = songs[currentSongIndex].src;
     audioElement.load();
     setCurrentTime(0);
@@ -74,7 +88,9 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
 
   useEffect(() => {
     const audioElement = audioRef.current;
-
+    if (audioElement == null) {
+      return;
+    }
     if (isPlaying) {
       void audioElement.play();
     } else {
@@ -83,6 +99,9 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   }, [isPlaying]);
   useEffect(() => {
     const audioElement = audioRef.current;
+    if (audioElement == null) {
+      return;
+    }
     audioElement.volume = volume;
   }, [volume]);
 
@@ -104,6 +123,9 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = parseFloat(e.target.value);
+    if (audioRef.current == null) {
+      return;
+    }
     audioRef.current.currentTime = time;
     setCurrentTime(time);
   };
@@ -121,7 +143,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   };
 
   return (
-    <div>
+    <div className="w-[60%]">
       <audio ref={audioRef} />
       {isMobile ? (
         <section
@@ -130,7 +152,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
           } mb-20 rounded border-[1px]`}
         >
           <div className="flex flex-col items-center justify-center">
-            <div className=" flex  justify-end">
+            <div className="flex justify-end ">
               <button
                 className={`flex justify-end bg-orange-200 ${isExpanded ? '' : 'hidden'}`}
                 onClick={toggleExpanded}
@@ -145,10 +167,10 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                 </div>
                 <div className="mt-5 flex items-center justify-center">
                   <button className="mr-2">
-                    <Image src={rendom} alt="alt" className=" mr-2" />
+                    <Image src={rendom} alt="alt" className="mr-2 " />
                   </button>
                   <button className="mr-5" onClick={handlePreviousSong}>
-                    <Image src={ant} alt="alt" className=" " />
+                    <Image src={ant} alt="alt" className="" />
                   </button>
                   <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full border-[3px] border-orange-400 bg-orange-100 p-6 ">
                     {isPlaying ? (
@@ -186,7 +208,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
             ) : (
               <div className="h-[70px] w-full  ">
                 <div className="relative bottom-3 right-3 w-[328px]">
-                  <button className=" relative flex w-full justify-end  " onClick={toggleExpanded}>
+                  <button className="relative flex w-full justify-end " onClick={toggleExpanded}>
                     <BsChevronUp className="bg-orange-200" />
                   </button>
                 </div>
@@ -227,14 +249,18 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
           </div>
         </section>
       ) : (
-        <section className="flex h-[100px] w-[800px] flex-col items-center justify-center rounded-3xl border-2 border-orange-400 bg-orange-100">
+        // REPRODUCTOR GRANDE
+        <section className="flex h-[100px] w-[110%] flex-col items-center justify-center rounded-3xl border-2 border-orange-400 bg-orange-100">
           <div className="flex h-[52px] w-[206px] justify-evenly">
+            {/* RANDOM */}
             <button className="mr-2" onClick={handleNextSong}>
               <Image src={rendom} alt="alt" className="relative top-5 text-[18px]" />
             </button>
+            {/* ANTERIOR */}
             <button onClick={handlePreviousSong}>
               <Image src={ant} alt="alt" className="relative top-5 text-[18px]" />
             </button>
+            {/* PLAY / STOP */}
             <button
               className="relative bottom-2 h-[60px] w-[60px] rounded-full border-[4px] border-orange-400 bg-orange-300"
               onClick={handlePlayPause}
@@ -249,22 +275,27 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                 </div>
               )}
             </button>
+            {/* SIGUIENTE */}
             <button onClick={handleNextSong}>
               <Image src={next} alt="alt" className="relative top-5 text-[18px]" />
             </button>
+            {/* REPETIR */}
             <button className="ml-2">
               <Image src={repet} alt="alt" className="relative top-5  text-[18px]" />
             </button>
           </div>
-
-          <div className="relative bottom-2">
-            <div className="flex items-center gap-3">
+          {/* CONTENEDOR IMAGEN | RANGO REPR | RANGO VOL */}
+          <div className="relative bottom-2 w-[100%]">
+            <div className="ml-10 flex items-center justify-center gap-3">
               <div>
-                <Image className="h-[62px] w-[62px]" src={img} alt="img" />
+                <Image className="h-[60px] w-[90px]" src={img} alt="img" />
               </div>
-              <div>
+              <div className="jusify-center ml-[1%] flex">
+                <span className="">{formatTime(currentTime)}</span>
+              </div>
+              <div className="flex w-[75%] justify-around">
                 <input
-                  className="w-[447px]"
+                  className="w-[100%]"
                   type="range"
                   min={0}
                   max={duration}
@@ -272,12 +303,14 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                   step={0.01}
                   onChange={handleSeek}
                 />
-                <span>{formatTime(currentTime)}</span> / <span>{formatTime(duration)}</span>
               </div>
-              <div>
+              <div className="jusify-center ml-[1%] flex">
+                <span>{formatTime(duration)}</span>
+              </div>
+              <div className="w-[25%]">
                 <div>
                   <input
-                    className="w-[100px]   "
+                    className="w-[70%]"
                     type="range"
                     min={0}
                     max={1}

@@ -1,8 +1,8 @@
 'use client';
-import Image from 'next/image';
-import CardAlbum from './CardAlbum';
-import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
+
 import { useState } from 'react';
+
+import CardAlbum from './CardAlbum';
 
 export default function Albumes() {
   // Estado para almacenar la página actual
@@ -11,7 +11,8 @@ export default function Albumes() {
   const pageSize = 5;
   const totalItems = 43;
   // Cálculo del número total de páginas
-  const totalPages = Math.ceil(totalItems / pageSize) || 1;
+  const totalPages = Math.ceil(totalItems / pageSize);
+
   const maxVisiblePages = 5;
 
   // Función para renderizar los componentes CardArtist correspondientes a la página actual
@@ -69,7 +70,7 @@ export default function Albumes() {
   };
 
   return (
-    <div className="flex-grow mt-5 mb-10 mr-3 overflow-auto">
+    <div className="mb-10 mr-3 mt-5 flex-grow overflow-auto">
       <div className="flex p-5">
         <div className="text-[18px] font-semibold leading-normal text-zinc-700 lg:text-[24px]">
           Lo nuevo en álbumes
@@ -87,7 +88,7 @@ export default function Albumes() {
             } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handlePreviousPage}
           >
-            <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
+            <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
           </div>
           {/* Renderización de los números de página */}
           {generatePageNumbers().map((pageNumber) => (
@@ -98,9 +99,11 @@ export default function Albumes() {
                   ? 'border-orange-600 bg-orange-300'
                   : 'border-orange-500 p-[5px]'
               }`}
-              onClick={() => setCurrentPage(pageNumber)}
+              onClick={() => {
+                setCurrentPage(pageNumber);
+              }}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">
+              <div className="text-base font-semibold uppercase leading-none text-black">
                 {pageNumber}
               </div>
             </div>
@@ -112,7 +115,7 @@ export default function Albumes() {
             } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handleNextPage}
           >
-            <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
+            <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
           </div>
         </div>
       </div>

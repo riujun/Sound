@@ -35,6 +35,9 @@ importers:
       next-auth:
         specifier: ^4.22.1
         version: 4.22.1(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
       react-icons:
         specifier: ^4.10.1
         version: 4.10.1(react@18.2.0)
@@ -78,6 +81,9 @@ importers:
       '@types/node':
         specifier: 20.3.2
         version: 20.3.2
+      '@types/prop-types':
+        specifier: ^15.7.5
+        version: 15.7.5
       '@types/react':
         specifier: 18.2.14
         version: 18.2.14

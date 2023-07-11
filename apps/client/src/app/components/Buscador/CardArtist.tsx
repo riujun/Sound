@@ -1,9 +1,12 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
-// @ts-ignore
+import React, { useState } from 'react';
 
-export default function CardArtist({index}) {
+interface CardArtistProps {
+  index?: number;
+}
+
+export default function CardArtist({ index = 0 }: CardArtistProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
@@ -17,7 +20,7 @@ export default function CardArtist({index}) {
   return (
     <div className="m-[11px] inline-flex cursor-pointer flex-col items-start justify-start gap-2 rounded-2xl border border-zinc-700 px-4 py-6">
       <div
-        className="inline-flex items-center self-stretch justify-between gap-2"
+        className="inline-flex items-center justify-between gap-2 self-stretch"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
@@ -50,7 +53,7 @@ export default function CardArtist({index}) {
       </div>
       <div className="flex flex-col items-start justify-start">
         <div className="text-[9.639604568481445px] font-semibold text-zinc-700">
-          Cant. Seguidores {index + 1} 
+          Cant. Seguidores {index + 1}
         </div>
         <div className="h-px w-[171px] bg-black"></div>
       </div>

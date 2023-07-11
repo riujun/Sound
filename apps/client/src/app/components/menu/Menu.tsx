@@ -1,6 +1,6 @@
 export default function Menu() {
   return (
-    <nav className="hidden min-h-[90vh] 2xl:min-h-[100vh] min-w-[260px] gap-6 border-r-4 border-r-orange-500 bg-orange-200 py-12 md:block lg:min-w-[260px] w-[260px]">
+    <nav className="hidden min-h-[90vh] w-[260px] min-w-[260px] gap-6 border-r-4 border-r-orange-500 bg-orange-200 py-12 md:block lg:min-w-[260px] 2xl:min-h-[100vh]">
       <div className="w-full">
         <button className="min-w-full pb-4 pl-[20%] pt-4 text-left hover:bg-orange-300">
           Mi música

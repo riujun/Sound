@@ -1,19 +1,11 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
-// @ts-ignore
+import PropTypes from 'prop-types';
+CardAlbum.propTypes = {
+  index: PropTypes.number.isRequired,
+};
 
-export default function CardAlbum({ index }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
+export default function CardAlbum({ index }: { index: number }) {
   return (
     <div className="m-[10px] inline-flex flex-col items-start justify-start gap-2">
       <Image
@@ -33,7 +25,7 @@ export default function CardAlbum({ index }) {
       </div>
       <div className="inline-flex cursor-pointer items-center justify-center gap-2.5 self-stretch border border-zinc-700 px-5 py-2">
         <div className="text-center text-xs font-medium leading-[13.46px] text-zinc-700">
-          $ {index + 1}0.00
+          $ {Number(index) !== 0 && !isNaN(Number(index)) ? Number(index) + 1 : 1}0.00
         </div>
       </div>
     </div>

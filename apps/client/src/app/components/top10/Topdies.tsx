@@ -5,6 +5,15 @@ import { useEffect, useState } from 'react';
 import ReproductorP from '@/app/components/reprodutorpequeño/ReproductorP';
 
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
+interface Song {
+  id: number;
+  title: string;
+  src: string;
+  artista: string;
+  price: string;
+  disco: string;
+  duracion: string;
+}
 const songs: Song[] = [
   {
     id: 1,
@@ -123,7 +132,7 @@ export default function Topdies() {
   const visibleSongs = showAll || !isSmallScreen ? songs : songs.slice(0, 5);
 
   return (
-    <div className='mb-10'>
+    <div className="mb-10">
       <h2 className="ml-5 text-2xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
         Top 10 - Lo más vendido por nuestros artistas
       </h2>
@@ -134,7 +143,7 @@ export default function Topdies() {
           ))}
         </section>
         {!showAll && isSmallScreen && (
-          <div onClick={handleShowMore} className="flex justify-center mt-4">
+          <div onClick={handleShowMore} className="mt-4 flex justify-center">
             <ButtonCuatro>Ver Mas</ButtonCuatro>
           </div>
         )}

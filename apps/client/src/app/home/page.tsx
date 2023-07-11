@@ -1,14 +1,9 @@
 import React from 'react';
-
+import Albumes from '@/app/components/Albumes/Albumes';
 import Buscador from '@/app/components/Buscador/Buscador';
 import HeaderGlobal from '@/app/components/header-global/Header_Global';
 import Top from '@/app/components/top10/Topdies';
-
 import { useStore } from '@/app/store';
-
-import Albumes from '@/app/components/Albumes/Albumes';
-
-
 import Menu from '@/app/components/menu/Menu';
 
 function home() {
