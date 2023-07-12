@@ -52,6 +52,7 @@
     "prettier": "2.8.8",
     "prettier-plugin-tailwindcss": "0.3.0",
     "storybook": "7.0.24",
+    "tailwind-scrollbar": "^3.0.4",
     "turbo": "1.10.6",
     "typescript": "5.1.6"
   },
