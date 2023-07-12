@@ -9,11 +9,13 @@ import { TbPlayerPlayFilled, TbPlaystationSquare } from 'react-icons/tb';
 import img from '@/app/assets/landingpage/p.jpg';
 
 interface Song {
+  id: number;
   title: string;
   src: string;
-  id: string;
   artista: string;
   price: string;
+  disco: string;
+  duracion: string;
 }
 
 interface ReproductorProps {
@@ -30,10 +32,12 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
     const handlePlayPause = async () => {
       if (isPlaying) {
         try {
-          await audioElement?.play();
+          // @ts-ignore
+          await audioElement.play();
         } catch (error) {}
       } else {
-        audioElement?.pause();
+          // @ts-ignore
+        audioElement.pause();
       }
     };
 
@@ -48,7 +52,7 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
     <div>
       <audio ref={audioRef} src={songs[0].src} />
 
-      <div className="flex h-[55px] w-[490px] items-center justify-evenly border-b-[1px] border-black">
+      <div className="flex h-[55px] w-[450px] items-center justify-evenly border-b-[1px] border-black">
         <h5 className="">{songs[0].id}</h5>
 
         <div className="flex items-center gap-5">

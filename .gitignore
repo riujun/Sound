@@ -14,3 +14,4 @@ storybook-static/
 .env.*
 !.env.example
 .eslintcache
+.vercel

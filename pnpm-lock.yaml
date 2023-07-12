@@ -14,6 +14,9 @@ importers:
       '@nestjs/swagger':
         specifier: ^7.1.1
         version: 7.1.1(@nestjs/common@10.0.0)(@nestjs/core@10.0.0)(reflect-metadata@0.1.13)
+      client:
+        specifier: workspace:^
+        version: link:apps/client
       cloudinary:
         specifier: ^1.37.3
         version: 1.37.3
@@ -32,9 +35,15 @@ importers:
       next-auth:
         specifier: ^4.22.1
         version: 4.22.1(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
+      prop-types:
+        specifier: ^15.8.1
+        version: 15.8.1
       react-icons:
         specifier: ^4.10.1
         version: 4.10.1(react@18.2.0)
+      zustand:
+        specifier: ^4.3.9
+        version: 4.3.9(react@18.2.0)
     devDependencies:
       '@commitlint/cli':
         specifier: 17.6.6
@@ -72,6 +81,9 @@ importers:
       '@types/node':
         specifier: 20.3.2
         version: 20.3.2
+      '@types/prop-types':
+        specifier: ^15.7.5
+        version: 15.7.5
       '@types/react':
         specifier: 18.2.14
         version: 18.2.14
@@ -111,6 +123,9 @@ importers:
       storybook:
         specifier: 7.0.24
         version: 7.0.24
+      tailwind-scrollbar:
+        specifier: ^3.0.4
+        version: 3.0.4(tailwindcss@3.3.2)
       turbo:
         specifier: 1.10.6
         version: 1.10.6
@@ -13225,6 +13240,15 @@ packages:
     resolution: {integrity: sha512-R2/nULkdg1VR/EL4RXg4dEohdoxNUJGLMnWIQnPKL+O9Twu7Cn3Rxi4dlXkDzZrEGtR+G+psSXFouWlpTyLhCQ==}
     dev: false
 
+  /tailwind-scrollbar@3.0.4(tailwindcss@3.3.2):
+    resolution: {integrity: sha512-X/QBsn/C5u9x6/YvTc1Zo7b09Gqs5BfDe0UK/8LDQUv8IEBKF+p2ISTRwvAr50MH0hn/wTyCEOann7uXoa1/2Q==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      tailwindcss: 3.x
+    dependencies:
+      tailwindcss: 3.3.2(ts-node@10.9.1)
+    dev: true
+
   /tailwindcss@3.3.2(ts-node@10.9.1):
     resolution: {integrity: sha512-9jPkMiIBXvPc2KywkraqsUfbfj+dHDb+JPWtSJa9MLFdrPyazI7q6WX2sUrm7R9eVR7qqv3Pas7EvQFzxKnI6w==}
     engines: {node: '>=14.0.0'}
@@ -13910,6 +13934,14 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
+  /use-sync-external-store@1.2.0(react@18.2.0):
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -14349,3 +14381,19 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+
+  /zustand@4.3.9(react@18.2.0):
+    resolution: {integrity: sha512-Tat5r8jOMG1Vcsj8uldMyqYKC5IZvQif8zetmLHs9WoZlntTHmIoNM8TpLRY31ExncuUvUOXehd0kvahkuHjDw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false

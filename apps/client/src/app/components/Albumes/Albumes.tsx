@@ -1,39 +1,37 @@
 'use client';
-import Image from 'next/image';
+
 import { useState } from 'react';
 
-import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
+import CardAlbum from './CardAlbum';
 
-import CardArtist from './CardArtist';
-
-export default function Buscador() {
+export default function Albumes() {
   // Estado para almacenar la página actual
   const [currentPage, setCurrentPage] = useState(1);
   // Número de registros por página
-  const pageSize = 10;
-  const totalItems = 95;
+  const pageSize = 5;
+  const totalItems = 43;
   // Cálculo del número total de páginas
-  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-  const totalPages = Math.ceil(totalItems / pageSize) || 1;
+  const totalPages = Math.ceil(totalItems / pageSize);
+
   const maxVisiblePages = 5;
 
   // Función para renderizar los componentes CardArtist correspondientes a la página actual
-  const renderCardArtists = () => {
+  const renderCardAlbumes = () => {
     // Cálculo del índice de inicio y fin de los registros de la página actual
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = Math.min(startIndex + pageSize, totalItems);
-    const cardArtists = [];
+    const cardAlbumes = [];
 
     for (let i = startIndex; i < endIndex; i++) {
-      cardArtists.push(<CardArtist key={i} index={i} />);
+      cardAlbumes.push(<CardAlbum key={i} index={i} />);
     }
-    return cardArtists;
+    return cardAlbumes;
   };
 
   const generatePageNumbers = () => {
     let startPage: number;
     let endPage: number;
-    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+
     if (totalPages <= maxVisiblePages) {
       startPage = 1;
       endPage = totalPages;
@@ -72,43 +70,14 @@ export default function Buscador() {
   };
 
   return (
-    <div className="my-5 mr-3 flex-grow overflow-auto">
-      <div className="flex justify-between">
-        <Image className="hidden w-auto md:block" src={logoMarketPlace} alt="logo market place" />
-        <div className="w-[100%] items-center md:w-[50%]">
-          <div className="relative flex h-12 overflow-auto rounded-full border border-gray-500 bg-white focus-within:shadow-lg">
-            <div className="grid h-full w-12 place-items-center text-gray-600">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            <input
-              className="peer w-[100%] border-none pr-2 text-sm text-gray-600  outline-none"
-              type="text"
-              id="search"
-              placeholder="¿Qué quieres escuchar hoy?"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="flex justify-center p-5">
+    <div className="mb-10 mr-3 mt-5 flex-grow overflow-auto">
+      <div className="flex p-5">
         <div className="text-[18px] font-semibold leading-normal text-zinc-700 lg:text-[24px]">
-          Descubre y apoya a nuevo talento musical
+          Lo nuevo en álbumes
         </div>
       </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
-      {renderCardArtists()}
+      {renderCardAlbumes()}
       <div id="Paginador" className="flex justify-center pt-8">
         <div className="inline-flex gap-2 bg-white">
           {/* Botón de página anterior */}
