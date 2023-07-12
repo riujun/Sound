@@ -32,9 +32,11 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
     const handlePlayPause = async () => {
       if (isPlaying) {
         try {
+          // @ts-ignore
           await audioElement.play();
         } catch (error) {}
       } else {
+          // @ts-ignore
         audioElement.pause();
       }
     };
