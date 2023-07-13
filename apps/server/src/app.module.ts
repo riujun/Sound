@@ -8,6 +8,9 @@ import { SongsModule } from './songs/songs.module';
 import { UserModule } from './user/user.module';
 import { PlaylistModule } from './playlist/playlist.module';
 import cloudinaryConfig from './cloudinary.config';
+import { MercadopagoModule } from './mercadopago/mercadopago.module';
+import { PaymentController } from './payment/payment.controller';
+import { PaypalModule } from './paypal/paypal.module';
 
 @Module({
   imports: [
@@ -22,7 +25,10 @@ import cloudinaryConfig from './cloudinary.config';
       isGlobal: true,
       load: [cloudinaryConfig],
     }),
+    MercadopagoModule,
+    PaypalModule,
   ],
+  controllers: [PaymentController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
