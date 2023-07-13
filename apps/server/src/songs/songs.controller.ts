@@ -15,11 +15,15 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreateSongDto } from 'src/dto/create-song.dto';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
 import { SongsService } from './songs.service';
+import { UserService } from 'src/user/user.service';
 
 @ApiTags('Songs')
 @Controller('songs')
 export class SongsController {
-  constructor(private songsService: SongsService) {}
+  constructor(
+    private songsService: SongsService,
+    private userService: UserService,
+  ) {}
 
   @ApiOperation({ summary: 'Obtener todas las canciones' })
   @Get()
@@ -91,11 +95,9 @@ export class SongsController {
         album,
         src,
       } = createSongDto;
-
       // const archivoURL = file.path;
       // console.log(archivoURL)
       // console.log(typeof archivoURL)
-
       const song = await this.songsService.createSong({
         name,
         duration,
@@ -108,7 +110,9 @@ export class SongsController {
         src,
         album,
       });
-
+      const usuario = await this.userService.getById(user);
+      usuario.songsUplodaded.push(song._id);
+      await this.userService.updateById(user, usuario);
       return res.status(HttpStatus.OK).json({ song });
     } catch (err) {
       console.log(err);

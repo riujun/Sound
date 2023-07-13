@@ -29,7 +29,10 @@ export class User extends Document {
   password: string;
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Song' }] })
-  songs: Song[];
+  songsPurchased: Song[];
+
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Song' }] })
+  songsUplodaded: Song[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
