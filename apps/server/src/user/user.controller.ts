@@ -1,29 +1,27 @@
 import {
-  Controller,
   Body,
-  Res,
+  Controller,
+  Delete,
+  Get,
   HttpStatus,
   Param,
+  Post,
+  Put,
+  Query,
+  Res,
   UploadedFile,
   UseInterceptors,
-  Req,
-  Delete,
-  Put,
-  Get,
-  Query,
-  Post,
 } from '@nestjs/common';
-import { UpdateUserDto } from 'src/dto/update-user.dto';
-import { UserService } from './user.service';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
-import { GetArtirtsFilterDto } from 'src/dto/get-artists-filter.dto';
-import { SongsService } from 'src/songs/songs.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { v2 as cloudinary } from 'cloudinary';
 import { ConfigService } from '@nestjs/config';
-import { MulterModule } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { v2 as cloudinary } from 'cloudinary';
 import { diskStorage } from 'multer';
+import { GetArtirtsFilterDto } from 'src/dto/get-artists-filter.dto';
+import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
+import { UpdateUserDto } from 'src/dto/update-user.dto';
+import { SongsService } from 'src/songs/songs.service';
+import { UserService } from './user.service';
 
 @ApiTags('User')
 @Controller('user')

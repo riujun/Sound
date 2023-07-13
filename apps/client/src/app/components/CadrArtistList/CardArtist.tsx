@@ -18,7 +18,7 @@ export default function CardArtist({ index = 0 }: CardArtistProps) {
   };
 
   return (
-    <div className="m-[11px] inline-flex cursor-pointer flex-col items-start justify-start gap-2 rounded-2xl border border-zinc-700 px-4 py-6">
+    <div className="m-[1%] inline-flex cursor-pointer flex-col items-start justify-start gap-2 rounded-2xl border border-zinc-700 px-4 py-6 md:m-2 lg:m-2 xl:m-2 2xl:m-3">
       <div
         className="inline-flex items-center justify-between gap-2 self-stretch"
         onMouseEnter={handleMouseEnter}
