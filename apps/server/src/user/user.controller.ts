@@ -62,7 +62,7 @@ export class UserController {
   ) {
     try {
       const user = await this.userService.getById(id);
-      const songsId = user.songs;
+      const songsId = user.songsPurchased;
       let songs = await this.songService.findSongsByIds(songsId, pagination);
       if (search) {
         const searchLowerCase = search.toLowerCase();
@@ -253,7 +253,7 @@ export class UserController {
           .status(HttpStatus.BAD_REQUEST)
           .json({ message: `El user con id:${userId} no existe` });
       }
-      user.songs.push(song);
+      user.songsPurchased.push(song);
       const userUpdate = await this.userService.updateById(userId, user);
       return res.status(HttpStatus.OK).json({
         userUpdate,
