@@ -12,11 +12,14 @@ import {
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from 'src/dto/create-album.dto';
 import { UpdateAlbumDto } from 'src/dto/update-album.dto';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Albums')
 @Controller('albums')
 export class AlbumsController {
   constructor(private albumService: AlbumsService) {}
 
+  @ApiOperation({ summary: 'Obtener todas los albumes' })
   @Get()
   async findAll(@Res() res) {
     try {
@@ -32,7 +35,8 @@ export class AlbumsController {
     }
   }
 
-  //  /albums/20
+  @ApiParam({ name: 'nombre', description: 'nombre del album' })
+  @ApiOperation({ summary: 'Obtener una canción por su nombre' })
   @Get(':nombre')
   async findOne(@Param('nombre') nombre: string, @Res() res) {
     try {
@@ -50,6 +54,8 @@ export class AlbumsController {
     }
   }
 
+  @ApiParam({ name: 'id', description: 'ID del artista' })
+  @ApiOperation({ summary: 'Obtener albunes de un artista por su id' })
   @Get('byArtist/:id')
   async findByArtist(@Param('id') id: string, @Res() res) {
     try {
@@ -67,6 +73,7 @@ export class AlbumsController {
     }
   }
 
+  @ApiOperation({ summary: 'Crear un album' })
   @Post()
   async create(@Body() body: CreateAlbumDto, @Res() res) {
     try {
@@ -81,7 +88,8 @@ export class AlbumsController {
         .json({ error: error.message });
     }
   }
-
+  @ApiParam({ name: 'id', description: 'ID del album' })
+  @ApiOperation({ summary: 'Actualizar el album por id' })
   @Put(':id')
   async update(
     @Param('id') id: string,
@@ -101,6 +109,8 @@ export class AlbumsController {
     }
   }
 
+  @ApiParam({ name: 'id', description: 'ID del album' })
+  @ApiOperation({ summary: 'Borrar el album por id' })
   @Delete(':id')
   async delete(@Param('id') id: string, @Res() res) {
     try {
