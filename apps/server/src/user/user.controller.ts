@@ -51,9 +51,36 @@ export class UserController {
     }
   }
 
+  @ApiOperation({ summary: 'Busqueda personal de artistas y musica' })
+  @ApiParam({ name: 'id', description: 'ID del user' })
+  @Get('/mysongs/:id')
+  async getMyMusic(
+    @Param('id') id: string,
+    @Query() pagination: PaginationQueryDto,
+    @Query() { search }: GetArtirtsFilterDto,
+    @Res() res,
+  ) {
+    try {
+      const user = await this.userService.getById(id);
+      const songsId = user.songs;
+      let songs = await this.songService.findSongsByIds(songsId, pagination);
+      if (search) {
+        const searchLowerCase = search.toLowerCase();
+        songs = songs.filter((song) =>
+          song.name.toLowerCase().includes(searchLowerCase),
+        );
+      }
+      return res.status(HttpStatus.OK).json({ songs });
+    } catch (error) {
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: `Error en el servidor, error:${error}` });
+    }
+  }
+
   @ApiOperation({ summary: 'Busqueda de artistas y canciones' })
   @Get('/search')
-  async getAllArtits(
+  async getSearch(
     @Query() pagination: PaginationQueryDto,
     @Query() { search }: GetArtirtsFilterDto,
     @Res() res,
@@ -72,6 +99,31 @@ export class UserController {
           ));
       }
       return res.status(HttpStatus.OK).json({ ...songs, ...artistUsers });
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: 'Internal server error' });
+    }
+  }
+
+  @ApiOperation({ summary: 'Busqueda de artistas y canciones' })
+  @Get('/artists')
+  async getArtists(
+    @Query() pagination: PaginationQueryDto,
+    @Query() { search }: GetArtirtsFilterDto,
+    @Res() res,
+  ) {
+    try {
+      const users = await this.userService.getAllArtist(pagination);
+      let artistUsers = users.filter((user) => user.artist === true);
+      if (search) {
+        const searchLowerCase = search.toLowerCase();
+        artistUsers = artistUsers.filter((artist) =>
+          artist.name.toLowerCase().includes(searchLowerCase),
+        );
+      }
+      return res.status(HttpStatus.OK).json({ ...artistUsers });
     } catch (error) {
       console.log(error);
       return res
@@ -179,6 +231,38 @@ export class UserController {
     } catch (error) {
       console.error(error);
       throw new Error('Error uploading profile photo');
+    }
+  }
+
+  @Get('/addsong/:id')
+  async addSong(
+    @Param('id') id: string,
+    @Body('userId') userId: string,
+    @Res() res,
+  ) {
+    try {
+      const song = await this.songService.getById(id);
+      if (!song) {
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .json({ message: `La canción con id:${id} no existe` });
+      }
+      const user = await this.userService.getById(userId);
+      if (!user) {
+        return res
+          .status(HttpStatus.BAD_REQUEST)
+          .json({ message: `El user con id:${userId} no existe` });
+      }
+      user.songs.push(song);
+      const userUpdate = await this.userService.updateById(userId, user);
+      return res.status(HttpStatus.OK).json({
+        userUpdate,
+        song,
+        message: `La canción con id:${id} ha sido agregada a las canciones del usuario.`,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 }

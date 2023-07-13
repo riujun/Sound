@@ -45,4 +45,22 @@ export class SongsService {
       console.log(error);
     }
   }
+
+  async findSongsByIds(
+    ids: Song[],
+    { limit, offset }: PaginationQueryDto,
+  ): Promise<Song[]> {
+    const songIds = ids.map((song) => song._id);
+    const songs = [];
+    for (let i = 0; i < songIds.length; i++) {
+      songs.push(
+        await this.songModel
+          .find({ _id: { $in: songIds[i] } })
+          .skip(offset)
+          .limit(limit)
+          .exec(),
+      );
+    }
+    return songs;
+  }
 }
