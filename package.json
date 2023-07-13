@@ -1,14 +1,11 @@
 {
   "private": true,
-  "name": "monorepo-nextjs-tailwindcss-template",
-  "version": "1.6.17",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/myopic-design/monorepo-nextjs-tailwindcss-template.git"
-  },
+  "name": "soundwave",
+  "version": "0.0.1",
   "scripts": {
     "clean": "turbo run clean --no-daemon",
-    "dev": "turbo run dev --no-daemon --concurrency 20",
+    "dev": "dotenv -- turbo run dev --no-daemon --concurrency 20",
+    "dc": "dotenv -- turbo run dc --no-daemon --concurrency 20",
     "build": "turbo run build --no-daemon",
     "check": "turbo run check --no-daemon",
     "storybook:dev": "turbo run storybook:dev --no-daemon",
@@ -39,10 +36,13 @@
     "@testing-library/react": "14.0.0",
     "@testing-library/user-event": "14.4.3",
     "@types/jest": "29.5.2",
+    "@types/multer": "^1.4.7",
     "@types/node": "20.3.2",
+    "@types/prop-types": "^15.7.5",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "@types/testing-library__jest-dom": "5.14.6",
+    "dotenv-cli": "^7.2.1",
     "eslint": "8.43.0",
     "eslint-config-custom": "workspace:*",
     "husky": "8.0.3",
@@ -52,8 +52,23 @@
     "prettier": "2.8.8",
     "prettier-plugin-tailwindcss": "0.3.0",
     "storybook": "7.0.24",
+    "tailwind-scrollbar": "^3.0.4",
     "turbo": "1.10.6",
     "typescript": "5.1.6"
   },
-  "packageManager": "pnpm@8.6.5"
+  "packageManager": "pnpm@8.6.5",
+  "dependencies": {
+    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/swagger": "^7.1.1",
+    "client": "workspace:^",
+    "cloudinary": "^1.37.3",
+    "flowbite": "^1.7.0",
+    "flowbite-react": "^0.4.10",
+    "multer": "1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "next-auth": "^4.22.1",
+    "prop-types": "^15.8.1",
+    "react-icons": "^4.10.1",
+    "zustand": "^4.3.9"
+  }
 }

@@ -1,10 +1,17 @@
-import React from 'react';
+import { getServerSession } from 'next-auth';
 
-import Header from '@/app/Components/header/Header';
-export default function Home() {
+import Landing from '@/app/components/Landing';
+import { authOptions } from '@/app/components/utils/authOptions';
+import { useStore } from '@/app/store';
+
+export default async function Home() {
+  useStore.setState({ name: 'PEPERONI' });
+  const session = await getServerSession(authOptions);
+  console.log(session);
+
   return (
-    <main className="">
-      <Header />
+    <main>
+      <Landing />
     </main>
   );
 }

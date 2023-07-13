@@ -1,30 +1,38 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
-import * as mongoose from 'mongoose';
-import * as autoIncrement from 'mongoose-plugin-autoinc';
+import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Song } from './song.schema';
+
 @Schema({ timestamps: true })
-export class User {
-  @Prop({ required: true })
-  id: number;
-  @Prop({ required: true })
+export class User extends Document {
+  @Prop()
   name: string;
 
-  @Prop({ required: true })
+  @Prop()
   surname: string;
 
-  @Prop({ unique: true, required: true })
+  @Prop({ default: false })
+  artist: boolean;
+
+  @Prop({ unique: true })
   username: string;
 
-  @Prop({ unique: true, required: true })
+  @Prop({
+    default:
+      'https://asset.cloudinary.com/dnemqmc7a/05b35cf73934f1746f6a2845259369f5',
+  })
+  profilePhotoUrl: string;
+
+  @Prop({ unique: true })
   email: string;
 
-  @Prop({ required: true })
+  @Prop()
   password: string;
-}
-export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.plugin(autoIncrement.plugin, {
-  model: 'User',
-  field: 'id',
-  startAt: 1,
-  incrementBy: 1,
-});
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Song' }] })
+  songsPurchased: Song[];
+
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Song' }] })
+  songsUplodaded: Song[];
+}
+
+export const UserSchema = SchemaFactory.createForClass(User);

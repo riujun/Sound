@@ -1,11 +1,12 @@
-import { Controller, Post, Body, Res, HttpStatus, Get } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import * as bcrypt from 'bcrypt';
+import { AuthJwtService } from '../auth-jwt/auth-jwt.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginUserDto } from '../dto/login-user.dto';
 import { TokenService } from '../helpers/token_creator';
 
-import { AuthJwtService } from '../auth-jwt/auth-jwt.service';
-import * as bcrypt from 'bcrypt';
-
+@ApiTags('Auth-jwt')
 @Controller('auth-jwt')
 export class AuthJwtController {
   constructor(
@@ -13,10 +14,11 @@ export class AuthJwtController {
     private tokenService: TokenService,
   ) {}
 
+  @ApiOperation({ summary: 'Registrarse en la web.' })
   @Post('/register')
   async register(@Body() registerDto: CreateUserDto, @Res() res) {
     try {
-      const { name, surname, username, email, password } = registerDto;
+      const { name, surname, username, email, password, artist } = registerDto;
       if (!name || !surname || !username || !email) {
         console.log(res.sendStatus(HttpStatus.BAD_REQUEST));
         return res.sendStatus(HttpStatus.BAD_REQUEST);
@@ -36,16 +38,20 @@ export class AuthJwtController {
         name,
         surname,
         username,
+        artist,
         email,
         password: hashedPassword,
       });
 
-      const { password: omitPassword, ...userWithoutPassword } = user;
+      const { ...userWithoutPassword } = user;
       return res.status(HttpStatus.OK).json(userWithoutPassword);
     } catch (err) {
+      console.log(err);
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @ApiOperation({ summary: 'Iniciar sesión en la web.' })
   @Post('/login')
   async login(@Body() loginDto: LoginUserDto, @Res() res) {
     try {
@@ -67,9 +73,9 @@ export class AuthJwtController {
 
       const token = this.tokenService.createToken(user);
 
-      const { id, username } = user;
+      const { _id, username } = user;
 
-      return res.status(HttpStatus.OK).json({ id, username, token });
+      return res.status(HttpStatus.OK).json({ _id, username, token });
     } catch (err) {
       console.log(err.message);
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
