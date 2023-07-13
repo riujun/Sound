@@ -28,7 +28,7 @@ export class AlbumsController {
       }
       return res.status(HttpStatus.OK).json(albums);
     } catch (error) {
-      res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
+      return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
     }
   }
 
