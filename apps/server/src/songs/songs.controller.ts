@@ -7,20 +7,14 @@ import {
   Param,
   Post,
   Put,
-  Res,
   Query,
-  UseInterceptors,
+  Res,
   UploadedFile,
-  BadRequestException,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreateSongDto } from 'src/dto/create-song.dto';
-import { SongsService } from './songs.service';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import { v2 as cloudinary } from 'cloudinary';
-import { extname } from 'path';
+import { SongsService } from './songs.service';
 
 @ApiTags('Songs')
 @Controller('songs')
@@ -37,9 +31,6 @@ export class SongsController {
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-
- 
 
   @ApiParam({ name: 'id', description: 'ID de la canción' })
   @ApiOperation({ summary: 'Obtener una canción por su id' })
@@ -59,8 +50,8 @@ export class SongsController {
         .json({ message: 'Internal server error' });
     }
   }
-  
- // @UseInterceptors(
+
+  // @UseInterceptors(
   //   FileInterceptor('file', {
   //     storage: new CloudinaryStorage({
   //       cloudinary: cloudinary,
