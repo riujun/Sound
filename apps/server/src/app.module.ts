@@ -7,6 +7,7 @@ import { AlbumsModule } from './albums/albums.module';
 import { SongsModule } from './songs/songs.module';
 import { UserModule } from './user/user.module';
 import { PlaylistModule } from './playlist/playlist.module';
+import { FavoriteArtistsModule } from './favorite-artists/favorite-artists.module';
 import cloudinaryConfig from './cloudinary.config';
 
 @Module({
@@ -22,6 +23,7 @@ import cloudinaryConfig from './cloudinary.config';
       isGlobal: true,
       load: [cloudinaryConfig],
     }),
+    FavoriteArtistsModule,
   ],
 })
 export class AppModule implements NestModule {
