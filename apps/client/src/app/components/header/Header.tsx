@@ -19,7 +19,11 @@ export default function Header() {
             <div>
               <div className="flex items-center justify-between ">
                 <div className="flex">
-                  <Image className=" h-[54px] w-[353px]  px-1" src={logo} alt="logo" />{' '}
+                  <Image
+                    className=" h-[30px] w-[195px]  px-1 md:h-[54px] md:w-[353px]"
+                    src={logo}
+                    alt="logo"
+                  />{' '}
                 </div>
                 <div className="md:hidden">
                   <button
@@ -44,7 +48,7 @@ export default function Header() {
                     ) : (
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-[48px] w-[48px] text-orange-500"
+                        className=" h-12 w-12 text-orange-500"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
