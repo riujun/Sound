@@ -2,31 +2,52 @@ import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateAlbumDto {
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Array con canciones de un album',
+    example: ['611234567890123456789012', '611234567890123456789013'],
+  })
   @IsArray()
   @IsNotEmpty()
   canciones: string[];
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Duración del album',
+    example: 50,
+  })
   @IsNumber()
   @IsNotEmpty()
   duracion: number;
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Nombre del album',
+    example: 'Super terror',
+  })
   @IsString()
   @IsNotEmpty()
   nombre: string;
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Descripción del album',
+    example: 'Album de rock progresivo',
+  })
   @IsString()
   @IsNotEmpty()
   descripcion: string;
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Imagen del album',
+    example: 'url',
+  })
   @IsString()
   @IsNotEmpty()
   imagen: string;
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Precio del album',
+    example: 20,
+  })
   @IsNumber()
   @IsNotEmpty()
   precio: number;
-  @ApiProperty()
+  @ApiProperty({
+    description: 'Id del usuario',
+    example: '611234567890123456789012',
+  })
   @IsString()
   @IsNotEmpty()
   usuario: string;
