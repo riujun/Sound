@@ -101,7 +101,7 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
             } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handlePreviousPage}
           >
-            <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
+            <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
           </div>
           {/* Renderización de los números de página */}
           {generatePageNumbers().map((pageNumber) => (
@@ -116,7 +116,7 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
                 setCurrentPage(pageNumber);
               }}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">
+              <div className="text-base font-semibold uppercase leading-none text-black">
                 {pageNumber}
               </div>
             </div>
@@ -128,7 +128,7 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
             } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handleNextPage}
           >
-            <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
+            <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
           </div>
         </div>
       </div>

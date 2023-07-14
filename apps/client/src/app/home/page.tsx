@@ -13,14 +13,12 @@ function home() {
       <HeaderGlobal />
       <div className="flex">
         <Menu />
-        <div className="flex flex-col justify-center flex-grow">
+        <div className="flex flex-grow flex-col justify-center">
           <CardArtistList pageSize={10} />
-          <div className="h-px my-10 mr-3 bg-black"></div>
+          <div className="my-10 mr-3 h-px bg-black"></div>
           <Top />
           <Albumes />
-          <div className="text-[11px] m-7">
-            © 2023 SoundWave | Todos los Derechos Reservados
-          </div>
+          <div className="m-7 text-[11px]">© 2023 SoundWave | Todos los Derechos Reservados</div>
         </div>
       </div>
     </>
