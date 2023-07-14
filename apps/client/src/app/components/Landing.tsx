@@ -23,7 +23,7 @@ export default function Landing() {
             <h2 className=" pr-5 pt-10 text-end text-[20px] font-medium leading-[22.4px] text-orange-500 md:w-[595px] md:text-center md:text-[42px] md:font-bold md:leading-[47.04px]">
               Explora, compra y descubre la música de talentosos artistas de todo el mundo.
             </h2>
-            <div className="hidden  md:flex md:w-full md:justify-evenly md:pb-36">
+            <div className="hidden md:flex md:w-full md:justify-evenly md:pb-36">
               <ButtonUno>CONOCE MÁS</ButtonUno>
               <Link href={`/login`}>
                 <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
@@ -35,7 +35,7 @@ export default function Landing() {
           </div>
         </section>
       </div>
-      <section className=" relative z-10 mb-10 flex flex-col items-center justify-center gap-5 pt-10">
+      <section className="relative z-10 mb-10 flex flex-col items-center justify-center gap-5 pt-10 ">
         <ButtonTres>CONOCE MÁS</ButtonTres>
         <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
       </section>
@@ -46,7 +46,7 @@ export default function Landing() {
         </h3>
 
         <section className="md:flex">
-          <div className="relative z-10 mt-5 flex items-center  ">
+          <div className="relative z-10 mt-5 flex items-center ">
             <div className="h-[186px] w-[214px] md:h-[749px] md:w-[864px]">
               <Image
                 className="mt-16 h-[200px] w-[800px] md:mt-12 md:h-[800px] md:w-[864px] "
@@ -62,7 +62,7 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="mt-20 flex flex-col gap-5  md:mr-32 md:mt-2 md:flex md:flex-col md:justify-evenly">
+          <div className="mt-20 flex flex-col gap-5 md:mr-32 md:mt-2 md:flex md:flex-col md:justify-evenly">
             <div className="z-10 px-7 md:relative md:h-[165px] md:w-[512px]">
               <h4 className="text-[20px] font-medium leading-loose text-orange-500 md:absolute md:left-0 md:top-0 md:w-[490.42px] md:text-[30px] md:font-medium">
                 SoundWave Marketplace
@@ -91,11 +91,11 @@ export default function Landing() {
           </div>
         </section>
         <div className="absolute md:top-[600px]">
-          <Image className="h-[610px] md:h-[1240px] md:w-[1540px]" src={ola} alt="ola" />
+          <Image className="h-[610px] w-[1920px] md:h-[1240px] " src={ola} alt="ola" />
         </div>
       </section>
       {/* tercera */}
-      <div className=" flex items-center justify-center text-center md:mt-40 md:flex-col">
+      <div className="flex items-center justify-center text-center md:mt-40 md:flex-col">
         <h5 className="hidden  text-center font-medium  text-zinc-700 md:block md:w-[1104px] md:text-[28px] md:font-medium">
           Si eres un creador de música, has llegado al lugar correcto.
         </h5>
@@ -124,7 +124,7 @@ export default function Landing() {
       <div className="flex items-center justify-center px-10 pt-10 text-center text-[20px] font-semibold text-orange-500 md:hidden">
         ¡Sí, lo has leído bien, el 100% de cada venta es para ti!
       </div>
-      <div className="mb-20 flex items-center justify-center  ">
+      <div className="mb-20 flex items-center justify-center ">
         <Link href={`/login`}>
           <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
         </Link>
@@ -179,7 +179,7 @@ export default function Landing() {
       </section>
 
       <div className=" mt-10 bg-yellow-50 md:flex md:h-[740px] md:flex-col md:items-center md:justify-center">
-        <section className=" flex items-center justify-evenly gap-20">
+        <section className="flex items-center justify-evenly gap-20">
           <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
           <div>
             <div className="flex flex-col  items-start px-10 pt-10 text-[20px] md:w-[643px] md:justify-evenly md:gap-2">
