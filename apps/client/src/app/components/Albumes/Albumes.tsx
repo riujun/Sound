@@ -70,15 +70,17 @@ export default function Albumes() {
   };
 
   return (
-    <div className="mb-10 mr-3 mt-5 flex-grow overflow-auto">
+    <div className="flex-grow mt-5 mb-10 ml-5 overflow-auto">
       <div className="flex p-5">
         <div className="text-[18px] font-semibold leading-normal text-zinc-700 lg:text-[24px]">
           Lo nuevo en álbumes
         </div>
       </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
-      {renderCardAlbumes()}
-      <div id="Paginador" className="flex justify-center pt-8">
+      <div>
+        {renderCardAlbumes()}
+      </div>
+      <div id="Paginador" className="flex items-center justify-center pt-8">
         <div className="inline-flex gap-2 bg-white">
           {/* Botón de página anterior */}
           <div
@@ -88,7 +90,7 @@ export default function Albumes() {
             } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handlePreviousPage}
           >
-            <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
+            <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
           </div>
           {/* Renderización de los números de página */}
           {generatePageNumbers().map((pageNumber) => (
@@ -103,7 +105,7 @@ export default function Albumes() {
                 setCurrentPage(pageNumber);
               }}
             >
-              <div className="text-base font-semibold uppercase leading-none text-black">
+              <div className="text-base font-semibold leading-none text-black uppercase">
                 {pageNumber}
               </div>
             </div>
@@ -115,7 +117,7 @@ export default function Albumes() {
             } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handleNextPage}
           >
-            <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
+            <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
           </div>
         </div>
       </div>

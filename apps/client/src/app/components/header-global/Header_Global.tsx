@@ -17,9 +17,9 @@ export default function HeaderGlobal() {
   };
   return (
     <div>
-      <header className="border-b-2 border-gray-400">
+      <header className="w-full border-b-2 border-gray-400">
         <nav>
-          <div className="items-center justify-between px-4 pb-1 pt-3 md:flex md:items-center">
+          <div className="items-center justify-between px-4 pt-3 pb-1 md:flex md:items-center">
             <div>
               <div className="flex items-center justify-between">
                 <div className="flex">
@@ -27,7 +27,7 @@ export default function HeaderGlobal() {
                 </div>
                 <div className="md:hidden">
                   <button
-                    className="rounded-md p-2 text-white outline-none focus:border focus:border-gray-400"
+                    className="p-2 text-white rounded-md outline-none focus:border focus:border-gray-400"
                     onClick={() => {
                       setNavbar(!navbar);
                     }}
@@ -82,7 +82,6 @@ export default function HeaderGlobal() {
                         <div className="flex h-[180px] w-screen flex-col items-start justify-evenly border-b-2  border-gray-400">
                           <button>SoundWave Maeketplace</button>
                           <button>SoundWave Social</button>
-                          <button>SoundWave Connect</button>
                         </div>
                         <div className="flex h-[180px] w-screen flex-col items-start justify-evenly border-b-2  border-gray-400">
                           <button>Mis Datos</button>
@@ -98,7 +97,7 @@ export default function HeaderGlobal() {
                         <Image src={dw} alt="descarga" className="cursor-pointer md:block" />
                         <Image src={bell} alt="campana" className="cursor-pointer md:block" />
                         <div className="relative">
-                          <div onClick={toggleMenu} className="flex cursor-pointer items-center">
+                          <div onClick={toggleMenu} className="flex items-center cursor-pointer">
                             <Image src={user} alt="user" className="text-white md:block" />
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
