@@ -11,9 +11,9 @@ export default function Page() {
       <HeaderGlobal />
       <div className="flex">
         <Menu />
-        <div className="flex flex-grow flex-col justify-center">
+        <div className="flex flex-col justify-center flex-grow">
           <PlayList />
-          <div className="m-7 text-[11px]">© 2023 SoundWave | Todos los Derechos Reservados</div>
+          <div className="ml-7 mb-3 text-[11px]">© 2023 SoundWave | Todos los Derechos Reservados</div>
         </div>
       </div>
     </div>
