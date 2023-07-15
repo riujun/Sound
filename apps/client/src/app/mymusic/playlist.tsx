@@ -213,30 +213,30 @@ export default function PlayList() {
 
   return (
     <>
-      <div className="m-8 flex justify-between">
+      <div className="flex justify-between m-8">
         <div className="hidden w-auto md:block">
-          <div className="text-[32px] font-bold leading-normal text-black">Mi Música</div>
+          <div className="text-[32px] font-bold leading-normal text-orange-500">Mi Música</div>
         </div>
         <Buscador />
       </div>
       {songs.length > 0 ? (
-        <div className="m-[2%] flex flex-grow flex-col">
+        <div className="m-[1%] flex flex-grow flex-col">
           <div className="hidden overflow-x-auto sm:block">
-            <div className="inline-block w-full py-2 sm:px-6 lg:px-8">
+            <div className="inline-block w-full px-4 py-2">
               <div className="">
                 <table className="w-[100%]">
-                  <thead className="sticky top-0 border-b bg-white">
-                    <tr className="h-12 border-b border-zinc-700 text-left">
-                      <th scope="col" className="p-3">
+                  <thead className="sticky top-0 bg-white border-b">
+                    <tr className="h-12 text-left border-b border-zinc-700">
+                      <th scope="col" className="p-[11px]">
                         Nombre
                       </th>
-                      <th scope="col" className="p-3">
+                      <th scope="col" className="p-[11px]">
                         Artista
                       </th>
-                      <th scope="col" className="p-3">
+                      <th scope="col" className="p-[11px]">
                         Disco
                       </th>
-                      <th scope="col" className="p-3">
+                      <th scope="col" className="p-[11px]">
                         Duración
                       </th>
                     </tr>
@@ -311,12 +311,12 @@ export default function PlayList() {
               </div>
             </div>
           </div>
-          <nav className="flex h-[60%] items-center justify-center pt-10">
+          <nav className="flex items-center justify-center pt-10 h-[70%]">
             <Reproductor songs={songs} onSongSelect={handleSongSelect} />
           </nav>
         </div>
       ) : (
-        <div className="flex w-full items-center justify-center">
+        <div className="flex items-center justify-center w-full">
           <section className="flex flex-col items-center gap-10">
             <Image src={vector} alt="logo vector" />
             <h2 className="ANNoTienesMSicaEnTuListaDeReproducciN w-[449px] text-center text-[32px] font-semibold text-zinc-700">
