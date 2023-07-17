@@ -77,7 +77,7 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
   };
 
   return (
-    <div className="m-[1%] flex-grow overflow-auto">
+    <div className="m-[1%] ml-4 flex-grow overflow-auto">
       <div className="flex justify-between">
         <div className="hidden w-auto md:block">
           <Image className="" src={logoMarketPlace} alt="logo market place" />

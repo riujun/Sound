@@ -70,15 +70,15 @@ export default function Albumes() {
   };
 
   return (
-    <div className="mb-10 mr-3 mt-5 flex-grow overflow-auto">
+    <div className="mb-10 ml-5 mt-5 flex-grow overflow-auto">
       <div className="flex p-5">
         <div className="text-[18px] font-semibold leading-normal text-zinc-700 lg:text-[24px]">
           Lo nuevo en álbumes
         </div>
       </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
-      {renderCardAlbumes()}
-      <div id="Paginador" className="flex justify-center pt-8">
+      <div>{renderCardAlbumes()}</div>
+      <div id="Paginador" className="flex items-center justify-center pt-8">
         <div className="inline-flex gap-2 bg-white">
           {/* Botón de página anterior */}
           <div

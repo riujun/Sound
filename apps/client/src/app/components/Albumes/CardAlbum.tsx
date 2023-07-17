@@ -7,7 +7,7 @@ CardAlbum.propTypes = {
 
 export default function CardAlbum({ index }: { index: number }) {
   return (
-    <div className="m-[10px] inline-flex flex-col items-start justify-start gap-2">
+    <div className="m-[1%] inline-flex flex-col items-start justify-start gap-2">
       <Image
         alt="tampa del album"
         className="h-52 w-[206px] rounded-[2.94px]"
