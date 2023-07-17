@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { IoIosMore, IoIosPodium } from 'react-icons/io';
 import { TbPlayerPlayFilled, TbPlaystationSquare } from 'react-icons/tb';
-import MyModal from '@/app/components/ModalAlert/ModalAlert';
+import MyModal from '@/app/components/ModalAlerts/AlertMetodoDePago';
 import img from '@/app/assets/landingpage/p.jpg';
 
 interface Song {
@@ -53,9 +53,9 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
     setIsPlaying(!isPlaying);
   };
 
-  const handleButtonClick = () => {
-    setShowMyModal(true);
-  };
+  // const handleButtonClick = () => {
+  //   setShowMyModal(true);
+  // };
 
   return (
     <div>
