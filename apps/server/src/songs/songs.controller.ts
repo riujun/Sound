@@ -12,12 +12,17 @@ import {
   UseInterceptors,
   UploadedFile,
   BadRequestException,
+  UploadedFiles,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreateSongDto } from 'src/dto/create-song.dto';
 import { SongsService } from './songs.service';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+  FilesInterceptor,
+} from '@nestjs/platform-express';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import { v2 as cloudinary } from 'cloudinary';
 import { extname } from 'path';
@@ -25,7 +30,13 @@ import { extname } from 'path';
 @ApiTags('Songs')
 @Controller('songs')
 export class SongsController {
-  constructor(private songsService: SongsService) {}
+  constructor(private songsService: SongsService) {
+    // cloudinary.config({
+    //   cloud_name: 'dlvpftdsm',
+    //   api_key: '359667715474286',
+    //   api_secret: '9tNuIOwxI1MNhiMlpEu8-mpATPo',
+    // });
+  }
 
   @ApiOperation({ summary: 'Obtener todas las canciones' })
   @Get()
@@ -37,9 +48,6 @@ export class SongsController {
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-
- 
 
   @ApiParam({ name: 'id', description: 'ID de la canción' })
   @ApiOperation({ summary: 'Obtener una canción por su id' })
@@ -59,15 +67,11 @@ export class SongsController {
         .json({ message: 'Internal server error' });
     }
   }
-  
- // @UseInterceptors(
+
+  // @UseInterceptors(
   //   FileInterceptor('file', {
   //     storage: new CloudinaryStorage({
-  //       cloudinary: cloudinary,
-  //       params: [{
-  //         folder: 'uploads', // Ruta en Cloudinary donde se almacenarán los archivos,
-  //         resource_type: 'video'
-  //       }],
+  //       cloudinary,
   //     }),
   //     fileFilter: (req, file, callback) => {
   //       const allowedExtensions = ['.mp3', '.mp4', '.jpg']; // Agrega las extensiones permitidas para archivos de audio
@@ -80,14 +84,41 @@ export class SongsController {
   //     },
   //   }),
   // )
+
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'song', maxCount: 1 },
+      { name: 'image', maxCount: 1 },
+    ]),
+  )
   @ApiOperation({ summary: 'Crear una nueva canción.' })
   @Post('/create')
   async createSong(
-    @UploadedFile() file: Express.Multer.File,
+    // @UploadedFile() file: Express.Multer.File,
+    @UploadedFiles() files: Array<Express.Multer.File>,
     @Body() createSongDto: CreateSongDto,
     @Res() res,
   ) {
     try {
+      // const fileUrls = Object.values(files).map(async (fileArray) => {
+      //   if (Array.isArray(fileArray) && fileArray.length > 0) {
+      //     const file = fileArray[0];
+      //     return await this.songsService.uploadFile(file);
+      //   }
+      //   return null;
+      // });
+      console.log(files);
+      const filePromises = Object.values(files).map(async (fileArray) => {
+        if (Array.isArray(fileArray) && fileArray.length > 0) {
+          const file = fileArray[0];
+          return await this.songsService.uploadFile(file);
+        }
+        return null;
+      });
+
+      const fileUrls = await Promise.all(filePromises);
+
+      console.log('arreglos de imagenes', fileUrls);
       const {
         name,
         duration,
@@ -98,12 +129,14 @@ export class SongsController {
         image,
         date,
         album,
-        src,
       } = createSongDto;
-
-      // const archivoURL = file.path;
-      // console.log(archivoURL)
-      // console.log(typeof archivoURL)
+      // const fileUrl = await this.songsService.uploadFile(file)
+      // console.log(fileUrl)
+      // // console.log(typeof archivoURL)
+      // const fileUrls = await Promise.all(
+      //   files.map(async (file) => await this.songsService.uploadFile(file))
+      // );
+      // console.log(fileUrls);
 
       const song = await this.songsService.createSong({
         name,
@@ -112,16 +145,16 @@ export class SongsController {
         coArtist,
         price,
         genre,
-        image,
+        image: fileUrls[0],
         date,
-        src,
+        src: fileUrls[1],
         album,
       });
 
-      return res.status(HttpStatus.OK).json({ song });
+      return res.status(HttpStatus.OK).json(song);
     } catch (err) {
       console.log(err);
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ err });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
     }
   }
 
