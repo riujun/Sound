@@ -17,7 +17,7 @@ export default function Landing() {
   return (
     <div>
       <Header />
-      <div className="flex items-center justify-center">
+      <div className="flex flex-col items-center justify-center ">
         <section className="md:gab-10 md:width-[100%] mt-10 flex ">
           <section className="md:flex md:flex-col md:justify-evenly">
             <h2 className=" pr-5 pt-10 text-end text-[20px] font-medium leading-[22.4px] text-orange-500 md:w-[595px] md:text-center md:text-[42px] md:font-bold md:leading-[47.04px]">
