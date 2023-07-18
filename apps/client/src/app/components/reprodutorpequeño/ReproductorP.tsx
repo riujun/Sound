@@ -5,7 +5,20 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { IoIosMore, IoIosPodium } from 'react-icons/io';
 import { TbPlayerPlayFilled, TbPlaystationSquare } from 'react-icons/tb';
-import MyModal from '@/app/components/ModalAlerts/AlertMetodoDePago';
+import MetodoDePago from '@/app/components/ModalAlerts/AlertMetodoDePago';
+
+// TODAS LAS ALERTAS DEL SITIO - IR BORRANDO A MEDIDA QUE SE UTILIZAN
+// import PagoExitoso from '@/app/components/ModalAlerts/AlertPagoExitoso';
+// import PagoError from '@/app/components/ModalAlerts/AlertPagoError';
+// import FotoPortadaUsuario from '@/app/components/ModalAlerts/AlertFotoPortadaUsuario';
+// import FotoPortadaAlbum from '@/app/components/ModalAlerts/AlertFotoPortadaAlbum';
+// import ArchivoDeAudio from '@/app/components/ModalAlerts/AlertArchivoDeAudio';
+// import AlertEliminarArchivos from '../ModalAlerts/AlertEliminarArchivos';
+// import MetodoDeCobro from '../ModalAlerts/AlertMetodoDeCobro';
+// import AlertMetodoCobro from '../ModalAlerts/AlertMetodoDeCobro';
+// import AlertFelicidades from '../ModalAlerts/AlertFelicidades';
+// import AlertPublicarComentario from '../ModalAlerts/AlertPublicarComentario';
+
 import img from '@/app/assets/landingpage/p.jpg';
 
 interface Song {
@@ -52,10 +65,6 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
-
-  // const handleButtonClick = () => {
-  //   setShowMyModal(true);
-  // };
 
   return (
     <div>
@@ -108,7 +117,18 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
 
         <IoIosMore className="cursor-pointer" />
       </div>
-      <MyModal onClose={handleClose} visible={showMyModal} />
+      <MetodoDePago onClose={handleClose} visible={showMyModal} />
+      
+      {/* TODAS LAS ALERTAS DEL SITIO - IR BORRANDO A MEDIDA QUE SE UTILIZAN */}
+      {/* <PagoExitoso onClose={handleClose} visible={showMyModal} /> */}
+      {/* <PagoError onClose={handleClose} visible={showMyModal} /> */}
+      {/* <FotoPortada onClose={handleClose} visible={showMyModal} /> */}
+      {/* <AlertEliminarArchivos onClose={handleClose} visible={showMyModal} /> */}
+      {/* <AlertMetodoCobro onClose={handleClose} visible={showMyModal} /> */}
+      {/* <FotoPortadaAlbum onClose={handleClose} visible={showMyModal} /> */}
+      {/* <ArchivoDeAudio onClose={handleClose} visible={showMyModal} /> */}
+      {/* <AlertFelicidades onClose={handleClose} visible={showMyModal} /> */}
+      {/* <AlertPublicarComentario onClose={handleClose} visible={showMyModal} /> */}
     </div>
   );
 };
