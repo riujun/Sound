@@ -7,25 +7,16 @@ import {
   Param,
   Post,
   Put,
-  Res,
   Query,
-  UseInterceptors,
-  UploadedFile,
-  BadRequestException,
+  Res,
   UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreateSongDto } from 'src/dto/create-song.dto';
-import { SongsService } from './songs.service';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
-import {
-  FileFieldsInterceptor,
-  FileInterceptor,
-  FilesInterceptor,
-} from '@nestjs/platform-express';
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import { v2 as cloudinary } from 'cloudinary';
-import { extname } from 'path';
+import { SongsService } from './songs.service';
 
 @ApiTags('Songs')
 @Controller('songs')
@@ -68,23 +59,6 @@ export class SongsController {
     }
   }
 
-  // @UseInterceptors(
-  //   FileInterceptor('file', {
-  //     storage: new CloudinaryStorage({
-  //       cloudinary,
-  //     }),
-  //     fileFilter: (req, file, callback) => {
-  //       const allowedExtensions = ['.mp3', '.mp4', '.jpg']; // Agrega las extensiones permitidas para archivos de audio
-  //       const fileExtension = extname(file.originalname).toLowerCase();
-  //       if (allowedExtensions.includes(fileExtension)) {
-  //         callback(null, true);
-  //       } else {
-  //         callback(new BadRequestException('El archivo debe ser un formato de audio válido'), false);
-  //       }
-  //     },
-  //   }),
-  // )
-
   @UseInterceptors(
     FileFieldsInterceptor([
       { name: 'song', maxCount: 1 },
@@ -94,20 +68,13 @@ export class SongsController {
   @ApiOperation({ summary: 'Crear una nueva canción.' })
   @Post('/create')
   async createSong(
-    // @UploadedFile() file: Express.Multer.File,
     @UploadedFiles() files: Array<Express.Multer.File>,
     @Body() createSongDto: CreateSongDto,
     @Res() res,
   ) {
     try {
-      // const fileUrls = Object.values(files).map(async (fileArray) => {
-      //   if (Array.isArray(fileArray) && fileArray.length > 0) {
-      //     const file = fileArray[0];
-      //     return await this.songsService.uploadFile(file);
-      //   }
-      //   return null;
-      // });
       console.log(files);
+
       const filePromises = Object.values(files).map(async (fileArray) => {
         if (Array.isArray(fileArray) && fileArray.length > 0) {
           const file = fileArray[0];
@@ -117,6 +84,38 @@ export class SongsController {
       });
 
       const fileUrls = await Promise.all(filePromises);
+
+      function getFileType(link: string): string {
+        const extension: string = link.split('.').pop()!;
+        return extension.toLowerCase();
+      }
+
+      function separateLinks(links: string[]): {
+        songLink: string | null;
+        imageLink: string | null;
+      } {
+        const result = {
+          songLink: null,
+          imageLink: null,
+        };
+
+        for (const link of links) {
+          const fileType = getFileType(link);
+          if (fileType === 'mp3' || fileType === 'mp4') {
+            result.songLink = link;
+          } else if (
+            fileType === 'jpg' ||
+            fileType === 'jpeg' ||
+            fileType === 'png'
+          ) {
+            result.imageLink = link;
+          }
+        }
+
+        return result;
+      }
+
+      const { songLink, imageLink } = separateLinks(fileUrls);
 
       console.log('arreglos de imagenes', fileUrls);
       const {
@@ -130,13 +129,6 @@ export class SongsController {
         date,
         album,
       } = createSongDto;
-      // const fileUrl = await this.songsService.uploadFile(file)
-      // console.log(fileUrl)
-      // // console.log(typeof archivoURL)
-      // const fileUrls = await Promise.all(
-      //   files.map(async (file) => await this.songsService.uploadFile(file))
-      // );
-      // console.log(fileUrls);
 
       const song = await this.songsService.createSong({
         name,
@@ -145,9 +137,9 @@ export class SongsController {
         coArtist,
         price,
         genre,
-        image: fileUrls[0],
+        image: imageLink,
         date,
-        src: fileUrls[1],
+        src: songLink,
         album,
       });
 
