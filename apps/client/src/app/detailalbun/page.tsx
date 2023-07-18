@@ -15,7 +15,7 @@ export default function page() {
         <div className="flex flex-grow flex-col">
           <Perfiluser />
           <AlbunDetails />
-          <div className="mb-3 ml-7  text-[11px]">
+          <div className="mb-3 ml-7 mt-10  text-[11px]">
             © 2023 SoundWave | Todos los Derechos Reservados
           </div>
         </div>
