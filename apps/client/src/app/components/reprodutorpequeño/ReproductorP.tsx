@@ -67,10 +67,10 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
   };
 
   return (
-    <div>
+    <div className='md:w-[49%] w-full'>
       <audio ref={audioRef} src={songs[0].src} />
 
-      <div className="flex h-[55px] w-[450px] items-center justify-evenly border-b-[1px] border-black">
+      <div className="flex h-[55px] w-full items-center justify-evenly border-b-[1px] border-black">
         <h5>{songs[0].id}</h5>
 
         <div className="flex items-center gap-5">
