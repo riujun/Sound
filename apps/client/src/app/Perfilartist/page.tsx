@@ -12,7 +12,7 @@ export default function Page() {
       <HeaderGlobal />
       <div className="flex ">
         <Menu />
-        <div>
+        <div className="w-full">
           <Perfiluser />
           <Markedplace />
           <Tufanbace />
