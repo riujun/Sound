@@ -3,9 +3,7 @@
 
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import { TbPlayerPauseFilled } from 'react-icons/tb';
-import { TbPlayerPlayFilled } from 'react-icons/tb';
+import { TbPlayerPauseFilled, TbPlayerPlayFilled } from 'react-icons/tb';
 
 import random from '@/app/assets/Aleatorio.png';
 import ant from '@/app/assets/Anterior.png';
@@ -99,6 +97,8 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
 
     if (isExpanded) {
       window.scrollTo(0, document.body.scrollHeight);
+    } else {
+      window.scrollTo(0, 0); 
     }
   }, [isPlaying, isExpanded]);
 
@@ -148,19 +148,19 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   };
 
   return (
-    <div className="my-5 flex w-[100%] justify-center">
+    <div className="fixed flex justify-center w-7/12 bottom-4">
       <audio ref={audioRef} />
       {isMobile ? (
         // REPRODUCTOR PEQUEÑO
         <section
-          className={`mx-[5%] bg-[#FFE1CC] ${
-            isExpanded ? 'h-[483px] w-full max-w-[360px]' : 'h-[64px] w-full max-w-[360px]'
+          className={`mx-[5%] mb-7 bg-[#FFE1CC] ${
+            isExpanded ? 'h-[483px] w-[388px]' : 'h-[64px] w-[388px]'
           } rounded border-[1px]`}
           style={{ boxShadow: '0px 0px 6px 3px rgba(0,0,0,0.3)' }}
         >
           <div>
             {isExpanded ? (
-              <div className="flex flex-col items-center w-full">
+              <div className="flex w-full min-w-[350px] flex-col items-center">
                 <div className="h-[310px] w-[310px] cursor-pointer pt-8" onClick={toggleExpanded}>
                   <Image className="object-cover w-full h-full" src={img} alt="img" />
                 </div>
@@ -209,12 +209,17 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                     <span>{formatTime(duration)}</span>
                   </div>
                 </div>
-                <div className="text-base font-medium text-black cursor-pointer mt-[-6px] w-full" onClick={toggleExpanded}>
-                  <p className="flex justify-center mt-5 text-center">{songs[currentSongIndex].title} - {songs[currentSongIndex].artista}</p>
+                <div
+                  className="mt-[-6px] w-full cursor-pointer text-base font-medium text-black"
+                  onClick={toggleExpanded}
+                >
+                  <p className="flex justify-center mt-5 text-center">
+                    {songs[currentSongIndex].title} - {songs[currentSongIndex].artista}
+                  </p>
                 </div>
               </div>
             ) : (
-              <div className="">
+              <div className="w-full min-w-[350px]">
                 <div className="flex justify-between ">
                   <div className="flex items-center gap-2 cursor-pointer" onClick={toggleExpanded}>
                     <div>
@@ -244,7 +249,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                     )}
                   </div>
                 </div>
-                <div className="mt-[-4px] flex">
+                <div className="mb-8 mt-[-4px] flex h-20">
                   <input
                     className="h-1 w-[100%] cursor-pointer appearance-none overflow-hidden rounded-lg bg-[#FFE1CC]"
                     type="range"
@@ -262,7 +267,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
       ) : (
         // REPRODUCTOR GRANDE
         <section
-          className="flex h-[100px] w-[70%] flex-col items-center justify-center rounded-3xl border-2 border-orange-500 bg-[#FFE1CC]"
+          className="mb-6 flex h-[100px] w-full flex-col items-center justify-center rounded-3xl border-2 border-orange-500 bg-[#FFE1CC] opacity-80 hover:opacity-100"
           style={{ boxShadow: '0px -10px 10px 0px rgba(0,0,0,0.2)' }}
         >
           <div className="flex h-[52px] w-[206px] justify-evenly">

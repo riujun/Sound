@@ -2,21 +2,32 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
+
+import exit from '@/app/assets/exit.png';
+import MenuOptions from '@/app/components/ModalAlerts/AlertMenuOptions';
 import bell from '@/app/assets/bell.png';
 import dw from '@/app/assets/dw.png';
-import exit from '@/app/assets/exit.png';
 import logo from '@/app/assets/landingpage/soundwave.png';
 import user from '@/app/assets/user.png';
+
 export default function HeaderGlobal() {
   const [navbar, setNavbar] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [showMyModal, setShowMyModal] = useState(false);
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setShowMyModal(false);
+  };
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+    setShowMyModal(true);
   };
+  
   return (
     <div>
-      <header className="border-b-2 border-gray-400">
+      <header className="w-full border-b-2 border-gray-400">
         <nav>
           <div className="items-center justify-between px-4 pt-3 pb-1 md:flex md:items-center">
             <div>
@@ -81,7 +92,6 @@ export default function HeaderGlobal() {
                         <div className="flex h-[180px] w-screen flex-col items-start justify-evenly border-b-2  border-gray-400">
                           <button>SoundWave Maeketplace</button>
                           <button>SoundWave Social</button>
-                          <button>SoundWave Connect</button>
                         </div>
                         <div className="flex h-[180px] w-screen flex-col items-start justify-evenly border-b-2  border-gray-400">
                           <button>Mis Datos</button>
@@ -106,13 +116,13 @@ export default function HeaderGlobal() {
                               viewBox="0 0 12 11"
                               fill="none"
                             >
-                              <g clip-path="url(#clip0_1315_3856)">
+                              <g clipPath="url(#clip0_1315_3856)">
                                 <path
                                   d="M10.0332 3.66699L5.5332 7.79199L1.0332 3.66699"
                                   stroke="black"
-                                  stroke-width="1.08613"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
+                                  strokeWidth="1.08613"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
                                 />
                               </g>
                               <defs>
@@ -128,35 +138,7 @@ export default function HeaderGlobal() {
                             </svg>
                           </div>
                           {isOpen && (
-                            <div className="absolute right-0 z-10 mt-2 h-[160px] w-[284px]  border-2 border-orange-300 bg-white pl-2 pt-2 shadow-lg">
-                              <a
-                                href="#"
-                                className="block px-4 py-3 text-gray-800 hover:bg-gray-200"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <Image className="h-[14px] w-[14px]" src={user} alt="user" />
-                                  <button>Mis Datos</button>
-                                </div>
-                              </a>
-                              <a
-                                href="#"
-                                className="block px-4 py-3 text-gray-800 hover:bg-gray-200"
-                              >
-                                <div className="flex items-end gap-2">
-                                  <Image className="h-[14px] w-[14px]" src={bell} alt="bell" />
-                                  <button>Notificaciones</button>
-                                </div>
-                              </a>
-                              <a
-                                href="#"
-                                className="block px-4 py-3 text-gray-800 hover:bg-gray-200"
-                              >
-                                <div className="flex items-center gap-2">
-                                  <Image className="h-[14px] w-[14px]" src={exit} alt="exit" />
-                                  <button>Cerrar Sesion</button>
-                                </div>
-                              </a>
-                            </div>
+                            <MenuOptions onClose={handleClose} visible={showMyModal} />
                           )}
                         </div>
                       </div>

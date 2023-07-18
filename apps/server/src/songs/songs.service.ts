@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+
 import { v2 as cloudinary } from 'cloudinary';
 import mongoose, { Model } from 'mongoose';
 import { CreateSongDto } from 'src/dto/create-song.dto';
@@ -53,19 +54,9 @@ export class SongsService {
     }
   }
 
-  async uploadFile(file: Express.Multer.File): Promise<string> {
-    // try {
-    //   console.log('result')
-    //   console.log(file)
-    //   const result = await cloudinary.uploader.upload(file.path);
-    //   console.log(result)
-    //   // Aquí puedes realizar acciones adicionales, como guardar la URL en la base de datos
-    //   return result.secure_url; // Retorna la URL del archivo subido
-    // } catch (error) {
-    //   // Maneja los errores de carga de archivos aquí
-    //   return (error);
-    // }
 
+  async uploadFile(file: Express.Multer.File): Promise<string> {
+ 
     try {
       const result = await new Promise<string>((resolve, reject) => {
         cloudinary.uploader
@@ -88,5 +79,24 @@ export class SongsService {
     } catch (error) {
       throw new Error(error);
     }
+  }
+
+  async findSongsByIds(
+    ids: Song[],
+    { limit, offset }: PaginationQueryDto,
+  ): Promise<Song[]> {
+    const songIds = ids.map((song) => song._id);
+    const songs = [];
+    for (let i = 0; i < songIds.length; i++) {
+      songs.push(
+        await this.songModel
+          .find({ _id: { $in: songIds[i] } })
+          .skip(offset)
+          .limit(limit)
+          .exec(),
+      );
+    }
+    return songs;
+
   }
 }

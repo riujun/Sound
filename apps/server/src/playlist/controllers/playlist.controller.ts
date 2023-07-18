@@ -14,6 +14,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { v2 as cloudinary } from 'cloudinary';
 import { Model, ObjectId } from 'mongoose';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
@@ -22,7 +23,6 @@ import { UpdatePlaylistDto } from 'src/dto/dto-playlist/update-playlist.dto';
 import { Playlist, PlaylistDocument } from 'src/schemas/playlist.schema';
 import { SongsService } from 'src/songs/songs.service';
 import { PlaylistService } from '../playlist.service';
-import { ApiTags, ApiOperation, ApiParam, ApiBody } from '@nestjs/swagger';
 
 @ApiTags('Playlist')
 @Controller('playlist')
@@ -153,7 +153,7 @@ export class PlaylistController {
     console.log(fileUrl);
     return fileUrl;
 
-    // Aquí puedes acceder a los datos del archivo subido y guardar la URL en tu base de datos
+ 
   }
 
   @Delete('')
