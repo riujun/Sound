@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import { IoIosPodium } from 'react-icons/io';
-
+import UsuarioPrueba from '@/app/assets/UsuarioPrueba.jpeg'
 import { ButtonCreate } from '../Buttons/seccion/Button_Create';
 interface Song {
   id: number;
@@ -118,9 +118,9 @@ export default function AlbunDetails() {
     <div className="mt-20">
       <section className="flex">
         <div>
-          <Image
+          <Image width={50} height={50}
             className="h-52 w-[206px] rounded-[2.94px]"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpvXGqhhMqb0cucakFq6m7QNh--cPvetEWmOxWi7CIKg&s"
+            src={UsuarioPrueba}
             alt="img"
           />
         </div>
@@ -142,35 +142,35 @@ export default function AlbunDetails() {
                 <div className="inline-block w-full py-2 sm:px-6 lg:px-8">
                   <div className="overflow-hidden">
                     <table className="w-[100%]">
-                      <thead className="border-b bg-white">
+                      <thead className="bg-white border-b">
                         <tr>
                           <th
                             scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900"
+                            className="pb-2 text-sm font-medium text-left text-gray-900"
                           >
                             Nombre v
                           </th>
                           <th
                             scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900"
+                            className="pb-2 text-sm font-medium text-left text-gray-900"
                           >
                             Artista v
                           </th>
                           <th
                             scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900 "
+                            className="pb-2 text-sm font-medium text-left text-gray-900 "
                           >
                             Disco v
                           </th>
                           <th
                             scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900"
+                            className="pb-2 text-sm font-medium text-left text-gray-900"
                           >
                             Duracion v
                           </th>
                           <th
                             scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900"
+                            className="pb-2 text-sm font-medium text-left text-gray-900"
                           ></th>
                         </tr>
                       </thead>
@@ -183,7 +183,7 @@ export default function AlbunDetails() {
                               handleSongSelect(index);
                             }}
                           >
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
+                            <td className="px-3 py-4 text-sm font-medium text-gray-900 whitespace-nowrap">
                               <div className="flex items-center gap-1">
                                 {selectedSongIndex === index && (
                                   <td className="whitespace-nowrap  text-[8px] text-gray-900">
@@ -198,16 +198,16 @@ export default function AlbunDetails() {
                                 )}
                               </div>
                             </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
+                            <td className="px-3 py-4 text-sm font-light text-gray-900 whitespace-nowrap">
                               {song.artista}
                             </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
+                            <td className="px-3 py-4 text-sm font-light text-gray-900 whitespace-nowrap">
                               {song.disco}
                             </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
+                            <td className="px-3 py-4 text-sm font-light text-gray-900 whitespace-nowrap">
                               {song.duracion}
                             </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
+                            <td className="px-3 py-4 text-sm font-light text-gray-900 whitespace-nowrap">
                               :
                             </td>
                           </tr>
