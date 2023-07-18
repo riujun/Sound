@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 'use client';
-import React from 'react';
+import React, {useState, ChangeEvent} from 'react';
 import { MouseEvent } from 'react';
 import Cerrar from '@/app/assets/CerrarXOrange.png';
 import UsuarioArtista from '@/app/assets/UsuarioArtista.png';
@@ -16,6 +16,13 @@ interface ModalAlertProps {
 }
 
 export default function AlertPublicarComentario({ visible, onClose }: ModalAlertProps) {
+  const [esPublicable, setEsPublicable] = useState(false);
+  
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const {value} = e.target;
+    setEsPublicable(value.trim() !== '');
+  }
+
   const handleClose = (e: MouseEvent<HTMLButtonElement | HTMLImageElement>) => {
     const { id } = e.currentTarget;
     if (id === 'publicar') {
@@ -91,9 +98,10 @@ export default function AlertPublicarComentario({ visible, onClose }: ModalAlert
           </div>
           <div className="mr-[1px] flex items-start justify-start pl-[44px] md:pl-[72px]">
             <div className="flex items-start justify-start w-full">
-              <textarea
-                className="w-full h-auto text-sm border-none resize-none max-h-14 text-zinc-700 focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500 md:pl-1 md:text-xl"
-                placeholder="Deja tu comentario aquí..." 
+              <textarea id="publicacion"
+                className="w-full h-auto mb-[1px] text-sm border-none resize-none max-h-14 text-zinc-700 focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500 md:pl-1 md:text-xl"
+                placeholder="Deja tu comentario aquí..."
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -120,7 +128,7 @@ export default function AlertPublicarComentario({ visible, onClose }: ModalAlert
               <button
                 id="publicar"
                 className="flex h-12 w-[141px] items-center justify-center gap-2.5 bg-orange-500 font-semibold hover:shadow-md disabled:bg-zinc-300 disabled:text-neutral-400 disabled:shadow-none"
-                disabled={false}
+                disabled={!esPublicable}
                 onClick={handleClose}
               >
                 PUBLICAR
