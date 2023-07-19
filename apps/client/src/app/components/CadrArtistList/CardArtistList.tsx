@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
-
+import React, { useState } from 'react';
+import { useMedia } from 'use-media';
 import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
 
 import Buscador from '../Buscador/Buscador';
@@ -75,7 +75,7 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
       setCurrentPage(currentPage + 1);
     }
   };
-
+  const isMediumScreen = useMedia({ minWidth: 768 });
   return (
     <div className="m-[1%] ml-4 flex-grow overflow-auto">
       <div className="flex justify-between">
@@ -85,12 +85,13 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
         <Buscador />
       </div>
       <div className="flex justify-center p-5">
-        <div className="text-[18px] font-semibold leading-normal text-zinc-700 lg:text-[24px]">
+        <div className="text-xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
           Descubre y apoya a nuevo talento musical
         </div>
       </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
-      <div>{renderCardArtists()}</div>
+      <div className='overflow-x-scroll whitespace-nowrap md:w-full w-[400px] md:overflow-x-auto md:whitespace-normal'>{renderCardArtists()}</div>
+      {isMediumScreen && (
       <div id="Paginador" className="flex justify-center pt-8">
         <div className="inline-flex gap-2 bg-white">
           {/* Botón de página anterior */}
@@ -101,7 +102,7 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
             } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handlePreviousPage}
           >
-            <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
+            <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
           </div>
           {/* Renderización de los números de página */}
           {generatePageNumbers().map((pageNumber) => (
@@ -116,7 +117,7 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
                 setCurrentPage(pageNumber);
               }}
             >
-              <div className="text-base font-semibold uppercase leading-none text-black">
+              <div className="text-base font-semibold leading-none text-black uppercase">
                 {pageNumber}
               </div>
             </div>
@@ -128,10 +129,10 @@ export default function CardArtistList({ pageSize = 0 }: CardArtistListProps) {
             } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
             onClick={handleNextPage}
           >
-            <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
+            <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
           </div>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 }

@@ -11,7 +11,7 @@ interface ModalAlertProps {
   onClose: () => void;
 }
 
-export default function ModalAlert({ visible, onClose }: ModalAlertProps) {
+export default function AlertMetodoDePago({ visible, onClose }: ModalAlertProps) {
   const handleClose = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.currentTarget;
     if (id === 'Cancelar') {

@@ -37,7 +37,8 @@ export class PlaylistController {
     //   cloud_name: configService.get('CLOUDINARY_CLOUD_NAME'),
     //   api_key: configService.get('CLOUDINARY_API_KEY'),
     //   api_secret: configService.get('CLOUDINARY_API_SECRET-mpATPo'),
-    // });
+    // // });
+
     cloudinary.config({
       cloud_name: 'dlvpftdsm',
       api_key: '359667715474286',
@@ -136,20 +137,23 @@ export class PlaylistController {
     return playlist;
   }
 
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: new CloudinaryStorage({
-        cloudinary: cloudinary,
-      }),
-    }),
-  )
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     storage: new CloudinaryStorage({
+  //       cloudinary: cloudinary,
+  //     }),
+  //   }),
+  // )
+
+  @UseInterceptors(FileInterceptor('file'))
   @Post('file')
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    // Aquí puedes acceder a los datos del archivo subido y guardar la URL en tu base de datos
-    // Guardar archivoURL en tu base de datos MongoDB u otra lógica que desees aplicar
-    return {
-      msg: `Archivo ${file.filename} cargado correctamente`,
-    };
+  async uploadFile(@UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+    const fileUrl = await this.playlistService.uploadFile(file);
+    console.log(fileUrl);
+    return fileUrl;
+
+ 
   }
 
   @Delete('')

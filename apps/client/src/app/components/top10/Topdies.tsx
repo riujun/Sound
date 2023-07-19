@@ -133,7 +133,7 @@ export default function Topdies() {
 
   return (
     <div className="mb-10">
-      <h2 className="ml-5 text-2xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
+      <h2 className="ml-5 text-xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
         Top 10 - Lo más vendido por nuestros artistas
       </h2>
       <div className="w-full ">
