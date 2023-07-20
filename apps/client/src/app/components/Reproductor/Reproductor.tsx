@@ -98,7 +98,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
     if (isExpanded) {
       window.scrollTo(0, document.body.scrollHeight);
     } else {
-      window.scrollTo(0, 0); 
+      window.scrollTo(0, 0);
     }
   }, [isPlaying, isExpanded]);
 
@@ -148,7 +148,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   };
 
   return (
-    <div className="fixed flex justify-center w-7/12 bottom-4">
+    <div className="fixed bottom-4 flex w-7/12 justify-center">
       <audio ref={audioRef} />
       {isMobile ? (
         // REPRODUCTOR PEQUEÑO
@@ -162,9 +162,9 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
             {isExpanded ? (
               <div className="flex w-full min-w-[350px] flex-col items-center">
                 <div className="h-[310px] w-[310px] cursor-pointer pt-8" onClick={toggleExpanded}>
-                  <Image className="object-cover w-full h-full" src={img} alt="img" />
+                  <Image className="h-full w-full object-cover" src={img} alt="img" />
                 </div>
-                <div className="flex items-center justify-center w-full gap-4 my-3">
+                <div className="my-3 flex w-full items-center justify-center gap-4">
                   <button className="mr-2">
                     <Image src={random} alt="alt" className="mr-2 " />
                   </button>
@@ -213,7 +213,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                   className="mt-[-6px] w-full cursor-pointer text-base font-medium text-black"
                   onClick={toggleExpanded}
                 >
-                  <p className="flex justify-center mt-5 text-center">
+                  <p className="mt-5 flex justify-center text-center">
                     {songs[currentSongIndex].title} - {songs[currentSongIndex].artista}
                   </p>
                 </div>
@@ -221,13 +221,13 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
             ) : (
               <div className="w-full min-w-[350px]">
                 <div className="flex justify-between ">
-                  <div className="flex items-center gap-2 cursor-pointer" onClick={toggleExpanded}>
+                  <div className="flex cursor-pointer items-center gap-2" onClick={toggleExpanded}>
                     <div>
                       <Image className="m-[14px] h-[35px] w-[35px]" src={img} alt="img" />
                     </div>
                   </div>
                   <div
-                    className="flex flex-col w-full ml-4 cursor-pointer"
+                    className="ml-4 flex w-full cursor-pointer flex-col"
                     onClick={toggleExpanded}
                   >
                     <div className="mb-[-3px] mt-3 text-base font-medium text-black">
@@ -306,16 +306,16 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
           </div>
           {/* CONTENEDOR IMAGEN | RANGO REPR | RANGO VOL */}
           <div className="relative bottom-2 w-[100%]">
-            <div className="flex items-center justify-center gap-3 ml-10">
+            <div className="ml-10 flex items-center justify-center gap-3">
               <div className="ml-[-10px] mt-[-15px] flex h-[60px] w-[120px]">
-                <Image className="object-cover w-full h-full" src={img} alt="img" />
+                <Image className="h-full w-full object-cover" src={img} alt="img" />
               </div>
               <div className="jusify-center ml-[1%] mt-[-7px] flex text-sm font-semibold text-zinc-700">
                 <span className="">{formatTime(currentTime)}</span>
               </div>
               <div className="mt-[-7px] flex w-full">
                 <input
-                  className="w-full h-1 overflow-hidden bg-gray-300 rounded-lg appearance-none cursor-pointer outline outline-1 outline-gray-400"
+                  className="h-1 w-full cursor-pointer appearance-none overflow-hidden rounded-lg bg-gray-300 outline outline-1 outline-gray-400"
                   type="range"
                   min="0"
                   step="0.1"
@@ -340,8 +340,8 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
               </div>
             </div>
           </div>
-          <div className="text-sm font-medium text-center text-black">
-            <p className="relative flex bottom-6">{songs[currentSongIndex].title}</p>
+          <div className="text-center text-sm font-medium text-black">
+            <p className="relative bottom-6 flex">{songs[currentSongIndex].title}</p>
           </div>
         </section>
       )}
