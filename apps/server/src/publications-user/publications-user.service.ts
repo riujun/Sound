@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Publications } from 'src/schemas/publications.schema';
+import { CreatePublicationDto } from 'src/dto/create-publication.dto';
 
 @Injectable()
 export class PublicationsUserService {
@@ -34,7 +35,7 @@ export class PublicationsUserService {
     }
   }
 
-  async create(publication: Publications): Promise<Publications> {
+  async create(publication: CreatePublicationDto): Promise<Publications> {
     try {
       const newPublication = new this.publicationsModel(publication);
       return await newPublication.save();

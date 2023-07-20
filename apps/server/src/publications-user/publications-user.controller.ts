@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { Publications } from 'src/schemas/publications.schema';
 import { PublicationsUserService } from './publications-user.service';
+import { CreatePublicationDto } from 'src/dto/create-publication.dto';
 
 @Controller('publications')
 export class PublicationsUserController {
@@ -48,7 +49,7 @@ export class PublicationsUserController {
   }
 
   @Post()
-  async createPublication(@Body() publication: Publications) {
+  async createPublication(@Body() publication: CreatePublicationDto) {
     try {
       const createdPublication = await this.publicationsUserService.create(
         publication,
