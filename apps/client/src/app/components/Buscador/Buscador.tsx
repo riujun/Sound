@@ -1,6 +1,6 @@
 export default function Buscador() {
   return (
-    <div className="w-[95%] items-center md:w-[50%]">
+    <div className="w-[97%] items-center md:w-[50%] md:mt-2 mt-4">
       <div className="relative flex h-12 overflow-auto bg-white border border-gray-500 rounded-full focus-within:shadow-lg">
         <div className="grid w-12 h-full text-gray-600 place-items-center">
           <svg

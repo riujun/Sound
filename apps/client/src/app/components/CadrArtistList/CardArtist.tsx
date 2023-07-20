@@ -20,7 +20,7 @@ export default function CardArtist({ index = 0 }: CardArtistProps) {
 
   return (
     <>
-      <div className="m-[1%] inline-flex cursor-pointer flex-col items-start justify-start gap-2 rounded-2xl border border-zinc-700 px-4 py-6 md:w-[206px] h-[157px] w-[156px] md:m-2 md:h-[213px] lg:m-2 xl:m-2 2xl:m-3">
+      <div className="m-[1%] md:m-[0.7%] inline-flex cursor-pointer flex-col items-start justify-start gap-2 rounded-2xl border border-zinc-700 px-4 py-6 md:w-[206px] h-[157px] w-[156px] md:h-[213px]">
         <div className="inline-flex items-center self-stretch justify-between gap-2">
           <Image
             alt="imagen artista"
