@@ -13,11 +13,11 @@ function home() {
       <div className="flex">
         <Menu />
         <div className="flex flex-col justify-center flex-grow">
-          <CardArtistList pageSize={10} />
-          <div className="h-px my-10 mr-3 bg-black"></div>
+          <CardArtistList />
+          <div className="h-px mx-4 my-10 bg-black"></div>
           <Top />
           <Albumes />
-          <div className="ml-7 mb-3  text-[11px]">© 2023 SoundWave | Todos los Derechos Reservados</div>
+          <div className="ml-7 mb-3 text-[11px]">© 2023 SoundWave | Todos los Derechos Reservados</div>
         </div>
       </div>
     </>

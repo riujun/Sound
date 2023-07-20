@@ -76,7 +76,7 @@ export default function AlertPublicarComentario({ visible, onClose }: ModalAlert
                   Texto del post del Artista Lorem ipsum dolor sit amet, consectetur adipisicing
                   elit. Officia temporibus optio expedita eaque fuga quas maiores id ad hic ea
                   veritatis consequatur quibusdam, corrupti tenetur rem nemo autem provident
-                  perspiciatis!
+                  perspiciatis! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae, cumque ducimus, delectus distinctio eos dolorem quaerat animi qui voluptates doloremque odio, ipsa totam dolore! Nostrum debitis quaerat sunt quae pariatur?
                 </span>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function AlertPublicarComentario({ visible, onClose }: ModalAlert
             <div>
               <button
                 id="publicar"
-                className="flex h-12 w-[141px] items-center justify-center gap-2.5 bg-orange-500 font-semibold hover:shadow-md disabled:bg-zinc-300 disabled:text-neutral-400 disabled:shadow-none"
+                className="flex h-12 w-[141px] mt-2 items-center justify-center gap-2.5 bg-orange-500 font-semibold hover:shadow-md disabled:bg-zinc-300 disabled:text-neutral-400 disabled:shadow-none"
                 disabled={!esPublicable}
                 onClick={handleClose}
               >
