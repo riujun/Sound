@@ -2,12 +2,12 @@
 // Se ha desactivado el eslint de tipos porque me lansaba error el staticImages de nextjs
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 import hideEye from '@/app/assets/auth/hide-eye.svg';
 import showEye from '@/app/assets/auth/show-eye.svg';
 import logo from '@/app/assets/landingpage/soundwave.png';
-import Link from 'next/link';
 
 export default function FormRegister() {
   const [visible, setVisible] = useState(false);
