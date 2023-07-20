@@ -25,5 +25,6 @@ import { SongsController } from 'src/songs/songs.controller';
   ],
   controllers: [UserController, SongsController],
   providers: [UserService, SongsService],
+  exports: [UserService],
 })
 export class UserModule {}

@@ -11,17 +11,29 @@ import { MercadopagoService } from '../mercadopago/mercadopago.service';
 import { PaypalService } from '../paypal/paypal.service';
 import { paypalItemDto } from 'src/dto/paypal-item.dto';
 import { mercadoItemDto } from 'src/dto/mercadopago-item.dto';
+import { SongsService } from 'src/songs/songs.service';
+import { UserService } from 'src/user/user.service';
 
 @Controller('payment')
 export class PaymentController {
   constructor(
     private readonly mercadopagoService: MercadopagoService,
     private readonly paypalService: PaypalService,
+    private readonly songService: SongsService,
+    private readonly userService: UserService,
   ) {}
 
   @Post('mercadopago')
   async createPayment(@Body() items: mercadoItemDto[], @Res() res) {
     try {
+      const song = await this.songService.getById(items[0].id);
+      const user = await this.userService.getById(items[0].user_id);
+      const songsPurchased = user.songsPurchased;
+      if (songsPurchased.includes(song._id)) {
+        return res
+          .status(HttpStatus.OK)
+          .json({ message: 'El usuario ya adquirio esta cancion' });
+      }
       const preference = await this.mercadopagoService.createPayment(items);
       if (!preference) {
         return res
