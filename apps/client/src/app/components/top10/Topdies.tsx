@@ -112,17 +112,19 @@ export default function Topdies() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 640);
-    };
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsSmallScreen(window.innerWidth < 640);
+      };
 
-    handleResize();
+      handleResize();
 
-    window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   const handleShowMore = () => {
@@ -158,7 +160,9 @@ export default function Topdies() {
         </section>
         {!showAll && isSmallScreen && (
           <div onClick={handleShowMore} className="mt-4 flex justify-center">
+
             <ButtonCuatro>VER MÁS</ButtonCuatro>
+
           </div>
         )}
       </div>

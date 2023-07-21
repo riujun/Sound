@@ -12,18 +12,20 @@ export default function Albumes() {
   // const [isMediumScreen, setIsMediumScreen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      // setIsMediumScreen(window.innerWidth < 640);
-      setShowAll(window.innerWidth > 768);
-    };
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        // setIsMediumScreen(window.innerWidth < 640);
+        setShowAll(window.innerWidth > 768);
+      };
 
-    handleResize();
+      handleResize();
 
-    window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   const handleShowMore = () => {

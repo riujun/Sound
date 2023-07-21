@@ -2,7 +2,10 @@ import { IsArray, IsNumber, IsString } from 'class-validator';
 
 export class mercadoItemDto {
   @IsString()
-  title: string;
+  id: string;
+
+  @IsString()
+  user_id: string;
 
   @IsNumber()
   unit_price: number;

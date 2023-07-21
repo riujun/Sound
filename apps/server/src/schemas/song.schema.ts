@@ -4,7 +4,7 @@ import { User } from './user.schema';
 
 export type SongDocument = HydratedDocument<Song>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Song extends Document {
   @Prop({ required: true })
   name: string;
