@@ -9,8 +9,11 @@ import {
   Put,
   Query,
   Res,
+  UploadedFiles,
+  UseInterceptors,
   UploadedFile,
 } from '@nestjs/common';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreateSongDto } from 'src/dto/create-song.dto';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
@@ -55,34 +58,65 @@ export class SongsController {
     }
   }
 
-  // @UseInterceptors(
-  //   FileInterceptor('file', {
-  //     storage: new CloudinaryStorage({
-  //       cloudinary: cloudinary,
-  //       params: [{
-  //         folder: 'uploads', // Ruta en Cloudinary donde se almacenarán los archivos,
-  //         resource_type: 'video'
-  //       }],
-  //     }),
-  //     fileFilter: (req, file, callback) => {
-  //       const allowedExtensions = ['.mp3', '.mp4', '.jpg']; // Agrega las extensiones permitidas para archivos de audio
-  //       const fileExtension = extname(file.originalname).toLowerCase();
-  //       if (allowedExtensions.includes(fileExtension)) {
-  //         callback(null, true);
-  //       } else {
-  //         callback(new BadRequestException('El archivo debe ser un formato de audio válido'), false);
-  //       }
-  //     },
-  //   }),
-  // )
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'song', maxCount: 1 },
+      { name: 'image', maxCount: 1 },
+    ]),
+  )
   @ApiOperation({ summary: 'Crear una nueva canción.' })
   @Post('/create')
   async createSong(
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFiles() files: Array<Express.Multer.File>,
     @Body() createSongDto: CreateSongDto,
     @Res() res,
   ) {
     try {
+      console.log(files);
+
+      const filePromises = Object.values(files).map(async (fileArray) => {
+        if (Array.isArray(fileArray) && fileArray.length > 0) {
+          const file = fileArray[0];
+          return await this.songsService.uploadFile(file);
+        }
+        return null;
+      });
+
+      const fileUrls = await Promise.all(filePromises);
+
+      function getFileType(link: string): string {
+        const extension: string = link.split('.').pop()!;
+        return extension.toLowerCase();
+      }
+
+      function separateLinks(links: string[]): {
+        songLink: string | null;
+        imageLink: string | null;
+      } {
+        const result = {
+          songLink: null,
+          imageLink: null,
+        };
+
+        for (const link of links) {
+          const fileType = getFileType(link);
+          if (fileType === 'mp3' || fileType === 'mp4') {
+            result.songLink = link;
+          } else if (
+            fileType === 'jpg' ||
+            fileType === 'jpeg' ||
+            fileType === 'png'
+          ) {
+            result.imageLink = link;
+          }
+        }
+
+        return result;
+      }
+
+      const { songLink, imageLink } = separateLinks(fileUrls);
+
+      console.log('arreglos de imagenes', fileUrls);
       const {
         name,
         duration,
@@ -93,11 +127,8 @@ export class SongsController {
         image,
         date,
         album,
-        src,
       } = createSongDto;
-      // const archivoURL = file.path;
-      // console.log(archivoURL)
-      // console.log(typeof archivoURL)
+
       const song = await this.songsService.createSong({
         name,
         duration,
@@ -105,18 +136,19 @@ export class SongsController {
         coArtist,
         price,
         genre,
-        image,
+        image: imageLink,
         date,
-        src,
+        src: songLink,
         album,
       });
+
       const usuario = await this.userService.getById(user);
       usuario.songsUplodaded.push(song._id);
       await this.userService.updateById(user, usuario);
       return res.status(HttpStatus.OK).json({ song });
     } catch (err) {
       console.log(err);
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ err });
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);
     }
   }
 

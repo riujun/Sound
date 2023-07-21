@@ -36,16 +36,18 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   const [isExpanded, setIsExpanded] = useState(false);
   const [volume, setVolume] = useState(1);
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Definir el ancho máximo para considerar como dispositivo móvil
-    };
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768); // Definir el ancho máximo para considerar como dispositivo móvil
+      };
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Verificar el tamaño inicial de la pantalla
+      window.addEventListener('resize', handleResize);
+      handleResize(); // Verificar el tamaño inicial de la pantalla
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   useEffect(() => {

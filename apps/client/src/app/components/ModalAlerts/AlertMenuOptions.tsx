@@ -7,12 +7,12 @@ import bell from '@/app/assets/bell.png';
 import exit from '@/app/assets/exit.png';
 import user from '@/app/assets/user.png';
 
-interface AlertOptionProps {
+interface ModalAlertProps {
   visible: boolean;
   onClose: () => void;
 }
 
-export default function AlertMenuOptions({ visible, onClose }: AlertOptionProps) {
+export default function AlertMenuOptions({ visible, onClose }: ModalAlertProps) {
   const handleClose = (e: MouseEvent<HTMLDivElement>) => {
     onClose();
   };

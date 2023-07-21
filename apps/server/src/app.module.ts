@@ -9,6 +9,10 @@ import { UserModule } from './user/user.module';
 import { PlaylistModule } from './playlist/playlist.module';
 import { FavoriteArtistsModule } from './favorite-artists/favorite-artists.module';
 import cloudinaryConfig from './cloudinary.config';
+import { MercadopagoModule } from './mercadopago/mercadopago.module';
+import { PaymentController } from './payment/payment.controller';
+import { PaypalModule } from './paypal/paypal.module';
+import { PublicationsUserModule } from './publications-user/publications-user.module';
 
 @Module({
   imports: [
@@ -23,13 +27,16 @@ import cloudinaryConfig from './cloudinary.config';
       isGlobal: true,
       load: [cloudinaryConfig],
     }),
+    MercadopagoModule,
+    PaypalModule,
     FavoriteArtistsModule,
+    PublicationsUserModule,
   ],
+  controllers: [PaymentController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('aut');
-    consumer.apply(AuthMiddleware).forRoutes('u');
+    consumer.apply(AuthMiddleware).forRoutes('playlist');
     consumer.apply(AuthMiddleware).forRoutes('songs');
   }
 }

@@ -1,22 +1,26 @@
+/* eslint-disable prettier/prettier */
 import Image from 'next/image';
 import React from 'react';
 
 import mp from '@/app/assets/pagos/Mercado Pago.png';
 import paypal from '@/app/assets/pagos/Pay Pal.png';
+
+import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
+import { ButtonTres } from '../mobile/buttons/Button_tres';
 export default function Midata() {
   return (
-    <div className=" mb-20 w-screen">
+    <div className=" mb-20 w-full">
       <h2 className="ml-7  mt-10 text-[32px] font-medium leading-normal text-orange-500">
         Mis datos
       </h2>
-      <section className=" mt-10 flex w-[100%] flex-col items-center justify-center ">
-        <div>
-          <div className="flex justify-between">
+      <section className=" mt-10 flex w-[100%] flex-col items-center justify-center  ">
+        <div className="">
+          <div className="flex w-full justify-between px-5">
             <h3 className="text-2xl font-semibold leading-normal text-black">Información básica</h3>
             <div className="text-center text-lg font-normal leading-[48px] text-black">Editar</div>
           </div>
-          <div className="h-[0px] w-[746px] border border-black"></div>
-          <section className="flex items-center justify-evenly">
+          <div className="h-[0px]  w-[100%] border border-gray-400 "></div>
+          <section className="flex flex-col items-center md:flex-row md:justify-evenly">
             <div className="mx-14 my-10 ">
               <div className="text-[21px] font-medium leading-normal text-black">
                 Foto de perfil
@@ -39,7 +43,7 @@ export default function Midata() {
                   className="mr-20 w-[40%] border-none"
                 />
               </div>
-              <div className="h-[0px] w-[539px] border border-black"></div>
+              <div className="h-[0px] w-[100%] border border-black"></div>
               <div className="flex justify-between">
                 <div className="py-2 text-xl font-medium leading-normal text-black">
                   Fecha de nacimiento
@@ -50,7 +54,7 @@ export default function Midata() {
                   className="mr-20 w-[40%] border-none"
                 />
               </div>
-              <div className="h-[0px] w-[539px] border border-black"></div>
+              <div className="h-[0px] w-[100%] border border-black"></div>
               <div className="flex justify-between">
                 <div className="py-2 text-xl font-medium leading-normal text-black">
                   Correo electrónico
@@ -61,7 +65,7 @@ export default function Midata() {
                   className="mr-20 w-[40%] border-none"
                 />
               </div>
-              <div className="h-[0px] w-[539px] border border-black"></div>
+              <div className="h-[0px] w-[100%] border border-black"></div>
               <div className="flex justify-between">
                 <div className="py-2 text-xl font-medium leading-normal text-black">Contraseña</div>
                 <input
@@ -70,14 +74,14 @@ export default function Midata() {
                   className="mr-20 w-[40%] border-none"
                 />
               </div>
-              <div className="h-[0px] w-[539px] border border-black"></div>
+              <div className="h-[0px] w-[100%] border border-black"></div>
             </div>
           </section>
-          <h2 className="w-[165px] text-2xl font-semibold leading-normal text-black">
+          <h2 className=" pl-5 text-2xl font-semibold leading-normal text-black ">
             Método de cobro
           </h2>
-          <div className="h-[0px] w-[745px] border border-black"></div>
-          <p className="mt-3 w-[746px] text-[21px] font-medium leading-normal text-black">
+          <div className=" mt-2 h-[0px] w-[100%] border border-gray-400 "></div>
+          <p className="mt-3 w-full pl-5 text-[21px] font-medium leading-normal text-black">
             Configura tu método de cobro. Una vez que esté configurado, podrás recibir los pagos por
             tus ventas.
           </p>
@@ -93,11 +97,11 @@ export default function Midata() {
               </div>
             </div>
           </section>
-          <h2 className="w-[225px] text-2xl font-semibold leading-normal text-black">
+          <h2 className=" pl-5 text-2xl font-semibold leading-normal text-black">
             Información del artista
           </h2>
-          <div className="h-[0px] w-[746px] border border-black"></div>
-          <div className="my-5">
+          <div className="mt-2  h-[0px] w-[100%] border  border-gray-400"></div>
+          <div className="my-5 pl-5">
             <input
               type="text"
               name=""
@@ -106,25 +110,33 @@ export default function Midata() {
               id=""
             />
           </div>
-          <div className="my-5">
+          <div className="my-5 pl-5">
             <input
               type="text"
               name=""
-              className="rounded border border-neutral-400 pb-[20%] pr-[80%] "
-              placeholder="Escribe el género musical"
+              className="w-[90%] rounded border border-neutral-400 pb-[20%]"
+              placeholder="Escribe una breve descripción acerca del artista"
               id=""
             />
           </div>
-          <div className="mt-10 flex justify-end  gap-5">
-            <div className="inline-flex h-12 w-[141px] items-center justify-center gap-2.5 border border-orange-500 p-4">
-              <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
-                Cancelar
+          <div className="hidden  md:block">
+            <div className="mt-10 flex  justify-end gap-5 pr-5 ">
+              <div className="inline-flex h-12 w-[141px] items-center justify-center gap-2.5 border border-orange-500 p-4">
+                <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
+                  Cancelar
+                </div>
+              </div>
+              <div className="inline-flex h-12 w-[158px] items-center justify-center gap-2.5 bg-orange-500 p-4">
+                <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
+                  Guardar cambios
+                </div>
               </div>
             </div>
-            <div className="inline-flex h-12 w-[158px] items-center justify-center gap-2.5 bg-orange-500 p-4">
-              <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
-                Guardar cambios
-              </div>
+          </div>
+          <div>
+            <div className="flex flex-col items-center justify-center gap-5">
+              <ButtonCuatro>Guardar cambios</ButtonCuatro>
+              <ButtonTres>Cancelar</ButtonTres>
             </div>
           </div>
         </div>

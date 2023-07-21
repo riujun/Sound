@@ -6,7 +6,7 @@ import { useStore } from '@/app/store';
 
 import CardArtistList from '../components/CadrArtistList/CardArtistList';
 
-function home() {
+function Home() {
   console.log(useStore.getState().name);
   return (
     <>
@@ -14,11 +14,13 @@ function home() {
       <div className="flex">
         <Menu />
         <div className="flex flex-grow flex-col justify-center">
-          <CardArtistList pageSize={10} />
-          <div className="my-10 mr-3 h-px bg-black"></div>
+
+          <CardArtistList />
+          <div className="mx-4 my-10 h-px bg-black"></div>
           <Top />
           <Albumes />
-          <div className="mb-3 ml-7  text-[11px]">
+          <div className="mb-3 ml-7 text-[11px]">
+
             © 2023 SoundWave | Todos los Derechos Reservados
           </div>
         </div>
@@ -27,4 +29,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;

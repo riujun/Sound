@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { type ChangeEvent, useState } from 'react';
 import { AiFillApple, AiFillEye, AiFillEyeInvisible } from 'react-icons/Ai';
 import { BiLogoFacebook } from 'react-icons/Bi';
 import { FaGoogle, FaTwitter } from 'react-icons/fa';
+
+import { signIn } from 'next-auth/react';
+
+
 
 import logo from '@/app/assets/landingpage/soundwave.png';
 

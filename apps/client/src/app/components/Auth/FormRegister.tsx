@@ -9,6 +9,7 @@ import hideEye from '@/app/assets/auth/hide-eye.svg';
 import showEye from '@/app/assets/auth/show-eye.svg';
 import logo from '@/app/assets/landingpage/soundwave.png';
 
+
 interface FormState {
   field1: string;
   field2: string;
@@ -17,6 +18,7 @@ interface FormState {
   field5: string;
   field6: string;
 }
+
 
 export default function FormRegister() {
   const [visible, setVisible] = useState(false);

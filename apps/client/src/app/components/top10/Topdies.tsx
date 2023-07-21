@@ -112,17 +112,19 @@ export default function Topdies() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 640);
-    };
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsSmallScreen(window.innerWidth < 640);
+      };
 
-    handleResize();
+      handleResize();
 
-    window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   const handleShowMore = () => {
@@ -130,21 +132,37 @@ export default function Topdies() {
   };
 
   const visibleSongs = showAll || !isSmallScreen ? songs : songs.slice(0, 5);
+  const halfIndex = Math.ceil(visibleSongs.length / 2);
+  const firstHalf = visibleSongs.slice(0, halfIndex);
+  const secondHalf = visibleSongs.slice(halfIndex);
 
   return (
-    <div className="mb-10">
-      <h2 className="ml-5 text-2xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
+    <div>
+      <h2 className="ml-6 text-xl font-semibold leading-normal text-zinc-700 md:ml-7 md:text-[32px]">
         Top 10 - Lo más vendido por nuestros artistas
       </h2>
-      <div className="w-full ">
-        <section className="mx-[5%] mt-10 flex flex-wrap justify-between gap-5">
-          {visibleSongs.map((song, index) => (
-            <ReproductorP key={index} songs={[song]} />
-          ))}
+      <div className="w-full">
+        <section className={`ml-8 flex flex-wrap pb-7 pt-14 md:flex-row md:items-center md:gap-4`}>
+          <div className="md:w-[49%]">
+            {firstHalf.map((song, index) => (
+              <div key={index} className={`flex-grow`}>
+                <ReproductorP songs={[song]} />
+              </div>
+            ))}
+          </div>
+          <div className="md:w-[49%]">
+            {secondHalf.map((song, index) => (
+              <div key={index} className={`flex-grow`}>
+                <ReproductorP songs={[song]} />
+              </div>
+            ))}
+          </div>
         </section>
         {!showAll && isSmallScreen && (
           <div onClick={handleShowMore} className="mt-4 flex justify-center">
-            <ButtonCuatro>Ver Mas</ButtonCuatro>
+
+            <ButtonCuatro>VER MÁS</ButtonCuatro>
+
           </div>
         )}
       </div>
