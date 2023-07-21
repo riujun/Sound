@@ -5,8 +5,9 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { IoIosMore, IoIosPodium } from 'react-icons/io';
 import { TbPlayerPlayFilled, TbPlaystationSquare } from 'react-icons/tb';
-import MyModal from '@/app/components/ModalAlerts/AlertMetodoDePago';
+
 import img from '@/app/assets/landingpage/p.jpg';
+import MyModal from '@/app/components/ModalAlerts/AlertMetodoDePago';
 
 interface Song {
   id: number;
@@ -78,14 +79,14 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
         <IoIosPodium className={`text-lg ${isPlaying ? 'text-orange-500' : ''}`} />
 
         <button
-          className="relative px-6 border group"
+          className="group relative border px-6"
           onClick={() => {
             setShowMyModal(true);
           }}
         >
           <span>{songs[0].price}</span>
 
-          <span className="absolute px-2 text-black transition-opacity duration-300 transform -translate-x-1/2 bg-orange-500 opacity-0 left-1/2 group-hover:opacity-100">
+          <span className="absolute left-1/2 -translate-x-1/2 transform bg-orange-500 px-2 text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             Comprar
           </span>
         </button>
@@ -93,14 +94,14 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
         <div>
           <button
             onClick={() => {
-                handlePlayPause();
+              handlePlayPause();
             }}
           >
             {isPlaying ? (
-              <TbPlaystationSquare className="text-3xl text-orange-500 cursor-pointer" />
+              <TbPlaystationSquare className="cursor-pointer text-3xl text-orange-500" />
             ) : (
-              <div className="p-1 border border-orange-500 rounded-full">
-                <TbPlayerPlayFilled className="text-orange-500 cursor-pointer" />
+              <div className="rounded-full border border-orange-500 p-1">
+                <TbPlayerPlayFilled className="cursor-pointer text-orange-500" />
               </div>
             )}
           </button>
