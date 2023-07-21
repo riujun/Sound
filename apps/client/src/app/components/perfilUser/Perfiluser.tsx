@@ -7,10 +7,8 @@ import userBig from '@/app/assets/userBig.png';
 export default function Perfiluser() {
   return (
     <div>
-
       <div className=" h-[208px] w-[100%] bg-green-100 md:h-[352px]">
         <Image className=" w-[100%]" src={portada} alt="portada" />
-
       </div>
       <div className="flex w-full flex-col items-center md:mt-10 md:h-[110px]  md:flex-row">
         <div className="relative bottom-20">
