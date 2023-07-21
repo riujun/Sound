@@ -35,6 +35,9 @@ importers:
       next-auth:
         specifier: ^4.22.1
         version: 4.22.1(next@13.4.9)(react-dom@18.2.0)(react@18.2.0)
+      next-navigation:
+        specifier: ^1.0.6
+        version: 1.0.6
       prop-types:
         specifier: ^15.8.1
         version: 15.8.1
@@ -11059,6 +11062,12 @@ packages:
       uuid: 8.3.2
     dev: false
 
+  /next-navigation@1.0.6:
+    resolution: {integrity: sha512-D4JXnngfeDFA+zsIWFcl8tr/rnCOXEUgJElfQ6zdcpHuNgR4peHKsk+FE1AGykEufKC7xgwv9oOSGK16c1VGiQ==}
+    dependencies:
+      react: 16.14.0
+    dev: false
+
   /next@13.4.7(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-M8z3k9VmG51SRT6v5uDKdJXcAqLzP3C+vaKfLIAM0Mhx1um1G7MDnO63+m52qPdZfrTFzMZNzfsgvm3ghuVHIQ==}
     engines: {node: '>=16.8.0'}
@@ -12433,6 +12442,15 @@ packages:
       prop-types: 15.8.1
       react: 18.2.0
       shallow-equal: 1.2.1
+    dev: false
+
+  /react@16.14.0:
+    resolution: {integrity: sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      prop-types: 15.8.1
     dev: false
 
   /react@18.2.0:

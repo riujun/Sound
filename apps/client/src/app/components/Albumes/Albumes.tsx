@@ -94,14 +94,14 @@ export default function Albumes() {
   };
 
   return (
-    <div className="mb-10 ml-5 mt-5 flex-grow overflow-auto">
-      <div className="flex py-5 pl-[5px] md:pl-[8px]">
+    <div className="mb-10 mt-5 flex-grow overflow-auto">
+      <div className="flex py-5 pl-5 md:pl-7">
         <div className="text-xl font-semibold leading-normal text-zinc-700 lg:text-[32px]">
           Lo nuevo en álbums
         </div>
       </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
-      <div className="h-[282px] w-[370px] overflow-x-scroll whitespace-nowrap md:h-[359px] md:w-full md:overflow-x-auto md:whitespace-normal">
+      <div className="h-[282px] w-[389px] overflow-x-scroll whitespace-nowrap pl-4 md:h-[359px] md:w-full md:overflow-x-auto md:whitespace-normal">
         {renderCardAlbumes()}
       </div>
       {showAll ? (

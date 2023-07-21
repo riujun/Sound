@@ -16,13 +16,13 @@ import { useEffect, useRef, useState } from 'react';
 // import AlertMetodoCobro from '../ModalAlerts/AlertMetodoDeCobro';
 // import AlertFelicidades from '../ModalAlerts/AlertFelicidades';
 // import AlertPublicarComentario from '../ModalAlerts/AlertPublicarComentario';
+// import Loader from '@/app/components/Loader/Loader';
 import img from '@/app/assets/landingpage/p.jpg';
 import Opciones from '@/app/assets/Opciones.png';
 import Play from '@/app/assets/Play.png';
 import Reproduciendo from '@/app/assets/Reproduciendo.png';
 import Stop from '@/app/assets/Stop.png';
 import MetodoDePago from '@/app/components/ModalAlerts/AlertMetodoDePago';
-
 
 interface Song {
   id: number;
@@ -108,7 +108,7 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
                 handlePlayPause();
               }}
             >
-              {isPlaying ? <Image src={Play} alt="Play" /> : <Image src={Stop} alt="Stop" />}
+              {isPlaying ? <Image src={Stop} alt="Stop" /> : <Image src={Play} alt="Play" />}
             </button>
           </div>
           <div className="inline-flex h-[30px] w-14 items-center justify-center gap-2.5 border border-zinc-700 px-5 py-2 hover:border-orange-500 md:w-[85px]">
@@ -133,8 +133,8 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
         </div>
       </div>
       <MetodoDePago onClose={handleClose} visible={showMyModal} />
-
       {/* TODAS LAS ALERTAS DEL SITIO - IR BORRANDO A MEDIDA QUE SE UTILIZAN */}
+      {/* <Loader onClose={handleClose} visible={showMyModal} /> */}
       {/* <PagoExitoso onClose={handleClose} visible={showMyModal} /> */}
       {/* <PagoError onClose={handleClose} visible={showMyModal} /> */}
       {/* <FotoPortada onClose={handleClose} visible={showMyModal} /> */}

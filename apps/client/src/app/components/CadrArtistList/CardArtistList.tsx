@@ -117,7 +117,7 @@ export default function CardArtistList() {
       <div
         className={
           isMediumScreen && !showAll
-            ? `h-[181px] w-[380px] overflow-x-scroll whitespace-nowrap pl-1`
+            ? `h-[181px] w-[382px] overflow-x-scroll whitespace-nowrap pl-1`
             : `pl-6 md:h-[485px] md:w-full md:overflow-x-auto md:whitespace-normal md:pl-3`
         }
       >
@@ -134,7 +134,7 @@ export default function CardArtistList() {
               } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={handlePreviousPage}
             >
-              <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
+              <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
             </div>
             {/* Renderización de los números de página */}
             {generatePageNumbers().map((pageNumber) => (
@@ -149,7 +149,7 @@ export default function CardArtistList() {
                   setCurrentPage(pageNumber);
                 }}
               >
-                <div className="text-base font-semibold uppercase leading-none text-black">
+                <div className="text-base font-semibold leading-none text-black uppercase">
                   {pageNumber}
                 </div>
               </div>
@@ -161,12 +161,12 @@ export default function CardArtistList() {
               } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={handleNextPage}
             >
-              <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
+              <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
             </div>
           </div>
         </div>
       ) : (
-        <div onClick={handleShowMore} className="mt-4 flex justify-center">
+        <div onClick={handleShowMore} className="flex justify-center mt-4">
           <ButtonCuatro>DESCUBRE MÁS</ButtonCuatro>
         </div>
       )}
