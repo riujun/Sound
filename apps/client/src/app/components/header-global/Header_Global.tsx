@@ -5,6 +5,7 @@ import { useState } from 'react';
 
 import bell from '@/app/assets/bell.png';
 import dw from '@/app/assets/dw.png';
+import opciones from '@/app/assets/Flecha.png';
 import logo from '@/app/assets/landingpage/soundwave.png';
 import user from '@/app/assets/user.png';
 import MenuOptions from '@/app/components/ModalAlerts/AlertMenuOptions';
@@ -107,34 +108,12 @@ export default function HeaderGlobal() {
                         <Image src={bell} alt="campana" className="cursor-pointer md:block" />
                         <div className="relative">
                           <div onClick={toggleMenu} className="flex cursor-pointer items-center">
-                            <Image src={user} alt="user" className="text-white md:block" />
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="11"
-                              viewBox="0 0 12 11"
-                              fill="none"
-                            >
-                              <g clipPath="url(#clip0_1315_3856)">
-                                <path
-                                  d="M10.0332 3.66699L5.5332 7.79199L1.0332 3.66699"
-                                  stroke="black"
-                                  strokeWidth="1.08613"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_1315_3856">
-                                  <rect
-                                    width="11"
-                                    height="11"
-                                    fill="white"
-                                    transform="translate(0.0332031)"
-                                  />
-                                </clipPath>
-                              </defs>
-                            </svg>
+                            <div className="relative h-12 w-12">
+                              <Image src={user} alt="user" className="text-white md:block" />
+                            </div>
+                            <div className="relative h-[18px] ">
+                              <Image src={opciones} alt="opciones" />
+                            </div>
                           </div>
                           {isOpen && <MenuOptions onClose={handleClose} visible={showMyModal} />}
                         </div>
