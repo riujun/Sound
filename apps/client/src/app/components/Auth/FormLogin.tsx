@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import { useState } from 'react';
+import { type ChangeEvent, useState } from 'react';
 
 import btnApple from '@/app/assets/auth/Apple.svg';
 import btnFacebook from '@/app/assets/auth/Facebook.svg';
@@ -22,7 +23,7 @@ export default function FormLogin() {
 
   const { field1, field2 } = form;
 
-  const handleChange = (e: { target: { name: any; value: any } }) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,

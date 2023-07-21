@@ -15,26 +15,31 @@ export default function CardArtistList() {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMediumScreen(window.innerWidth < 768);
-      setShowAll(window.innerWidth > 768);
-      pageSize = window.innerWidth > 768 ? 10 : 6;
-    };
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsMediumScreen(window.innerWidth < 768);
+        setShowAll(window.innerWidth > 768);
+        pageSize = window.innerWidth > 768 ? 10 : 6;
+      };
 
-    handleResize();
+      handleResize();
 
-    window.addEventListener('resize', handleResize);
+      window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   const handleShowMore = () => {
     setShowAll(true);
   };
   // Número de registros por página
-  let pageSize = window.innerWidth > 768 ? 10 : 6;
+  let pageSize = 0;
+  if (typeof window !== 'undefined') {
+    pageSize = window.innerWidth > 768 ? 10 : 6;
+  }
   const totalItems = 95; // cantidad de CardArtists que traiga la API
   // Cálculo del número total de páginas
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions

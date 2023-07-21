@@ -6,7 +6,7 @@ import { useStore } from '@/app/store';
 
 import CardArtistList from '../components/CadrArtistList/CardArtistList';
 
-function home() {
+function Home() {
   console.log(useStore.getState().name);
   return (
     <>
@@ -27,4 +27,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;
