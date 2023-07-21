@@ -313,7 +313,6 @@ export default function PlayList() {
           </div>
 
           <nav className="flex items-center justify-center pt-20">
-
             <Reproductor songs={songs} onSongSelect={handleSongSelect} />
           </nav>
         </div>

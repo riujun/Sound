@@ -4,7 +4,6 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
-
 // TODAS LAS ALERTAS DEL SITIO - IR BORRANDO A MEDIDA QUE SE UTILIZAN
 // import PagoExitoso from '@/app/components/ModalAlerts/AlertPagoExitoso';
 // import PagoError from '@/app/components/ModalAlerts/AlertPagoError';
@@ -96,8 +95,6 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
           </div>
         </div>
 
-
-
         <div className="flex items-center justify-start">
           <div className="mr-[-9px] h-12 w-4 md:m-0 md:h-12 md:w-4">
             {isPlaying ? <Image src={Reproduciendo} alt="Reproduciendo" /> : ''}
@@ -129,7 +126,6 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
           <div className="relative m-[-5px] h-8 w-8 md:m-0 md:h-12 md:w-12">
             <Image className="cursor-pointer" src={Opciones} alt="Opciones" />
           </div>
-
         </div>
       </div>
       <MetodoDePago onClose={handleClose} visible={showMyModal} />
