@@ -18,6 +18,19 @@ interface FormState {
   field6: string;
 }
 
+interface data {
+  name: string;
+  username: string;
+  artist: boolean;
+  email: string;
+  password: string;
+  fechaNacimiento: Date;
+}
+
+export interface dataFetch extends Omit<data, 'fechaNacimiento'> {
+  surname: string;
+}
+
 export default function FormRegister() {
   const [visible, setVisible] = useState(false);
 
@@ -107,23 +120,7 @@ export default function FormRegister() {
               Correo electrónico
             </label>
           </div>
-          <div className="relative mb-4 md:mb-4">
-            <input
-              type="email"
-              name="field4"
-              value={field4}
-              onChange={handleChange}
-              id="floating_outlined"
-              className="border-1 peer block w-full appearance-none rounded border-neutral-400 bg-transparent bg-white px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-0 "
-              placeholder=" "
-            />
-            <label
-              htmlFor="floating_outlined"
-              className="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[16px] text-sm  text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-gray-900 md:text-[16px]"
-            >
-              Repetir correo electrónico
-            </label>
-          </div>
+
           <div className="relative mb-4 md:mb-4">
             <input
               type={visible ? 'text' : 'password'}
@@ -164,46 +161,7 @@ export default function FormRegister() {
               />
             )}
           </div>
-          <div className="relative mb-4 md:mb-4">
-            <input
-              type={visible ? 'text' : 'password'}
-              name="field6"
-              value={field6}
-              onChange={handleChange}
-              id="floating_outlined"
-              className="border-1 peer block w-full appearance-none rounded border-neutral-400 bg-transparent bg-white px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-orange-500 focus:outline-none focus:ring-0 "
-              placeholder=" "
-            />
-            <label
-              htmlFor="floating_outlined"
-              className="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[16px] text-sm  text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-gray-900 md:text-[16px]"
-            >
-              Repetir contraseña
-            </label>
-            {visible ? (
-              <Image
-                src={showEye}
-                width={25}
-                height={25}
-                alt=""
-                className="absolute right-4 top-[15%] cursor-pointer"
-                onClick={() => {
-                  setVisible(false);
-                }}
-              />
-            ) : (
-              <Image
-                src={hideEye}
-                width={25}
-                height={25}
-                alt=""
-                className="absolute right-4 top-[15%] cursor-pointer"
-                onClick={() => {
-                  setVisible(true);
-                }}
-              />
-            )}
-          </div>
+
           <button
             className={`inline-flex h-12 w-[348px] items-center justify-center gap-2.5 rounded-md p-4 text-[16px] font-semibold uppercase leading-none   ${
               isFormCompleted
