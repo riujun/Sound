@@ -5,11 +5,8 @@ import { useState } from 'react';
 
 import bell from '@/app/assets/bell.png';
 import dw from '@/app/assets/dw.png';
-
 import opciones from '@/app/assets/Flecha.png';
-
-//import exit from '@/app/assets/exit.png';
-
+// import exit from '@/app/assets/exit.png';
 import logo from '@/app/assets/landingpage/soundwave.png';
 import user from '@/app/assets/user.png';
 import MenuOptions from '@/app/components/ModalAlerts/AlertMenuOptions';
