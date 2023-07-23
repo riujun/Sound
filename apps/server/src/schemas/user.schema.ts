@@ -20,13 +20,19 @@ export class User extends Document {
     default:
       'https://asset.cloudinary.com/dnemqmc7a/05b35cf73934f1746f6a2845259369f5',
   })
-  image: string;
+  profilePhoto: string;
 
   @Prop({ type: [{ type: Types.ObjectId }] })
   favoriteArtists: string[]; // Array de IDs de artistas favoritos
 
   @Prop({ unique: true })
   email: string;
+
+  @Prop({
+    default:
+      'https://asset.cloudinary.com/dnemqmc7a/05b35cf73934f1746f6a2845259369f5',
+  })
+  coverPhoto: string;
 
   @Prop()
   password: string;
@@ -36,6 +42,9 @@ export class User extends Document {
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Song' }] })
   songsUplodaded: Song[];
+
+  @Prop()
+  description: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
