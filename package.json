@@ -58,6 +58,7 @@
   },
   "packageManager": "pnpm@8.6.5",
   "dependencies": {
+    "@hookform/resolvers": "^3.1.1",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/swagger": "^7.1.1",
     "client": "workspace:^",
@@ -66,12 +67,12 @@
     "flowbite-react": "^0.4.10",
     "multer": "1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
-    "next-auth": "^4.22.1",
     "next-navigation": "^1.0.6",
     "prop-types": "^15.8.1",
     "react-icons": "^4.10.1",
     "react-responsive": "^9.0.2",
     "use-media": "^1.4.0",
+    "yup": "^1.2.0",
     "zustand": "^4.3.9"
   }
 }
