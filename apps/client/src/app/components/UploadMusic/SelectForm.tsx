@@ -1,6 +1,27 @@
-import React from 'react';
+'use client';
+
+import React, { type ChangeEvent, useState } from 'react';
+
+import FromAlbum from './FormAlbum';
+import FromSingle from './FromSingle';
 
 export default function SelectForm() {
+  const [selectedForm, setSelectedForm] = useState('formA');
+
+  const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSelectedForm(e.target.value);
+  };
+
+  const renderSelectedForm = () => {
+    if (selectedForm === 'formA') {
+      return <FromSingle />;
+    } else if (selectedForm === 'formB') {
+      return <FromAlbum />;
+    }
+
+    return null;
+  };
+
   return (
     <>
       <p className="ml-7 mt-7 text-base font-normal leading-tight text-black md:mr-24 md:text-center">
@@ -13,6 +34,10 @@ export default function SelectForm() {
             type="radio"
             name="inline-radio-group"
             className="h-4 w-4 border-gray-300 bg-gray-100 text-zinc-700"
+            value="formA"
+            checked={selectedForm === 'formA'}
+            onChange={handleFormChange}
+            defaultChecked
           />
           <label htmlFor="inline-radio" className="ml-2 text-sm font-medium text-gray-900">
             Single
@@ -23,6 +48,9 @@ export default function SelectForm() {
             id="inline-2-radio"
             type="radio"
             name="inline-radio-group"
+            value="formB"
+            checked={selectedForm === 'formB'}
+            onChange={handleFormChange}
             className="border-gray-30 h-4 w-4 bg-gray-100 text-gray-700 "
           />
           <label htmlFor="inline-2-radio" className="ml-2 text-sm font-medium text-gray-900">
@@ -30,6 +58,7 @@ export default function SelectForm() {
           </label>
         </div>
       </div>
+      {renderSelectedForm()}
     </>
   );
 }
