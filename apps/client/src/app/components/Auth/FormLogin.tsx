@@ -4,6 +4,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 import { AiFillApple, AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
@@ -23,6 +24,7 @@ interface FormValues {
 export default function FormLogin() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const router = useRouter();
 
   const postRoute = 'http://localhost:4000/auth-jwt/login';
   const postLogin = usePostLogin(postRoute);
@@ -57,17 +59,14 @@ export default function FormLogin() {
     setIsSubmitting(false);
 
     if (result.ok) {
-      // hacer algo si la solicitud es exitosa
+      router.push('/home');
     } else {
-      const error = result.errorMessage !== undefined ? result.errorMessage : ''; // asignar un valor predeterminado a la variable error si es undefined
-
-      // Buscar la cadena de texto '{"message":"USUARIO O CONTRASEÑA INCORRECTA"}' dentro del contenido del error
+      const error = result.errorMessage !== undefined ? result.errorMessage : '';
       const usuarioIncorrecto = error.match(/{"message":"USUARIO O CONTRASEÑA INCORRECTA"}/)?.[0];
 
       if (usuarioIncorrecto != null) {
         setError(new Error('Usuario o contraseña incorrecta'));
       } else {
-        // Buscar la cadena de texto dentro de los corchetes []
         const mensajeLimpio = error.match(/\[([^\]]+)\]/)?.[1]?.trim() ?? '';
         console.log(mensajeLimpio);
 
@@ -77,22 +76,6 @@ export default function FormLogin() {
   };
 
   const [visible, setVisible] = useState(false);
-
-  // const [form, setForm] = useState({
-  //   field1: '',
-  //   field2: '',
-  // });
-
-  // const { field1, field2 } = form;
-
-  // const handleChange = (e: { target: { name: any; value: any } }) => {
-  //   setForm({
-  //     ...form,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
-
-  // const isFormCompleted = field1 !== '' && field2 !== '';
 
   return (
     <>
@@ -153,8 +136,8 @@ export default function FormLogin() {
           <button
             className={`inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-md p-4 text-[16px] font-semibold uppercase leading-none   ${
               isSubmitting
-                ? 'bg-orange-500 text-black hover:bg-orange-400'
-                : ' bg-zinc-300 text-neutral-400'
+                ? ' bg-zinc-300 text-neutral-400'
+                : 'bg-orange-500 text-black hover:bg-orange-400'
             }`}
             type="submit"
           >

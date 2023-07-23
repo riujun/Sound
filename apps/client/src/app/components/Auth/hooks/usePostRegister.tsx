@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import axios, { type AxiosResponse } from 'axios';
+import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { useState } from 'react';
 
 import type { dataFetch } from '../FormRegister';
 
 interface PostRegisterResult {
   ok: boolean;
+  errorMessage?: any;
 }
 
 const usePostRegister = (postRoute: string) => {
@@ -23,18 +25,17 @@ const usePostRegister = (postRoute: string) => {
 
       setIsLoading(false);
       console.log('[REGISTRO EXITOSO]');
+      const token = response.data.token;
+      localStorage.setItem('jwtToken', token);
       return { ok: status === 200 };
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        const errorMessage = error.response?.data ?? 'No hay mensaje';
-        console.error('There was a problem with the fetch operation:', error);
-        console.error('Mensaje de error del back:', errorMessage);
-      } else {
-        console.error('There was a problem with the fetch operation:', error);
-      }
-
+      const axiosError = error as AxiosError;
+      const response = axiosError.response;
+      const errorMessage = response != null ? response.data : 'No hay mensaje';
+      console.error('El error de fetch operacion es:', error);
+      console.error('El mensaje de server es:', errorMessage);
       setIsLoading(false);
-      return { ok: false };
+      return { ok: false, errorMessage };
     }
   };
 

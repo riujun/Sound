@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 interface LoginData {
   email: string;
   password: string;
@@ -6,6 +9,7 @@ interface LoginData {
 interface PostLoginResult {
   ok: boolean;
   errorMessage?: string;
+  respuestaApi?: string;
 }
 
 const usePostLogin =
@@ -27,7 +31,13 @@ const usePostLogin =
       }
 
       console.log('[LOGIN SUCCESS]');
-      return { ok: true };
+
+      const respuestaApi = response != null ? await response.text() : 'No hay mensaje';
+
+      if (response.ok) {
+        localStorage.setItem('jwtToken', await response.json());
+      }
+      return { ok: true, respuestaApi };
     } catch (error) {
       const errorMessage = response != null ? await response.text() : 'No hay mensaje';
       console.error('El error de fetch operacion es:', error);
