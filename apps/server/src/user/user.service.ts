@@ -5,6 +5,7 @@ import { Model } from 'mongoose';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../schemas/user.schema';
+import { ImageType } from '../enums/enums';
 
 @Injectable()
 export class UserService {
@@ -12,6 +13,7 @@ export class UserService {
     @InjectModel(User.name) private userModel: Model<User>,
     private readonly configService: ConfigService,
   ) {}
+
   async getAll(): Promise<User[] | null> {
     return this.userModel.find().exec();
   }
@@ -40,12 +42,15 @@ export class UserService {
       .exec();
   }
 
-  async updateProfilePhotoUrl(
+  async updateUserPhoto(
     id: string,
-    profilePhotoUrl: string,
+    photoUrl: string,
+    imageType: ImageType,
   ): Promise<User | null> {
+    const updateData = { [imageType]: photoUrl };
+
     return this.userModel
-      .findByIdAndUpdate(id, { profilePhotoUrl }, { new: true })
+      .findByIdAndUpdate(id, updateData, { new: true })
       .exec();
   }
 }

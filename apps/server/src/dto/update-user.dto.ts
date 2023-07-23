@@ -60,4 +60,8 @@ export class UpdateUserDto {
     },
   )
   password?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
 }
