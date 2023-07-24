@@ -11,14 +11,13 @@ import {
   Res,
   UploadedFiles,
   UseInterceptors,
-  UploadedFile,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreateSongDto } from 'src/dto/create-song.dto';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
-import { SongsService } from './songs.service';
 import { UserService } from 'src/user/user.service';
+import { SongsService } from './songs.service';
 
 @ApiTags('Songs')
 @Controller('songs')
@@ -85,7 +84,7 @@ export class SongsController {
       const fileUrls = await Promise.all(filePromises);
 
       function getFileType(link: string): string {
-        const extension: string = link.split('.').pop()!;
+        const extension: string = link.split('.').pop();
         return extension.toLowerCase();
       }
 
@@ -117,17 +116,8 @@ export class SongsController {
       const { songLink, imageLink } = separateLinks(fileUrls);
 
       console.log('arreglos de imagenes', fileUrls);
-      const {
-        name,
-        duration,
-        user,
-        coArtist,
-        price,
-        genre,
-        image,
-        date,
-        album,
-      } = createSongDto;
+      const { name, duration, user, coArtist, price, genre, date, album } =
+        createSongDto;
 
       const song = await this.songsService.createSong({
         name,

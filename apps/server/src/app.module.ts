@@ -36,7 +36,6 @@ import { PublicationsUserModule } from './publications-user/publications-user.mo
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    // consumer.apply(AuthMiddleware).forRoutes('playlist');
-    // consumer.apply(AuthMiddleware).forRoutes('songs');
+    consumer.apply(AuthMiddleware).forRoutes('a');
   }
 }
