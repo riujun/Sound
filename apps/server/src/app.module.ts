@@ -13,6 +13,7 @@ import { MercadopagoModule } from './mercadopago/mercadopago.module';
 import { PaymentController } from './payment/payment.controller';
 import { PaypalModule } from './paypal/paypal.module';
 import { AuthModule } from './auth/auth.module';
+import { PublicationsUserModule } from './publications-user/publications-user.module';
 
 @Module({
   imports: [
@@ -31,12 +32,12 @@ import { AuthModule } from './auth/auth.module';
     PaypalModule,
     FavoriteArtistsModule,
     AuthModule,
+    PublicationsUserModule,
   ],
   controllers: [PaymentController],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('playlist');
-    consumer.apply(AuthMiddleware).forRoutes('songs');
+    consumer.apply(AuthMiddleware).forRoutes('a');
   }
 }

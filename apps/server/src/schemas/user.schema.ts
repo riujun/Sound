@@ -24,12 +24,18 @@ export class User extends Document {
   @IsOptional() // Haciendo el campo "username" opcional
   username?: string;
 
+  @Prop()
+  genre: string;
+
+  @Prop()
+  followers: number;
+
   @Prop({
     default:
-      'https://asset.cloudinary.com/dnemqmc7a/05b35cf73934f1746f6a2845259369f5',
+      'https://res.cloudinary.com/dnemqmc7a/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1689019059/image_bahgnt.jpg?_s=public-apps',
   })
-  @IsOptional() // Haciendo el campo "image" opcional
-  image?: string;
+  @IsOptional() // Haciendo el campo "profilePhoto" opcional
+  profilePhoto?: string;
 
   @Prop({ type: [{ type: Types.ObjectId }] })
   @IsOptional() // Haciendo el campo "favoriteArtists" opcional
@@ -43,6 +49,12 @@ export class User extends Document {
   @IsOptional() // Haciendo el campo "email" opcional
   email?: string;
 
+  @Prop({
+    default:
+      'https://res.cloudinary.com/dnemqmc7a/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1689019059/image_bahgnt.jpg?_s=public-apps',
+  })
+  coverPhoto: string;
+
   @Prop()
   @IsOptional() // Haciendo el campo "password" opcional
   password?: string;
@@ -54,6 +66,10 @@ export class User extends Document {
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Song' }] })
   @IsOptional() // Haciendo el campo "songsUplodaded" opcional
   songsUplodaded?: Song[];
+
+  @Prop()
+  @IsOptional()
+  description?: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

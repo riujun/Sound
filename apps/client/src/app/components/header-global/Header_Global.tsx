@@ -3,12 +3,13 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import exit from '@/app/assets/exit.png';
-import MenuOptions from '@/app/components/ModalAlerts/AlertMenuOptions';
 import bell from '@/app/assets/bell.png';
 import dw from '@/app/assets/dw.png';
+import opciones from '@/app/assets/Flecha.png';
+// import exit from '@/app/assets/exit.png';
 import logo from '@/app/assets/landingpage/soundwave.png';
 import user from '@/app/assets/user.png';
+import MenuOptions from '@/app/components/ModalAlerts/AlertMenuOptions';
 
 export default function HeaderGlobal() {
   const [navbar, setNavbar] = useState(false);
@@ -24,12 +25,12 @@ export default function HeaderGlobal() {
     setIsOpen(!isOpen);
     setShowMyModal(true);
   };
-  
+
   return (
     <div>
       <header className="w-full border-b-2 border-gray-400">
         <nav>
-          <div className="items-center justify-between px-4 pt-3 pb-1 md:flex md:items-center">
+          <div className="items-center justify-between px-4 pb-1 pt-3 md:flex md:items-center">
             <div>
               <div className="flex items-center justify-between">
                 <div className="flex">
@@ -37,7 +38,7 @@ export default function HeaderGlobal() {
                 </div>
                 <div className="md:hidden">
                   <button
-                    className="p-2 text-white rounded-md outline-none focus:border focus:border-gray-400"
+                    className="rounded-md p-2 text-white outline-none focus:border focus:border-gray-400"
                     onClick={() => {
                       setNavbar(!navbar);
                     }}
@@ -107,39 +108,15 @@ export default function HeaderGlobal() {
                         <Image src={dw} alt="descarga" className="cursor-pointer md:block" />
                         <Image src={bell} alt="campana" className="cursor-pointer md:block" />
                         <div className="relative">
-                          <div onClick={toggleMenu} className="flex items-center cursor-pointer">
-                            <Image src={user} alt="user" className="text-white md:block" />
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="12"
-                              height="11"
-                              viewBox="0 0 12 11"
-                              fill="none"
-                            >
-                              <g clipPath="url(#clip0_1315_3856)">
-                                <path
-                                  d="M10.0332 3.66699L5.5332 7.79199L1.0332 3.66699"
-                                  stroke="black"
-                                  strokeWidth="1.08613"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_1315_3856">
-                                  <rect
-                                    width="11"
-                                    height="11"
-                                    fill="white"
-                                    transform="translate(0.0332031)"
-                                  />
-                                </clipPath>
-                              </defs>
-                            </svg>
+                          <div onClick={toggleMenu} className="flex cursor-pointer items-center">
+                            <div className="relative h-12 w-12">
+                              <Image src={user} alt="user" className="text-white md:block" />
+                            </div>
+                            <div className="relative h-[18px] ">
+                              <Image src={opciones} alt="opciones" />
+                            </div>
                           </div>
-                          {isOpen && (
-                            <MenuOptions onClose={handleClose} visible={showMyModal} />
-                          )}
+                          {isOpen && <MenuOptions onClose={handleClose} visible={showMyModal} />}
                         </div>
                       </div>
                     )}

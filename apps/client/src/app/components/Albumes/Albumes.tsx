@@ -1,36 +1,50 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import CardAlbum from './CardAlbum';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
+import type { Album } from './CardAlbum';
+import CardAlbum from './CardAlbum';
 
 export default function Albumes() {
   // Estado para almacenar la página actual
+  const [albums, setAlbums] = useState<Album[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [showAll, setShowAll] = useState(false);
-  const [isMediumScreen, setIsMediumScreen] = useState(false);
+  const [showPaginator, setShowPaginator] = useState(false);
+  const [isDBConnected, setDBConnected] = useState(false);
+  const [hasData, setHasData] = useState(false);
+  // const [isMediumScreen, setIsMediumScreen] = useState(false);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMediumScreen(window.innerWidth < 640);
-      setShowAll(window.innerWidth > 768);
+    const fetchAlbums = async (): Promise<void> => {
+      try {
+        const response = await axios.get<Album[]>('http://localhost:4000/albums');
+        setAlbums(response.data);
+        setDBConnected(true);
+        setHasData(response.data.length > 0);
+      } catch (error) {
+        console.error('Error fetching albums:', error);
+        setDBConnected(false);
+      }
     };
 
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
+    const fetchData = () => {
+      fetchAlbums().catch((error) => {
+        // Manejar el error aquí si es necesario
+        console.error('Error in fetchData:', error);
+      });
     };
+
+    fetchData();
   }, []);
 
   const handleShowMore = () => {
-    setShowAll(true);
+    setShowPaginator(true);
   };
   // Número de registros por página
   const pageSize = 5;
-  const totalItems = 43;
+  const totalItems = Array.isArray(albums) ? albums.length : 0;
   // Cálculo del número total de páginas
   const totalPages = Math.ceil(totalItems / pageSize);
 
@@ -44,7 +58,7 @@ export default function Albumes() {
     const cardAlbumes = [];
 
     for (let i = startIndex; i < endIndex; i++) {
-      cardAlbumes.push(<CardAlbum key={i} index={i} />);
+      cardAlbumes.push(<CardAlbum key={i} album={albums[i]} />);
     }
     return cardAlbumes;
   };
@@ -89,19 +103,26 @@ export default function Albumes() {
       setCurrentPage(currentPage + 1);
     }
   };
-  
+
   return (
-    <div className="flex-grow mt-5 mb-10 ml-5 overflow-auto">
-      <div className="flex py-5 pl-[5px] md:pl-[8px]">
+    <div className="mb-10 mt-5 flex-grow overflow-auto">
+      <div className="flex py-5 pl-5 md:pl-7">
         <div className="text-xl font-semibold leading-normal text-zinc-700 lg:text-[32px]">
-          Lo nuevo en álbums
+          Lo nuevo en álbums{' '}
+          <div className="text-red-600 ">{isDBConnected ? '' : 'Desconectado'}</div>
         </div>
       </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
-      <div className="h-[282px] w-[370px] overflow-x-scroll whitespace-nowrap md:h-[359px] md:w-full md:overflow-x-auto md:whitespace-normal">
+      <div className="h-[282px] w-[389px] overflow-x-scroll whitespace-nowrap pl-4 md:h-[359px] md:w-full md:overflow-x-auto md:whitespace-normal">
+        {hasData ? '' : <div className="text-red-600 ">No Data</div>}
         {renderCardAlbumes()}
       </div>
-      {showAll ? (
+      {!showPaginator && (
+        <div onClick={handleShowMore} className="mt-4 flex justify-center">
+          <ButtonCuatro>DESCUBRE MÁS ARTISTAS</ButtonCuatro>
+        </div>
+      )}
+      {showPaginator && (
         <div id="Paginador" className="flex items-center justify-center pt-8">
           <div className="inline-flex gap-2 bg-white">
             {/* Botón de página anterior */}
@@ -112,7 +133,7 @@ export default function Albumes() {
               } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={handlePreviousPage}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
+              <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
             </div>
             {/* Renderización de los números de página */}
             {generatePageNumbers().map((pageNumber) => (
@@ -127,7 +148,7 @@ export default function Albumes() {
                   setCurrentPage(pageNumber);
                 }}
               >
-                <div className="text-base font-semibold leading-none text-black uppercase">
+                <div className="text-base font-semibold uppercase leading-none text-black">
                   {pageNumber}
                 </div>
               </div>
@@ -139,13 +160,9 @@ export default function Albumes() {
               } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={handleNextPage}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
+              <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div onClick={handleShowMore} className="flex justify-center mt-4">
-          <ButtonCuatro>DESCUBRE MÁS ARTISTAS</ButtonCuatro>
         </div>
       )}
     </div>

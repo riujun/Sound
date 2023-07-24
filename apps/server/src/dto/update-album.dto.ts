@@ -24,6 +24,13 @@ export class UpdateAlbumDto {
   @IsString()
   nombre: string;
   @ApiProperty({
+    description: 'Nombre del artista',
+    example: 'SOUR',
+  })
+  @IsOptional()
+  @IsString()
+  nombreArtista: string;
+  @ApiProperty({
     description: 'Descripción del album',
     example: 'album de rock progresivo',
   })
