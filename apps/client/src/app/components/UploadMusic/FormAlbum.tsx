@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
-import React, { type ChangeEvent, type FormEvent, useState } from 'react';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
+import { BsPlusCircleFill } from 'react-icons/bs';
 
 import MyModal from '@/app/components/ModalAlerts/AlertArchivoDeAudio';
 
@@ -13,11 +14,16 @@ interface FormState {
   checkbox2: boolean;
 }
 
-export default function FromSingle() {
+export default function FromAlbum() {
   const [showMyModal, setShowMyModal] = useState(false);
+  const [songInputs, setSongInputs] = useState<string[]>([]);
 
   const handleClose = () => {
     setShowMyModal(false);
+  };
+
+  const handleAddSongInput = () => {
+    setSongInputs((prevInputs) => [...prevInputs, '']);
   };
 
   const initialState: FormState = {
@@ -59,6 +65,21 @@ export default function FromSingle() {
             className="mt-7 md:mt-[46px] md:w-[340px] md:flex-col md:justify-center md:px-0"
             onSubmit={handleSubmit}
           >
+            <div className="relative mb-7 flex md:mb-8">
+              <label
+                htmlFor="floating_outlined"
+                className=" :items-center inline-flex place-items-center justify-center bg-white px-2  text-[16px] text-sm text-black placeholder:text-black md:mb-2 md:text-[16px]"
+              >
+                Número de canciones
+              </label>
+              <input
+                type="number"
+                name="field1"
+                id="floating_outlined"
+                className="border-1 peer block  w-[124px] appearance-none rounded border-neutral-400 bg-transparent bg-white px-2.5 pb-2.5 pt-4 text-center  text-sm text-gray-900 placeholder:text-center focus:border-orange-500 focus:outline-none focus:ring-0 md:w-[105px]"
+                placeholder="0 "
+              />
+            </div>
             <div className="relative mb-4 md:mb-4">
               <input
                 type="text"
@@ -73,7 +94,7 @@ export default function FromSingle() {
                 htmlFor="floating_outlined"
                 className="absolute left-1 top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-[16px] text-sm  text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-gray-900 md:text-[16px]"
               >
-                Escribe el nombre del single
+                Escribe el nombre álbum
               </label>
             </div>
             <p className="mb-5 mt-7 text-base font-normal leading-tight text-black">Precio</p>
@@ -225,8 +246,36 @@ export default function FromSingle() {
                 </svg>
               </button>
             </div>
+            <div className="my-5 flex justify-center md:justify-start">
+              <button
+                type="button"
+                className=" inline-flex h-12 w-36  items-center justify-start gap-2.5 text-center  text-lg font-normal leading-10 text-black"
+                onClick={handleAddSongInput}
+              >
+                <BsPlusCircleFill className="text-orange-500" />
+                Agregar canción
+              </button>
+            </div>
 
-            <div className=" md relative mt-5 h-20 w-[324px]">
+            {/* Step 3: Map over the state variable to render the song inputs */}
+            {songInputs.map((inputValue, index) => (
+              <div key={index} className="relative mb-4 flex md:mb-5">
+                <input
+                  type="file"
+                  name={`field${index}`} // Use a unique name for each song input
+                  value={inputValue}
+                  onChange={(e) => {
+                    const updatedInputs = [...songInputs];
+                    updatedInputs[index] = e.target.value;
+                    setSongInputs(updatedInputs);
+                  }}
+                  className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-lg text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                  placeholder="Song name"
+                />
+              </div>
+            ))}
+
+            <div className="relative mt-5 h-20 w-[324px]">
               <div className="absolute left-[48px] top-0 w-[276px] text-sm font-normal text-black md:w-96">
                 Declaro que estoy consciente de las leyes de derechos de autor en mi país de
                 residencia y entiendo que cualquier violación de dichas leyes puede acarrear
