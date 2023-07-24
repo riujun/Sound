@@ -18,15 +18,21 @@ export class User extends Document {
 
   @Prop({
     default:
-      'https://asset.cloudinary.com/dnemqmc7a/05b35cf73934f1746f6a2845259369f5',
+      'https://res.cloudinary.com/dnemqmc7a/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1689019059/image_bahgnt.jpg?_s=public-apps',
   })
-  image: string;
+  profilePhoto: string;
 
   @Prop({ type: [{ type: Types.ObjectId }] })
   favoriteArtists: string[]; // Array de IDs de artistas favoritos
 
   @Prop({ unique: true })
   email: string;
+
+  @Prop({
+    default:
+      'https://res.cloudinary.com/dnemqmc7a/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1689019059/image_bahgnt.jpg?_s=public-apps',
+  })
+  coverPhoto: string;
 
   @Prop()
   password: string;
@@ -36,6 +42,9 @@ export class User extends Document {
 
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Song' }] })
   songsUplodaded: Song[];
+
+  @Prop()
+  description: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

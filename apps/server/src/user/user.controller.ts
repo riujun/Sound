@@ -16,12 +16,13 @@ import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { v2 as cloudinary } from 'cloudinary';
-import { diskStorage } from 'multer';
+// import { diskStorage } from 'multer';
 import { GetArtirtsFilterDto } from 'src/dto/get-artists-filter.dto';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
 import { UpdateUserDto } from 'src/dto/update-user.dto';
 import { SongsService } from 'src/songs/songs.service';
 import { UserService } from './user.service';
+import { ImageType } from 'src/enums/enums';
 
 @ApiTags('User')
 @Controller('user')
@@ -112,7 +113,7 @@ export class UserController {
     }
   }
 
-  @ApiOperation({ summary: 'Busqueda de artistas y canciones' })
+  @ApiOperation({ summary: 'Busqueda de artistas.' })
   @Get('/artists')
   async getArtists(
     @Query() pagination: PaginationQueryDto,
@@ -200,17 +201,19 @@ export class UserController {
 
   @Post(':id/profile-photo')
   @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './uploads', // Directorio de destino para guardar los archivos
-        filename: (req, file, cb) => {
-          const uniqueSuffix = `${Date.now()}-${Math.round(
-            Math.random() * 1e9,
-          )}`;
-          cb(null, `${file.fieldname}-${uniqueSuffix}`);
-        },
-      }),
-    }),
+    // FileInterceptor('file', {
+    //   storage: diskStorage({
+    //     destination: './uploads', // Directorio de destino para guardar los archivos
+    //     filename: (req, file, cb) => {
+    //       const uniqueSuffix = `${Date.now()}-${Math.round(
+    //         Math.random() * 1e9,
+    //       )}`;
+    //       cb(null, `${file.fieldname}-${uniqueSuffix}`);
+    //     },
+    //   }),
+    // }),
+
+    FileInterceptor('file'),
   )
   async uploadProfilePhoto(
     @Param('id') id: string,
@@ -218,12 +221,13 @@ export class UserController {
     @Res() res,
   ) {
     try {
-      const result = await cloudinary.uploader.upload(file.path);
-      const profilePhotoUrl = result.secure_url;
-
-      const updatedUser = await this.userService.updateProfilePhotoUrl(
+      const profilePhotoUrl = await this.songService.uploadFile(file);
+      // const profilePhotoUrl = result.secure_url;
+      console.log(profilePhotoUrl);
+      const updatedUser = await this.userService.updateUserPhoto(
         id,
         profilePhotoUrl,
+        ImageType.PROFILE,
       );
 
       if (!updatedUser) {
@@ -281,6 +285,61 @@ export class UserController {
       return res
         .status(HttpStatus.INTERNAL_SERVER_ERROR)
         .json({ error: 'Ocurrió un error al procesar la solicitud.' });
+    }
+  }
+
+  @Put('/coverPhoto/:id')
+  @UseInterceptors(FileInterceptor('file'))
+  async updatePort(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+    @Res() res,
+  ) {
+    try {
+      const coverPhotoUrl = await this.songService.uploadFile(file);
+
+      const updatedUser = await this.userService.updateUserPhoto(
+        id,
+        coverPhotoUrl,
+        ImageType.COVER,
+      );
+
+      console.log(updatedUser);
+
+      if (!updatedUser) {
+        return res
+          .status(HttpStatus.NOT_FOUND)
+          .json({ message: 'User not found' });
+      }
+
+      return res.status(HttpStatus.OK).json(updatedUser);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error uploading profile photo');
+    }
+  }
+
+  @Put('/description/:id')
+  async updateDescription(
+    @Body() updateUser: UpdateUserDto,
+    @Param('id') id: string,
+    @Res() res,
+  ) {
+    try {
+      const updatedDescription = await this.userService.updateById(
+        id,
+        updateUser,
+      );
+
+      if (!updatedDescription) {
+        return res
+          .status(HttpStatus.NOT_FOUND)
+          .json({ message: 'User not found' });
+      }
+      return res.status(HttpStatus.OK).json(updatedDescription);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error uploading descrption: ' + error.message);
     }
   }
 }
