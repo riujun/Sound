@@ -113,7 +113,7 @@ export class UserController {
     }
   }
 
-  @ApiOperation({ summary: 'Busqueda de artistas y canciones' })
+  @ApiOperation({ summary: 'Busqueda de artistas.' })
   @Get('/artists')
   async getArtists(
     @Query() pagination: PaginationQueryDto,
