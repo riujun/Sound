@@ -7,8 +7,8 @@ import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
 
 import Buscador from '../Buscador/Buscador';
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
+import type { Artist } from './CardArtist';
 import CardArtist from './CardArtist';
-import { type Artist } from './CardArtist';
 
 export default function CardArtistList() {
   // Estado para almacenar la página actual
@@ -20,19 +20,26 @@ export default function CardArtistList() {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
 
   useEffect(() => {
-    const fetchAlbums = async () => {
+    const fetchArtists = async (): Promise<void> => {
       try {
-        const response = await axios.get('http://localhost:4000/user');
+        const response = await axios.get<Artist[]>('http://localhost:4000/user');
         setArtist(response.data);
-        setDBConnected(true); // Setear el estado a true si se pudo conectar a la base de datos
-        setHasData(response.data.length > 0); // Hay datos en la DB
+        setDBConnected(true);
+        setHasData(response.data.length > 0);
       } catch (error) {
-        console.error('Error fetching albums:', error);
+        console.error('Error fetching artist:', error);
         setDBConnected(false);
       }
     };
 
-    fetchAlbums();
+    const fetchData = () => {
+      fetchArtists().catch((error) => {
+        // Manejar el error aquí si es necesario
+        console.error('Error in fetchData:', error);
+      });
+    };
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -62,7 +69,7 @@ export default function CardArtistList() {
   if (typeof window !== 'undefined') {
     pageSize = window.innerWidth > 768 ? 10 : 6;
   }
-  const totalItems = artist.length || 0; // cantidad de CardArtists que traiga la API
+  const totalItems = artist.length > 0 || 0; // cantidad de CardArtists que traiga la API
   // Cálculo del número total de páginas
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   const totalPages = Math.ceil(totalItems / pageSize) || 1; // Cantidad de páginas del paginador
@@ -158,7 +165,7 @@ export default function CardArtistList() {
               } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={handlePreviousPage}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
+              <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
             </div>
             {/* Renderización de los números de página */}
             {generatePageNumbers().map((pageNumber) => (
@@ -173,7 +180,7 @@ export default function CardArtistList() {
                   setCurrentPage(pageNumber);
                 }}
               >
-                <div className="text-base font-semibold leading-none text-black uppercase">
+                <div className="text-base font-semibold uppercase leading-none text-black">
                   {pageNumber}
                 </div>
               </div>
@@ -185,12 +192,12 @@ export default function CardArtistList() {
               } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={handleNextPage}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
+              <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
             </div>
           </div>
         </div>
       ) : (
-        <div onClick={handleShowMore} className="flex justify-center mt-4">
+        <div onClick={handleShowMore} className="mt-4 flex justify-center">
           <ButtonCuatro>DESCUBRE MÁS</ButtonCuatro>
         </div>
       )}

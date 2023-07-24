@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
+import type { Album } from './CardAlbum';
 import CardAlbum from './CardAlbum';
-import { type Album } from './CardAlbum';
 
 export default function Albumes() {
   // Estado para almacenar la página actual
@@ -17,19 +17,26 @@ export default function Albumes() {
   // const [isMediumScreen, setIsMediumScreen] = useState(false);
 
   useEffect(() => {
-    const fetchAlbums = async () => {
+    const fetchAlbums = async (): Promise<void> => {
       try {
-        const response = await axios.get('http://localhost:4000/albums');
+        const response = await axios.get<Album[]>('http://localhost:4000/albums');
         setAlbums(response.data);
-        setDBConnected(true); // Setear el estado a true si se pudo conectar a la base de datos
-        setHasData(response.data.length > 0); // Hay datos en la DB
+        setDBConnected(true);
+        setHasData(response.data.length > 0);
       } catch (error) {
         console.error('Error fetching albums:', error);
         setDBConnected(false);
       }
     };
 
-    fetchAlbums();
+    const fetchData = () => {
+      fetchAlbums().catch((error) => {
+        // Manejar el error aquí si es necesario
+        console.error('Error in fetchData:', error);
+      });
+    };
+
+    fetchData();
   }, []);
 
   const handleShowMore = () => {
@@ -37,7 +44,7 @@ export default function Albumes() {
   };
   // Número de registros por página
   const pageSize = 5;
-  const totalItems = albums.length || 0;
+  const totalItems = Array.isArray(albums) ? albums.length : 0;
   // Cálculo del número total de páginas
   const totalPages = Math.ceil(totalItems / pageSize);
 
@@ -98,7 +105,7 @@ export default function Albumes() {
   };
 
   return (
-    <div className="flex-grow mt-5 mb-10 overflow-auto">
+    <div className="mb-10 mt-5 flex-grow overflow-auto">
       <div className="flex py-5 pl-5 md:pl-7">
         <div className="text-xl font-semibold leading-normal text-zinc-700 lg:text-[32px]">
           Lo nuevo en álbums{' '}
@@ -110,11 +117,11 @@ export default function Albumes() {
         {hasData ? '' : <div className="text-red-600 ">No Data</div>}
         {renderCardAlbumes()}
       </div>
-      { !showPaginator && (
-        <div onClick={handleShowMore} className="flex justify-center mt-4">
+      {!showPaginator && (
+        <div onClick={handleShowMore} className="mt-4 flex justify-center">
           <ButtonCuatro>DESCUBRE MÁS ARTISTAS</ButtonCuatro>
-        </div> )
-      }
+        </div>
+      )}
       {showPaginator && (
         <div id="Paginador" className="flex items-center justify-center pt-8">
           <div className="inline-flex gap-2 bg-white">
@@ -126,7 +133,7 @@ export default function Albumes() {
               } ${hasPreviousPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={handlePreviousPage}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">&lt;</div>
+              <div className="text-base font-semibold uppercase leading-none text-black">&lt;</div>
             </div>
             {/* Renderización de los números de página */}
             {generatePageNumbers().map((pageNumber) => (
@@ -141,7 +148,7 @@ export default function Albumes() {
                   setCurrentPage(pageNumber);
                 }}
               >
-                <div className="text-base font-semibold leading-none text-black uppercase">
+                <div className="text-base font-semibold uppercase leading-none text-black">
                   {pageNumber}
                 </div>
               </div>
@@ -153,11 +160,11 @@ export default function Albumes() {
               } ${hasNextPage ? 'cursor-pointer' : 'cursor-not-allowed'}`}
               onClick={handleNextPage}
             >
-              <div className="text-base font-semibold leading-none text-black uppercase">&gt;</div>
+              <div className="text-base font-semibold uppercase leading-none text-black">&gt;</div>
             </div>
           </div>
         </div>
-      )} 
+      )}
     </div>
   );
 }
