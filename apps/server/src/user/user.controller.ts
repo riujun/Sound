@@ -57,7 +57,7 @@ export class UserController {
     }
   }
 
-  @ApiOperation({ summary: 'Busqueda personal de artistas y musica' })
+  @ApiOperation({ summary: 'Obtener musica comprada' })
   @ApiParam({ name: 'id', description: 'ID del user' })
   @Get('/mysongs/:id')
   async getMyMusic(
@@ -69,6 +69,33 @@ export class UserController {
     try {
       const user = await this.userService.getById(id);
       const songsId = user.songsPurchased;
+      let songs = await this.songService.findSongsByIds(songsId, pagination);
+      if (search) {
+        const searchLowerCase = search.toLowerCase();
+        songs = songs.filter((song) =>
+          song.name.toLowerCase().includes(searchLowerCase),
+        );
+      }
+      return res.status(HttpStatus.OK).json({ songs });
+    } catch (error) {
+      return res
+        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+        .json({ message: `Error en el servidor, error:${error}` });
+    }
+  }
+
+  @ApiOperation({ summary: 'Obtener musica del artista' })
+  @ApiParam({ name: 'id', description: 'ID del user' })
+  @Get('/mysongsuploaded/:id')
+  async getMyMusicUploaded(
+    @Param('id') id: string,
+    @Query() pagination: PaginationQueryDto,
+    @Query() { search }: GetArtirtsFilterDto,
+    @Res() res,
+  ) {
+    try {
+      const user = await this.userService.getById(id);
+      const songsId = user.songsUplodaded;
       let songs = await this.songService.findSongsByIds(songsId, pagination);
       if (search) {
         const searchLowerCase = search.toLowerCase();
