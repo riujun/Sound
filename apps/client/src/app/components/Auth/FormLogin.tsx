@@ -77,33 +77,6 @@ export default function FormLogin() {
 
   const [visible, setVisible] = useState(false);
 
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch('http://localhost:4000/auth-jwt/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: field1,
-          password: field2,
-        }),
-      });
-
-      const data = await response.json();
-      console.log(data);
-      if (response.ok) {
-        localStorage.setItem('jwtToken', data.token);
-      } else {
-        setError(data.message || 'Login failed. Please try again.');
-      }
-    } catch (error) {
-      setError('An error occurred. Please try again.');
-    }
-  };
-
   return (
     <>
       <section className="z-10 max-h-screen md:relative md:z-10 md:mt-[129px] md:h-[751px] md:w-[588px] md:rounded-xl md:bg-orange-100 md:px-[120px] md:pt-[59px]  md:shadow-2xl">
