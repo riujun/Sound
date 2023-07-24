@@ -16,6 +16,12 @@ export class User extends Document {
   @Prop({ unique: true })
   username: string;
 
+  @Prop()
+  genre: string;
+
+  @Prop()
+  followers: number;
+
   @Prop({
     default:
       'https://res.cloudinary.com/dnemqmc7a/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1689019059/image_bahgnt.jpg?_s=public-apps',

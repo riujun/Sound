@@ -38,6 +38,16 @@ export class UpdateUserDto {
   @IsBoolean()
   artist?: boolean;
   @ApiProperty({
+    description: 'Genero del artista',
+    example: true,
+  })
+  genre: string;
+
+  @ApiProperty({
+    description: 'Cantidad de seguidores',
+  })
+  followers: number;
+  @ApiProperty({
     description: 'Email del usuario',
     example: 'pedro@123.com',
   })
