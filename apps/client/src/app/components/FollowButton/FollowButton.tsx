@@ -2,7 +2,7 @@
 'use client';
 import React, { useState } from 'react';
 
-import CardArtist from '../CadrArtistList/CardArtist';
+// import CardArtist from '../CadrArtistList/CardArtist';
 interface FollowButtonProps {
   followers: number;
   following: number;
