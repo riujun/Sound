@@ -19,13 +19,13 @@ Nuestro objetivo es proporcionar una plataforma que permita a los músicos indep
 
 #Características técnicas
 
-#Tecnologías utilizadas:
+# Tecnologias Utilizadas:
 Front End: Next js, TypeScript y Taildwind css
 Back End: Nest js, TypeScript
 #Almacenamiento de datos:
 Como base de datos utilizamos MongoDB, los archivos de imagenes y sonido son almacenados en Cloudinary.
 
-#Integraciones:
+# Integraciones:
 Si la app se integra con mercado pago y paypal para poder comprar musica.
 
 #Integrantes
