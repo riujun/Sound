@@ -17,31 +17,31 @@ Descarga SoundWave ahora mismo y déjate llevar por la magia de la música indep
 ##Objetivo
 Nuestro objetivo es proporcionar una plataforma que permita a los músicos independientes vender sus canciones a precios personalizados y, al mismo tiempo, ampliar la difusión de su trabajo, proporcionándoles una oportunidad para mantener carreras musicales sostenibles en un entorno de transición hacia el streaming en la industria musical.
 
-#Características técnicas
+# Características técnicas
 
-# Tecnologias Utilizadas:
+## Tecnologias Utilizadas:
 Front End: Next js, TypeScript y Taildwind css
 Back End: Nest js, TypeScript
 #Almacenamiento de datos:
 Como base de datos utilizamos MongoDB, los archivos de imagenes y sonido son almacenados en Cloudinary.
 
-# Integraciones:
+## Integraciones:
 Si la app se integra con mercado pago y paypal para poder comprar musica.
 
-#Integrantes
+## Integrantes
 
-#UX/UI:
+#### UX/UI:
 
 - [Daniel Infante](https://www.linkedin.com/in/dinfante6/ 'Daniel Infante')
 - [Romina Garavaglia](https://www.linkedin.com/in/rominaggaravaglia 'Romina Garavaglia')
 - [Cristian Rios](https://www.linkedin.com/in/cristian-rios-uxuidesigner/ 'Cristian Rios')
 
-#Front End:
+#### Front End:
 
 - [Alan Telo](http://www.linkedin.com/in/alan-gabriel-telo 'Alan Telo')
 - [Jose Arias](https://www.linkedin.com/in/joose-ari-b08729233 'Jose Arias')
 
-#Back End:
+#### Back End:
 
 - [Sebastián Torreiro](https://www.linkedin.com/in/sebastian-torreiro/ 'Sebastián Torreiro')
 - [Pedro Faino](https://www.linkedin.com/in/devpedrofaino/ 'Pedro Faino')
