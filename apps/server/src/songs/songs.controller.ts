@@ -20,16 +20,13 @@ import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
 import { SongsService } from './songs.service';
 import { UserService } from 'src/user/user.service';
 
-
 @ApiTags('Songs')
 @Controller('songs')
 export class SongsController {
-
   constructor(
     private songsService: SongsService,
     private userService: UserService,
   ) {}
-
 
   @ApiOperation({ summary: 'Obtener todas las canciones' })
   @Get()
@@ -61,14 +58,12 @@ export class SongsController {
     }
   }
 
-
   @UseInterceptors(
     FileFieldsInterceptor([
       { name: 'song', maxCount: 1 },
       { name: 'image', maxCount: 1 },
     ]),
   )
-
   @ApiOperation({ summary: 'Crear una nueva canción.' })
   @Post('/create')
   async createSong(
@@ -151,7 +146,6 @@ export class SongsController {
       usuario.songsUplodaded.push(song._id);
       await this.userService.updateById(user, usuario);
       return res.status(HttpStatus.OK).json({ song });
-
     } catch (err) {
       console.log(err);
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(err);

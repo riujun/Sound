@@ -35,6 +35,10 @@ export class User extends Document {
   @IsOptional() // Haciendo el campo "favoriteArtists" opcional
   favoriteArtists?: string[]; // Array de IDs de artistas favoritos
 
+  @Prop({ type: [{ type: Types.ObjectId }] })
+  @IsOptional() // Haciendo el campo "favoriteArtists" opcional
+  followingArtists?: string[]; // Arreglo de IDs de los artistas seguidos por el usuario
+
   @Prop({ unique: true })
   @IsOptional() // Haciendo el campo "email" opcional
   email?: string;
