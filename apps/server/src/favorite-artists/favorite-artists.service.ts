@@ -21,10 +21,10 @@ export class FavoriteArtistsService {
 
   async addToFavorites(userId: string, artistId: string): Promise<User> {
     const user = await this.userModel.findById(userId);
+    const artist = await this.userModel.findById(artistId);
 
-    // Verificar si el usuario existe
-    if (!user) {
-      throw new Error('Usuario no encontrado');
+    if (!user || !artist) {
+      throw new Error('Usuario o artista no encontrado');
     }
 
     if (user.favoriteArtists.includes(artistId)) {
@@ -32,17 +32,20 @@ export class FavoriteArtistsService {
     }
 
     user.favoriteArtists.push(artistId);
+    artist.followingArtists.push(userId); // Agregar el usuario a la lista de seguidores del artista
 
     await user.save();
+    await artist.save();
 
     return user;
   }
 
   async removeFavoriteArtist(userId: string, artistId: string): Promise<User> {
     const user = await this.userModel.findById(userId);
+    const artist = await this.userModel.findById(artistId);
 
-    if (!user) {
-      throw new Error('Usuario no encontrado');
+    if (!user || !artist) {
+      throw new Error('Usuario o artista no encontrado');
     }
 
     const index = user.favoriteArtists.indexOf(artistId);
@@ -50,6 +53,14 @@ export class FavoriteArtistsService {
       user.favoriteArtists.splice(index, 1);
     }
 
-    return user.save();
+    const followerIndex = artist.followingArtists.indexOf(userId);
+    if (followerIndex > -1) {
+      artist.followingArtists.splice(followerIndex, 1);
+    }
+
+    await user.save();
+    await artist.save();
+
+    return user;
   }
 }

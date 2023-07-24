@@ -11,6 +11,7 @@ import { User, UserSchema } from 'src/schemas/user.schema';
 @Module({
   providers: [SongsService, UserService],
   controllers: [SongsController, UserController],
+
   exports: [SongsService],
   imports: [
     ConfigModule,

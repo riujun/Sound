@@ -12,6 +12,7 @@ import cloudinaryConfig from './cloudinary.config';
 import { MercadopagoModule } from './mercadopago/mercadopago.module';
 import { PaymentController } from './payment/payment.controller';
 import { PaypalModule } from './paypal/paypal.module';
+import { AuthModule } from './auth/auth.module';
 import { PublicationsUserModule } from './publications-user/publications-user.module';
 
 @Module({
@@ -30,6 +31,7 @@ import { PublicationsUserModule } from './publications-user/publications-user.mo
     MercadopagoModule,
     PaypalModule,
     FavoriteArtistsModule,
+    AuthModule,
     PublicationsUserModule,
   ],
   controllers: [PaymentController],
