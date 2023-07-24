@@ -1,4 +1,5 @@
 'use client';
+import axios from 'axios';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -6,13 +7,40 @@ import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
 
 import Buscador from '../Buscador/Buscador';
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
+import type { Artist } from './CardArtist';
 import CardArtist from './CardArtist';
 
 export default function CardArtistList() {
   // Estado para almacenar la página actual
+  const [artist, setArtist] = useState<Artist[]>([]);
+  const [isDBConnected, setDBConnected] = useState(false);
+  const [hasData, setHasData] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [showAll, setShowAll] = useState(true);
   const [isMediumScreen, setIsMediumScreen] = useState(false);
+
+  useEffect(() => {
+    const fetchArtists = async (): Promise<void> => {
+      try {
+        const response = await axios.get<Artist[]>('http://localhost:4000/user');
+        setArtist(response.data);
+        setDBConnected(true);
+        setHasData(response.data.length > 0);
+      } catch (error) {
+        console.error('Error fetching artist:', error);
+        setDBConnected(false);
+      }
+    };
+
+    const fetchData = () => {
+      fetchArtists().catch((error) => {
+        // Manejar el error aquí si es necesario
+        console.error('Error in fetchData:', error);
+      });
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -37,10 +65,11 @@ export default function CardArtistList() {
   };
   // Número de registros por página
   let pageSize = 0;
+
   if (typeof window !== 'undefined') {
     pageSize = window.innerWidth > 768 ? 10 : 6;
   }
-  const totalItems = 95; // cantidad de CardArtists que traiga la API
+  const totalItems = artist.length > 0 || 0; // cantidad de CardArtists que traiga la API
   // Cálculo del número total de páginas
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   const totalPages = Math.ceil(totalItems / pageSize) || 1; // Cantidad de páginas del paginador
@@ -55,7 +84,7 @@ export default function CardArtistList() {
 
     for (let i = startIndex; i < endIndex; i++) {
       // Pasar parámetros con los datos del Artista
-      cardArtists.push(<CardArtist key={i} index={i} />);
+      cardArtists.push(<CardArtist key={i} artist={artist[i]} />);
     }
     return cardArtists;
   };
@@ -111,16 +140,18 @@ export default function CardArtistList() {
       <div className="flex justify-center p-5">
         <div className="text-xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
           {!isMediumScreen && 'Descubre y apoya a nuevo talento musical'}
+          <div className="text-red-600 ">{isDBConnected ? '' : 'Desconectado'}</div>
         </div>
       </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
       <div
         className={
           isMediumScreen && !showAll
-            ? `h-[181px] w-[382px] overflow-x-scroll whitespace-nowrap pl-1`
+            ? `h-[181px] w-[382px] overflow-x-scroll whitespace-nowrap pl-1 sm:w-[760px]`
             : `pl-6 md:h-[485px] md:w-full md:overflow-x-auto md:whitespace-normal md:pl-3`
         }
       >
+        {hasData ? '' : <div className="text-red-600 ">No Data</div>}
         {renderCardArtists()}
       </div>
       {showAll ? (

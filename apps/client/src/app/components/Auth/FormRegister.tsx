@@ -87,7 +87,7 @@ export default function FormRegister() {
 
   return (
     <>
-      <section className="z-10 max-h-screen md:relative md:z-10 md:mt-[129px] md:h-[889px] md:w-[588px] md:rounded-xl md:bg-orange-100 md:px-[120px] md:pt-[59px] md:shadow-2xl">
+      <section className="z-10 max-h-screen md:relative md:z-10 md:mt-[129px] md:min-h-[889px] md:w-[588px] md:rounded-xl md:bg-orange-100 md:px-[120px] md:pt-[59px] md:shadow-2xl">
         <Image src={logo} alt="Logo" width={348} height={53} priority className="hidden md:flex" />
         <p className="mt-10 px-7 text-start text-2xl font-bold text-black md:mt-5  md:pt-[25px] md:text-center md:text-[24px] md:font-semibold ">
           ¡Regístrate ahora y sumérgete en el mundo de la música!

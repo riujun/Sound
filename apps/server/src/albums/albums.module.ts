@@ -4,6 +4,7 @@ import { AlbumsService } from './albums.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Album, AlbumSchema } from 'src/schemas/album.schema';
 import { ConfigModule } from '@nestjs/config';
+import { User, UserSchema } from '../schemas/user.schema';
 
 @Module({
   imports: [
@@ -11,6 +12,10 @@ import { ConfigModule } from '@nestjs/config';
       {
         name: Album.name,
         schema: AlbumSchema,
+      },
+      {
+        name: User.name,
+        schema: UserSchema,
       },
     ]),
     ConfigModule,

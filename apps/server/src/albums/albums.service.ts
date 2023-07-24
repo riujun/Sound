@@ -20,18 +20,24 @@ export class AlbumsService {
   }
 
   async findAll() {
-    return await this.albumModel.find();
+    return this.albumModel.find().populate({ path: 'user', model: 'User' });
   }
 
   async delete(id: string) {
-    return await this.albumModel.findByIdAndDelete(id);
+    return await this.albumModel
+      .findByIdAndDelete(id)
+      .populate({ path: 'user', model: 'User' });
   }
 
   async findByName(nombre: string) {
-    return await this.albumModel.findOne({ nombre });
+    return await this.albumModel
+      .findOne({ nombre })
+      .populate({ path: 'user', model: 'User' });
   }
 
   async findByArtist(usuario: string) {
-    return await this.albumModel.findOne({ usuario });
+    return await this.albumModel
+      .findOne({ usuario })
+      .populate({ path: 'user', model: 'User' });
   }
 }

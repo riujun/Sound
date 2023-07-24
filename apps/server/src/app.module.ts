@@ -36,6 +36,6 @@ import { PublicationsUserModule } from './publications-user/publications-user.mo
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes('p');
+    consumer.apply(AuthMiddleware).forRoutes('a');
   }
 }
