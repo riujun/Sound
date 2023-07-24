@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { type ChangeEvent, useState } from 'react';
-import { AiFillApple, AiFillEye, AiFillEyeInvisible } from 'react-icons/Ai';
-import { BiLogoFacebook } from 'react-icons/Bi';
+import { type ChangeEvent, type FormEvent, useState } from 'react';
+import { AiFillApple, AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { BiLogoFacebook } from 'react-icons/bi';
 import { FaGoogle, FaTwitter } from 'react-icons/fa';
 
 import logo from '@/app/assets/landingpage/soundwave.png';
@@ -16,7 +15,7 @@ interface FormFields {
 
 export default function FormLogin() {
   const [visible, setVisible] = useState(false);
-
+  const [error, setError] = useState('');
   const [form, setForm] = useState<FormFields>({
     field1: '',
     field2: '',
@@ -33,6 +32,33 @@ export default function FormLogin() {
 
   const isFormCompleted = field1 !== '' && field2 !== '';
 
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:4000/auth-jwt/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: field1,
+          password: field2,
+        }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if (response.ok) {
+        localStorage.setItem('jwtToken', data.token);
+      } else {
+        setError(data.message || 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.');
+    }
+  };
+
   return (
     <>
       <section className="z-10 max-h-screen md:relative md:z-10 md:mt-[129px] md:h-[751px] md:w-[588px] md:rounded-xl md:bg-orange-100 md:px-[120px] md:pt-[59px]  md:shadow-2xl">
@@ -40,7 +66,7 @@ export default function FormLogin() {
         <p className="mt-10 px-7 text-start text-2xl font-bold text-black md:mt-5 md:px-5 md:pt-[25px] md:text-center md:text-[24px] md:font-semibold">
           Iniciar Sesión
         </p>
-        <form className="mt-10 px-5 md:mt-[46px] md:px-0">
+        <form className="mt-10 px-5 md:mt-[46px] md:px-0" onSubmit={handleLogin}>
           <div className="relative mb-4 md:mb-4">
             <input
               type="email"
@@ -90,6 +116,7 @@ export default function FormLogin() {
               />
             )}
           </div>
+          {error && <p className="mb-4 text-sm text-red-500">{error}</p>}
           <button
             className={`inline-flex h-12 w-full items-center justify-center gap-2.5 rounded-md p-4 text-[16px] font-semibold uppercase leading-none   ${
               isFormCompleted
