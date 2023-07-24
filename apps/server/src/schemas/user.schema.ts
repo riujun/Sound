@@ -25,10 +25,11 @@ export class User extends Document {
   username?: string;
 
   @Prop()
-  genre: string;
-
+  @IsOptional()
+  genre?: string;
+  @IsOptional()
   @Prop()
-  followers: number;
+  followers?: number;
 
   @Prop({
     default:

@@ -3,6 +3,7 @@ import {
   IsBoolean,
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   Matches,
@@ -45,12 +46,16 @@ export class CreateUserDto {
     description: 'Genero del artista',
     example: true,
   })
-  genre: string;
+  @IsString()
+  @IsOptional()
+  genre?: string;
 
   @ApiProperty({
     description: 'Cantidad de seguidores',
   })
-  followers: number;
+  @IsNumber()
+  @IsOptional()
+  followers?: number;
   @ApiProperty({
     description: 'Responde a si el usuario es artista o no',
     example: true,

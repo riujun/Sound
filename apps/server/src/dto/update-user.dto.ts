@@ -41,12 +41,14 @@ export class UpdateUserDto {
     description: 'Genero del artista',
     example: true,
   })
-  genre: string;
+  @IsOptional()
+  genre?: string;
 
   @ApiProperty({
     description: 'Cantidad de seguidores',
   })
-  followers: number;
+  @IsOptional()
+  followers?: number;
   @ApiProperty({
     description: 'Email del usuario',
     example: 'pedro@123.com',
