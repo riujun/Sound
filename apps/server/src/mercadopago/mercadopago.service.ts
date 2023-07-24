@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
 import { Preference } from 'mercadopago';
 import { mercadoItemDto } from 'src/dto/mercadopago-item.dto';
-import { UserController } from 'src/user/user.controller';
-import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class MercadopagoService {
