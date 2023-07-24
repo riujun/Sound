@@ -30,7 +30,7 @@ export class User extends Document {
 
   @Prop({
     default:
-      'https://asset.cloudinary.com/dnemqmc7a/05b35cf73934f1746f6a2845259369f5',
+      'https://res.cloudinary.com/dlvpftdsm/image/upload/v1690205832/image_bahgnt_jflwbk.jpg',
   })
   coverPhoto: string;
 
