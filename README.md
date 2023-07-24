@@ -33,7 +33,7 @@ Como base de datos utilizamos MongoDB, los archivos de imagenes y sonido son alm
 
 Si la app se integra con mercado pago y paypal para poder comprar musica.
 
-### Integrantes
+## Integrantes
 
 #### UX/UI:
 
