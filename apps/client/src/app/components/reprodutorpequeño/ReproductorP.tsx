@@ -21,8 +21,8 @@ import Opciones from '@/app/assets/Opciones.png';
 import Play from '@/app/assets/Play.png';
 import Reproduciendo from '@/app/assets/Reproduciendo.png';
 import Stop from '@/app/assets/Stop.png';
-import MetodoDePago from '@/app/components/ModalAlerts/AlertMetodoDePago';
-
+// import MetodoDePago from '@/app/components/ModalAlerts/AlertMetodoDePago';
+import AlertSongsOptions from '@/app/components/ModalAlerts/AlertSongsOptions';
 interface Song {
   id: number;
   title: string;
@@ -73,14 +73,14 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
       <audio ref={audioRef} src={songs[0].src} />
 
       {/* Diseño José */}
-      <div className="flex h-14 w-[326px] items-center justify-between border-b border-neutral-400 md:h-[58px] md:w-[525px]">
+      <div className="flex h-14 w-[326px] items-center justify-between border-b border-neutral-400 md:h-[58px] md:w-full md:min-w-[430px] md:max-w-[525px]">
         <div className="relative h-[42px] w-[270px]">
           <div className="absolute left-0 top-[0px] text-2xl font-semibold leading-normal text-black md:text-3xl">
             {songs[0].id}
           </div>
           <div className="absolute left-[30px] top-[-2px] inline-flex items-center justify-start gap-4 md:left-[35px]">
             <Image
-              className="h-[33px] w-[33px] object-cover md:h-[42px] md:w-[42px]"
+              className="h-[33px] w-[33px] rounded object-cover md:h-[42px] md:w-[42px]"
               src={img}
               alt="imagen de portada"
             />
@@ -108,7 +108,7 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
               {isPlaying ? <Image src={Stop} alt="Stop" /> : <Image src={Play} alt="Play" />}
             </button>
           </div>
-          <div className="inline-flex h-[30px] w-14 items-center justify-center gap-2.5 border border-zinc-700 px-5 py-2 hover:border-orange-500 md:w-[85px]">
+          <div className="inline-flex h-[30px] w-14 rounded items-center justify-center gap-2.5 border border-zinc-700 px-5 py-2 hover:border-orange-500 md:w-[85px]">
             <button
               className="group relative text-center text-xs font-medium leading-[13.46px] text-zinc-700"
               onClick={() => {
@@ -118,7 +118,7 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
               <span className="text-center text-xs font-medium leading-[13.46px] text-zinc-700">
                 {songs[0].price + '0'}
               </span>
-              <span className="absolute left-1/2 mt-[-8px] h-[30px] w-14 -translate-x-1/2 transform bg-orange-500 pt-2 text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:w-[85px]">
+              <span className="absolute left-1/2 mt-[-8px] h-[30px] rounded w-14 -translate-x-1/2 transform bg-orange-500 pt-2 text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:w-[85px]">
                 COMPRAR
               </span>
             </button>
@@ -128,7 +128,8 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
           </div>
         </div>
       </div>
-      <MetodoDePago onClose={handleClose} visible={showMyModal} />
+      {/* <MetodoDePago onClose={handleClose} visible={showMyModal} /> */}
+      <AlertSongsOptions onClose={handleClose} visible={showMyModal} />
       {/* TODAS LAS ALERTAS DEL SITIO - IR BORRANDO A MEDIDA QUE SE UTILIZAN */}
       {/* <Loader onClose={handleClose} visible={showMyModal} /> */}
       {/* <PagoExitoso onClose={handleClose} visible={showMyModal} /> */}
