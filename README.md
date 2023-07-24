@@ -18,7 +18,6 @@ Descarga SoundWave ahora mismo y déjate llevar por la magia de la música indep
 Nuestro objetivo es proporcionar una plataforma que permita a los músicos independientes vender sus canciones a precios personalizados y, al mismo tiempo, ampliar la difusión de su trabajo, proporcionándoles una oportunidad para mantener carreras musicales sostenibles en un entorno de transición hacia el streaming en la industria musical.
 
 # Características técnicas
-
 ## Tecnologias Utilizadas:
 Front End: Next js, TypeScript y Taildwind css
 Back End: Nest js, TypeScript
