@@ -5,7 +5,7 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get('google/oauth/tokens') // Cambiar a @Get en lugar de @Post
+  @Get('google/oauth/tokens')
   async getGoogleOAuthTokens(@Query('code') code: string) {
     // Usar @Query en lugar de @Body
     console.log(code);
@@ -30,6 +30,4 @@ export class AuthController {
       return { error: 'Error fetching Google user' };
     }
   }
-
-  // Puedes agregar más rutas y métodos según tus necesidades.
 }
