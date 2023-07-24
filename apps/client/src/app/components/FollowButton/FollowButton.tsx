@@ -2,7 +2,7 @@
 'use client';
 import React, { useState } from 'react';
 
-import CardArtist from '../CadrArtistList/CardArtist';
+// import CardArtist from '../CadrArtistList/CardArtist';
 interface FollowButtonProps {
   followers: number;
   following: number;
@@ -49,15 +49,15 @@ const FollowButton: React.FC<FollowButtonProps> = () => {
       <section className="ml-10 mt-16">
         {showFollowers && (
           <div>
-            <CardArtist />
-            <CardArtist />
-            <CardArtist />
+            {/* <CardArtist />  
+            // <CardArtist />
+            // <CardArtist /> */}
           </div>
         )}
         {showFollowing && (
           <div>
-            <CardArtist />
-            <CardArtist />
+            {/* <CardArtist />
+            <CardArtist /> */}
           </div>
         )}
       </section>

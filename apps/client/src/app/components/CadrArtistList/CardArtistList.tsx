@@ -69,7 +69,7 @@ export default function CardArtistList() {
   if (typeof window !== 'undefined') {
     pageSize = window.innerWidth > 768 ? 10 : 6;
   }
-  const totalItems = artist.length > 0 || 0; // cantidad de CardArtists que traiga la API
+  const totalItems = Array.isArray(artist) ? artist.length : 0;
   // Cálculo del número total de páginas
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   const totalPages = Math.ceil(totalItems / pageSize) || 1; // Cantidad de páginas del paginador
