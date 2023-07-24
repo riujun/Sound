@@ -24,6 +24,12 @@ export class CreateAlbumDto {
   @IsNotEmpty()
   nombre: string;
   @ApiProperty({
+    description: 'Nombre del artista',
+    example: 'El mato',
+  })
+  @IsString()
+  nombreArtista: string;
+  @ApiProperty({
     description: 'Descripción del album',
     example: 'Album de rock progresivo',
   })

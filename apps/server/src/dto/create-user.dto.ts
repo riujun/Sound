@@ -34,6 +34,16 @@ export class CreateUserDto {
   @IsNotEmpty()
   username: string;
   @ApiProperty({
+    description: 'Genero del artista',
+    example: true,
+  })
+  genre: string;
+
+  @ApiProperty({
+    description: 'Cantidad de seguidores',
+  })
+  followers: number;
+  @ApiProperty({
     description: 'Responde a si el usuario es artista o no',
     example: true,
     required: false,
