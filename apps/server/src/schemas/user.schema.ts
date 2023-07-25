@@ -2,6 +2,7 @@ import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 import { Song } from './song.schema';
 import { IsArray, IsOptional } from 'class-validator';
+import { Album } from './album.schema';
 
 @Schema({ timestamps: true })
 export class User extends Document {
@@ -69,6 +70,20 @@ export class User extends Document {
   @Prop()
   @IsOptional()
   description?: string;
+
+  @Prop({ type: [{ type: Types.ObjectId }] })
+  @IsOptional()
+  albumes: Album[];
+  // @Prop()
+  // @IsOptional()
+
+  @Prop({ default: false })
+  @IsOptional()
+  mercadopagoApproved: boolean;
+
+  @Prop({ default: false })
+  @IsOptional()
+  paypalApproved: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

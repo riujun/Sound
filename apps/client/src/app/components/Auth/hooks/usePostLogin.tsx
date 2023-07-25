@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable prettier/prettier */
 interface LoginData {
   email: string;
   password: string;
@@ -29,14 +27,8 @@ const usePostLogin =
       if (!response.ok) {
         throw new Error('No hay un ok');
       }
-
-      console.log('[LOGIN SUCCESS]');
-
       const respuestaApi = response != null ? await response.text() : 'No hay mensaje';
-
-      if (response.ok) {
-        localStorage.setItem('jwtToken', await response.json());
-      }
+      localStorage.setItem('respuestaApi', respuestaApi);
       return { ok: true, respuestaApi };
     } catch (error) {
       const errorMessage = response != null ? await response.text() : 'No hay mensaje';

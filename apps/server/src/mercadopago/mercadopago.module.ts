@@ -8,6 +8,7 @@ import { SongsService } from 'src/songs/songs.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/schemas/user.schema';
 import { Song, SongSchema } from 'src/schemas/song.schema';
+import { MercadopagoController } from './mercadopago.controller';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { Song, SongSchema } from 'src/schemas/song.schema';
     ]),
     ConfigModule, // Agrega el ConfigModule aquí
   ],
-  controllers: [UserController, SongsController],
+  controllers: [UserController, SongsController, MercadopagoController],
   providers: [MercadopagoService, UserService, SongsService],
   exports: [MercadopagoService],
 })

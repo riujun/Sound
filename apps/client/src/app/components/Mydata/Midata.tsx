@@ -1,13 +1,70 @@
 /* eslint-disable prettier/prettier */
+'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { type ChangeEvent, useEffect, useState } from 'react';
 
 import mp from '@/app/assets/pagos/Mercado Pago.png';
 import paypal from '@/app/assets/pagos/Pay Pal.png';
 
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import { ButtonTres } from '../mobile/buttons/Button_tres';
+
+interface UserData {
+  name: string;
+  surname: string;
+  username: string;
+  artist: boolean;
+  email: string;
+  password: string;
+}
+
 export default function Midata() {
+  const originalUserData: UserData = {
+    name: '',
+    surname: '',
+    username: '',
+    artist: false,
+    email: '',
+    password: '',
+  };
+
+  const [userData, setUserData] = useState<UserData>(originalUserData);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/user/64bcb383dccef44f62a9c9d4')
+      .then((response) => response.json())
+      .then((data: UserData) => {
+        setUserData(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    fetch('http://localhost:4000/user/64bcb383dccef44f62a9c9d4', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => response.json())
+      .then((data: UserData) => {
+        console.log('Data updated successfully:', data);
+      })
+      .catch((error) => {
+        console.error('Error updating user data:', error);
+      });
+  };
   return (
     <div className=" mb-20 w-full">
       <h2 className="ml-7  mt-10 text-[32px] font-medium leading-normal text-orange-500">
@@ -39,8 +96,11 @@ export default function Midata() {
                 <div className="py-2 text-xl font-medium leading-normal text-black">Nombre</div>
                 <input
                   type="text"
+                  name="name"
                   placeholder="Craig Álvarez"
                   className="mr-20 w-[40%] border-none"
+                  value={userData.name}
+                  onChange={handleChange}
                 />
               </div>
               <div className="h-[0px] w-[100%] border border-black"></div>
@@ -50,8 +110,11 @@ export default function Midata() {
                 </div>
                 <input
                   type="text"
+                  name="surname"
                   placeholder="04 de febrero 1880"
                   className="mr-20 w-[40%] border-none"
+                  value={userData.surname}
+                  onChange={handleChange}
                 />
               </div>
               <div className="h-[0px] w-[100%] border border-black"></div>
@@ -61,17 +124,23 @@ export default function Midata() {
                 </div>
                 <input
                   type="text"
+                  name="email"
                   placeholder="vcraig_alvarez@gmail.com"
                   className="mr-20 w-[40%] border-none"
+                  value={userData.email}
+                  onChange={handleChange}
                 />
               </div>
               <div className="h-[0px] w-[100%] border border-black"></div>
               <div className="flex justify-between">
                 <div className="py-2 text-xl font-medium leading-normal text-black">Contraseña</div>
                 <input
-                  type="text"
+                  type="password"
+                  name="password"
                   placeholder="******************"
                   className="mr-20 w-[40%] border-none"
+                  value={userData.password}
+                  onChange={handleChange}
                 />
               </div>
               <div className="h-[0px] w-[100%] border border-black"></div>
@@ -127,7 +196,10 @@ export default function Midata() {
                 </div>
               </div>
               <div className="inline-flex h-12 w-[158px] items-center justify-center gap-2.5 bg-orange-500 p-4">
-                <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
+                <div
+                  onClick={handleSubmit}
+                  className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black"
+                >
                   Guardar cambios
                 </div>
               </div>
@@ -135,8 +207,15 @@ export default function Midata() {
           </div>
           <div>
             <div className="flex flex-col items-center justify-center gap-5">
-              <ButtonCuatro>Guardar cambios</ButtonCuatro>
-              <ButtonTres>Cancelar</ButtonTres>
+              <ButtonCuatro onClick={handleSubmit}>Guardar cambios</ButtonCuatro>
+
+              <ButtonTres
+                onClick={() => {
+                  setUserData(originalUserData);
+                }}
+              >
+                Cancelar
+              </ButtonTres>
             </div>
           </div>
         </div>

@@ -154,8 +154,8 @@ export class PlaylistController {
     return fileUrl;
   }
 
-  @Delete('')
-  async deleteDatabase() {
-    await this.playlistModel.deleteMany();
-  }
+  // @Delete('')
+  // async deleteDatabase() {
+  //   await this.playlistModel.deleteMany();
+  // }
 }
