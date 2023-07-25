@@ -23,21 +23,25 @@ import Reproduciendo from '@/app/assets/Reproduciendo.png';
 import Stop from '@/app/assets/Stop.png';
 import MetodoDePago from '@/app/components/ModalAlerts/AlertMetodoDePago';
 // import AlertSongsOptions from '@/app/components/ModalAlerts/AlertSongsOptions';
-interface Song {
-  id: number;
-  title: string;
+export interface Song {
+  _id: string;
+  name: string;
+  duration: number;
+  user: string;
+  coArtist: string;
+  price: number;
+  genre: string;
+  image: string;
+  date: string;
+  album: string;
   src: string;
-  artista: string;
-  price: string;
-  disco: string;
-  duracion: string;
 }
-
 interface ReproductorProps {
   songs: Song[];
+  index: number;
 }
 
-const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
+const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMyModal, setShowMyModal] = useState(false);
@@ -76,7 +80,7 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
       <div className="flex h-14 w-[326px] items-center justify-between border-b border-neutral-400 md:h-[58px] md:w-full md:min-w-[430px] md:max-w-[525px]">
         <div className="relative h-[42px] w-[270px]">
           <div className="absolute left-0 top-[0px] text-2xl font-semibold leading-normal text-black md:text-3xl">
-            {songs[0].id}
+            {index}
           </div>
           <div className="absolute left-[30px] top-[-2px] inline-flex items-center justify-start gap-4 md:left-[35px]">
             <Image
@@ -86,10 +90,10 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
             />
             <div className="inline-flex flex-col items-start justify-center">
               <div className="w-[118px] truncate text-base font-semibold text-zinc-700 md:w-[178px]">
-                {songs[0].title}
+                {songs[0].name}
               </div>
               <div className="w-[118px] truncate text-sm font-medium text-neutral-500 md:w-[178px]">
-                {songs[0].artista}
+                {songs[0].user}
               </div>
             </div>
           </div>
@@ -110,13 +114,13 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
           </div>
           <div className="inline-flex h-[30px] w-14 items-center justify-center gap-2.5 rounded border border-zinc-700 px-5 py-2 hover:border-orange-500 md:w-[85px]">
             <button
-              className="group relative text-center text-xs font-medium leading-[13.46px] text-zinc-700"
+              className="group relative text-center text-xs font-medium text-zinc-700"
               onClick={() => {
                 setShowMyModal(true);
               }}
             >
-              <span className="text-center text-xs font-medium leading-[13.46px] text-zinc-700">
-                {songs[0].price + '0'}
+              <span className="text-center text-xs font-medium text-zinc-700">
+                $ {songs[0].price}
               </span>
               <span className="absolute left-1/2 mt-[-8px] h-[30px] w-14 -translate-x-1/2 transform rounded bg-orange-500 pt-2 text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:w-[85px]">
                 COMPRAR
