@@ -46,7 +46,7 @@ Si la app se integra con mercado pago y paypal para poder comprar musica.
 - [Alan Telo](http://www.linkedin.com/in/alan-gabriel-telo 'Alan Telo')
 - [Jose Arias](https://www.linkedin.com/in/joose-ari-b08729233 'Jose Arias')
 - [Martín Alegría Cáceres](https://www.linkedin.com/in/martin-alcapr/ 'Martín Alegría Cáceres')
--
+- [Juan Alberto Quiroz Sanchez](https://www.linkedin.com/in/dreyz/ 'Juan Alberto Quiroz Sanchez')
 
 #### Back End:
 
@@ -54,3 +54,6 @@ Si la app se integra con mercado pago y paypal para poder comprar musica.
 - [Pedro Faino](https://www.linkedin.com/in/devpedrofaino/ 'Pedro Faino')
 - [Fabian Torres](https://www.linkedin.com/in/fabi%C3%A1nignaciotorres/ 'Fabian Torres')
 - [Santiago Rodriguez](https://www.linkedin.com/in/santiago-rodriguez62/ 'Santiago Rodriguez')
+
+#### Team Leader:
+- [Viktor Krill](https://www.linkedin.com/in/viktordevv/ 'Viktor Krill')
