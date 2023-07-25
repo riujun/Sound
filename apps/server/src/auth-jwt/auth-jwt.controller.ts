@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 import { AuthJwtService } from '../auth-jwt/auth-jwt.service';
