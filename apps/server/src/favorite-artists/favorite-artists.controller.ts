@@ -19,11 +19,9 @@ export class FavoriteArtistsController {
       const favoriteArtists = await this.favoriteService.getFavoriteArtists(
         userId,
       );
-
       if (!favoriteArtists) {
         throw new NotFoundException('Usuario no encontrado');
       }
-
       return favoriteArtists;
     } catch (error) {
       throw error;
