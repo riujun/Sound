@@ -62,12 +62,18 @@ export default function CardArtist({ artist }: { artist: Artist }) {
             {artist.name} {artist.surname}
           </div>
           <div className="max-w-[130px] truncate text-[11px] font-medium text-neutral-500 md:max-w-[180px]">
-            {artist.genre ?? 'Género'}
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+              artist.genre ?? 'Género'
+            }
           </div>
         </div>
         <div className="flex flex-col items-start justify-start">
           <div className="text-[9.639604568481445px] font-semibold text-zinc-700">
-            {artist && artist.followers ? `${artist.followers.length} Seguidores` : '0 Seguidores'}
+            {
+              // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+              artist.followers ? `${artist.followers.length} Seguidores` : '0 Seguidores'
+            }
           </div>
 
           <div className="md:h-px md:w-[171px] md:bg-black"></div>
