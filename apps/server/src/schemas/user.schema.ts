@@ -25,7 +25,7 @@ export class User extends Document {
   @IsOptional() // Haciendo el campo "username" opcional
   username?: string;
 
-  @Prop()
+  @Prop({ default: null })
   @IsOptional()
   genre?: string;
 
@@ -71,7 +71,7 @@ export class User extends Document {
   @IsOptional()
   description?: string;
 
-  @Prop({ type: [{ type: Types.ObjectId }] })
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Album' }] })
   @IsOptional()
   albumes: Album[];
   // @Prop()

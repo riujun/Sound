@@ -20,7 +20,7 @@ export class AlbumsService {
   }
 
   async findAll() {
-    return this.albumModel.find().populate({ path: 'user', model: 'User' });
+    return this.albumModel.find().populate({ path: 'usuario', model: 'User' });
   }
 
   async delete(id: string) {

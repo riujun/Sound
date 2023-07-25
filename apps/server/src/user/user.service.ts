@@ -29,6 +29,12 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
+  // async getByIdAndSave(usuario: string): Promise<User | null> {
+  //   const user = this.userModel.findById(usuario).exec();
+  //   user.save()
+  //   return
+  // }
+
   async deleteById(id: string): Promise<User | null> {
     return this.userModel.findByIdAndDelete(id).exec();
   }
