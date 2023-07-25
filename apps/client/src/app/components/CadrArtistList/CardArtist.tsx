@@ -11,16 +11,19 @@ export interface Artist {
   surname: string;
   artist: boolean;
   username: string;
-  profilePhotoUrl: string;
+  profilePhoto: string;
+  favoriteArtists: string[]; // Otra interfaz para los artistas favoritos, si es necesario
   email: string;
+  coverPhoto: string;
   password: string;
+  songsPurchased: string[]; // Otra interfaz para las canciones compradas, si es necesario
+  songsUplodaded: string[]; // Otra interfaz para las canciones subidas, si es necesario
+  followers: string[];
   createdAt: string;
   updatedAt: string;
+  genre: string;
   __v: number;
-  favoriteArtists: string[]; // Cambiar el tipo si es diferente del ejemplo proporcionado
-  image: string;
-  songsPurchased: string[]; // Cambiar el tipo si es diferente del ejemplo proporcionado
-  songsUplodaded: string[]; // Cambiar el tipo si es diferente del ejemplo proporcionado
+  description: string; // Propiedad "description" agregada
 }
 
 export default function CardArtist({ artist }: { artist: Artist }) {
@@ -46,9 +49,7 @@ export default function CardArtist({ artist }: { artist: Artist }) {
           <Image
             alt="imagen artista"
             className="rounded-full"
-            src={
-              'https://res.cloudinary.com/dnemqmc7a/image/upload/c_pad,b_auto:predominant,fl_preserve_transparency/v1689019059/image_bahgnt.jpg?_s=public-apps'
-            }
+            src={artist.profilePhoto}
             width="49"
             height="49"
           />
@@ -61,21 +62,18 @@ export default function CardArtist({ artist }: { artist: Artist }) {
             {artist.name} {artist.surname}
           </div>
           <div className="max-w-[130px] truncate text-[11px] font-medium text-neutral-500 md:max-w-[180px]">
-            Género: {artist.username}
+            {artist.genre ?? 'Género'}
           </div>
         </div>
         <div className="flex flex-col items-start justify-start">
           <div className="text-[9.639604568481445px] font-semibold text-zinc-700">
-            {artist.__v} Seguidores
+            {artist && artist.followers ? `${artist.followers.length} Seguidores` : '0 Seguidores'}
           </div>
+
           <div className="md:h-px md:w-[171px] md:bg-black"></div>
         </div>
         <div className="h-0 w-0 text-transparent md:h-[106px] md:w-[171px] md:text-xs md:font-normal md:leading-[14px] md:text-zinc-700">
-          <p className="m-0 line-clamp-4">
-            Breve descripción del artista: {artist.name} {artist.surname} es{' '}
-            {artist.artist ? 'artista' : 'usuario'} {artist.username} | email: {artist.email} |
-            desde: {artist.createdAt} | artistas favoritos: {artist.favoriteArtists}
-          </p>
+          <p className="m-0 line-clamp-4">{artist.description ?? 'Descripción del artista'}</p>
         </div>
       </div>
     </>
