@@ -6,17 +6,15 @@ import React, { useEffect, useState } from 'react';
 interface UserData {
   name: string;
   surname: string;
-  genero: string; // Assuming "genero" is a string property in the data object
-  description: string; // Assuming "description" is a string property in the data object
+  genero: string;
+  description: string;
 }
 
 export default function Perfiluser() {
-  const [data, setData] = useState<UserData | null>(null); // Use the UserData interface as the type for data
-
-  console.log(data);
+  const [data, setData] = useState<UserData | null>(null);
 
   useEffect(() => {
-    const url = 'http://localhost:4000/user/64befaaaffbe80cc4135f1824';
+    const url = 'http://localhost:4000/user/64bfb94d0edd8b1c9c00931d';
     fetch(url)
       .then((response) => response.json())
       .then((responseData: UserData) => {
