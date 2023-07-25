@@ -21,13 +21,14 @@ import Opciones from '@/app/assets/Opciones.png';
 import Play from '@/app/assets/Play.png';
 import Reproduciendo from '@/app/assets/Reproduciendo.png';
 import Stop from '@/app/assets/Stop.png';
+import type { Artist } from '@/app/components/CadrArtistList/CardArtist';
 import MetodoDePago from '@/app/components/ModalAlerts/AlertMetodoDePago';
 // import AlertSongsOptions from '@/app/components/ModalAlerts/AlertSongsOptions';
 export interface Song {
   _id: string;
   name: string;
   duration: number;
-  user: string;
+  user: Artist;
   coArtist: string;
   price: number;
   genre: string;
@@ -93,7 +94,7 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
                 {songs[0].name}
               </div>
               <div className="w-[118px] truncate text-sm font-medium text-neutral-500 md:w-[178px]">
-                {songs[0].user}
+                {songs[0]?.user?.name + ' ' + songs[0]?.user?.surname}
               </div>
             </div>
           </div>
