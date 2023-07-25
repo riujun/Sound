@@ -1,49 +1,40 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unnecessary-condition */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-interface LoginData {
+/* eslint-disable prettier/prettier */
+interface ApiResponse {
+  token: string;
+  nombre: string;
   email: string;
+  id: string;
+}
+
+interface LoginData {
+  username: string;
   password: string;
 }
 
 interface PostLoginResult {
   ok: boolean;
-  errorMessage?: string;
-  respuestaApi?: string;
+  token: string;
 }
 
-const usePostLogin =
-  (postRoute: string) =>
-  async (data: LoginData): Promise<PostLoginResult> => {
-    let response: Response | null = null;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const usePostLogin = async (postRoute: string, data: LoginData): Promise<PostLoginResult> => {
+  try {
+    const responseData: ApiResponse = {
+      token: 'your_token_here',
+      nombre: 'John Doe',
+      email: 'john.doe@example.com',
+      id: '123456789',
+    };
 
-    try {
-      response = await fetch(postRoute, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+    const { token, nombre, email, id } = responseData;
 
-      if (!response.ok) {
-        throw new Error('No hay un ok');
-      }
+    localStorage.setItem('Token', token);
 
-      console.log('[LOGIN SUCCESS]');
+    const userData = { nombre, email, id };
+    localStorage.setItem('UserData', JSON.stringify(userData));
 
-      const respuestaApi = response != null ? await response.text() : 'No hay mensaje';
-
-      if (response.ok) {
-        localStorage.setItem('jwtToken', await response.json());
-      }
-      return { ok: true, respuestaApi };
-    } catch (error) {
-      const errorMessage = response != null ? await response.text() : 'No hay mensaje';
-      console.error('El error de fetch operacion es:', error);
-      console.error('El mensaje de server es:', errorMessage);
-      return { ok: false, errorMessage };
-    }
-  };
-
-export default usePostLogin;
+    return { ok: true, token };
+  } catch (error) {
+    throw new Error('Error occurred during login');
+  }
+};

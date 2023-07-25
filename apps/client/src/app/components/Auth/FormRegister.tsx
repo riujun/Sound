@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // Se ha desactivado el eslint de tipos porque me lansaba error el staticImages de nextjs
 'use client';
@@ -76,7 +77,7 @@ export default function FormRegister() {
     setIsSubmitting(false);
 
     if (result.ok) {
-      router.push('/home');
+      router.push('/login');
     } else {
       const errorData = result.errorMessage;
       const error = typeof errorData === 'string' ? errorData : 'Vuelve a intentarlo más tarde';

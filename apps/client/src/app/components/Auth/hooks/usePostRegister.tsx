@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -24,9 +25,6 @@ const usePostRegister = (postRoute: string) => {
       const { status } = response;
 
       setIsLoading(false);
-      console.log('[REGISTRO EXITOSO]');
-      const token = response.data.token;
-      localStorage.setItem('jwtToken', token);
       return { ok: status === 200 };
     } catch (error: unknown) {
       const axiosError = error as AxiosError;
