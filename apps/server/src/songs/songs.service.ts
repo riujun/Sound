@@ -19,12 +19,20 @@ export class SongsService {
   }
 
   async getAllSongs({ limit, offset }: PaginationQueryDto): Promise<Song[]> {
-    return this.songModel.find().skip(offset).limit(limit).exec();
+    return this.songModel
+      .find()
+      .populate({ path: 'user', model: 'User' })
+      .skip(offset)
+      .limit(limit)
+      .exec();
   }
 
   async getById(id: string): Promise<Song | null> {
     try {
-      const song = this.songModel.findById(id).exec();
+      const song = this.songModel
+        .findById(id)
+        .populate({ path: 'user', model: 'User' })
+        .exec();
       return song;
     } catch (error) {
       console.log(error);
@@ -54,9 +62,7 @@ export class SongsService {
     }
   }
 
-
   async uploadFile(file: Express.Multer.File): Promise<string> {
- 
     try {
       const result = await new Promise<string>((resolve, reject) => {
         cloudinary.uploader
@@ -91,12 +97,12 @@ export class SongsService {
       songs.push(
         await this.songModel
           .find({ _id: { $in: songIds[i] } })
+          .populate({ path: 'user', model: 'User' })
           .skip(offset)
           .limit(limit)
           .exec(),
       );
     }
     return songs;
-
   }
 }
