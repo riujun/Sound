@@ -41,13 +41,8 @@ export default function CardAlbum({ album }: { album: Album }) {
   //   : 'Nombre del Artista';
 
   const artistName =
-    album.user &&
-    album.user.name &&
-    album.user.surname &&
-    typeof album.user.name === 'string' &&
-    typeof album.user.surname === 'string' &&
-    album.user.name !== '' &&
-    album.user.surname !== ''
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    album.user && album.user.name !== '' && album.user.surname !== ''
       ? `${album.user.name} ${album.user.surname}`
       : 'Nombre del Artista';
 
