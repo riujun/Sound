@@ -1,4 +1,4 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import { Body, Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import * as bcrypt from 'bcrypt';
 import { AuthJwtService } from '../auth-jwt/auth-jwt.service';
@@ -79,6 +79,20 @@ export class AuthJwtController {
     } catch (err) {
       console.log(err.message);
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @ApiOperation({ summary: 'Cerrar sesion' })
+  @Post('/logout')
+  async logout(@Res() res, @Body('token') token: string) {
+    try {
+      this.tokenService.deleteToken(token);
+      return res
+        .status(HttpStatus.OK)
+        .json({ message: 'El usuario a cerrado sesion' });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.BAD_GATEWAY);
     }
   }
 }
