@@ -57,6 +57,55 @@ export class UserController {
     }
   }
 
+  @ApiOperation({ summary: 'Agregar un follower al usuario.' })
+  @ApiParam({ name: 'id', description: 'ID del user.' })
+  @Post('/addfollower/:id')
+  async addFollower(
+    @Res() res,
+    @Param('id') id: string,
+    @Body('followerId') followerId: string,
+  ) {
+    try {
+      let user = await this.userService.getById(id);
+      if (user.followers.includes(followerId)) {
+        return res
+          .status(HttpStatus.OK)
+          .json({ message: 'El follower ya lo sigue al usuario' });
+      }
+      user.followers.push(followerId);
+      user = await this.userService.updateById(id, user);
+      return res.status(HttpStatus.OK).json({ user });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.BAD_GATEWAY);
+    }
+  }
+
+  @ApiOperation({ summary: 'Dejar de seguir al usuario.' })
+  @ApiParam({ name: 'id', description: 'ID del user.' })
+  @Post('/unfollow/:id')
+  async unFollow(
+    @Res() res,
+    @Param('id') id: string,
+    @Body('followerId') followerId: string,
+  ) {
+    try {
+      const user = await this.userService.getById(id);
+      if (user.followers.includes(followerId) === false) {
+        return res
+          .status(HttpStatus.OK)
+          .json({ message: 'El follower no lo sigue al usuario' });
+      }
+      const newFollowers = user.followers.filter((id) => id === followerId);
+      user.followers = newFollowers;
+      await this.userService.updateById(id, user);
+      return res.status(HttpStatus.OK).json({ user });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.BAD_GATEWAY);
+    }
+  }
+
   @ApiOperation({ summary: 'Obtener musica comprada' })
   @ApiParam({ name: 'id', description: 'ID del user' })
   @Get('/mysongs/:id')

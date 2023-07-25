@@ -16,6 +16,7 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   name?: string;
+
   @ApiProperty({
     description: 'Apellido del usuario',
     example: 'faino',
@@ -23,6 +24,7 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   surname?: string;
+
   @ApiProperty({
     description: 'Nombre de Usuario',
     example: 'Juan21',
@@ -30,6 +32,7 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   username?: string;
+
   @ApiProperty({
     description: 'Responde a si el usuario es artista o no',
     example: true,
@@ -37,6 +40,7 @@ export class UpdateUserDto {
   @IsOptional()
   @IsBoolean()
   artist?: boolean;
+
   @ApiProperty({
     description: 'Genero del artista',
     example: true,
@@ -48,7 +52,8 @@ export class UpdateUserDto {
     description: 'Cantidad de seguidores',
   })
   @IsOptional()
-  followers?: number;
+  followers?: string[];
+
   @ApiProperty({
     description: 'Email del usuario',
     example: 'pedro@123.com',
