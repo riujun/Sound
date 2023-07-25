@@ -46,7 +46,8 @@ Si la app se integra con mercado pago y paypal para poder comprar musica.
 - [Alan Telo](http://www.linkedin.com/in/alan-gabriel-telo 'Alan Telo')
 - [Jose Arias](https://www.linkedin.com/in/joose-ari-b08729233 'Jose Arias')
 - [Martín Alegría Cáceres](https://www.linkedin.com/in/martin-alcapr/ 'Martín Alegría Cáceres')
-- 
+-
+
 #### Back End:
 
 - [Sebastián Torreiro](https://www.linkedin.com/in/sebastian-torreiro/ 'Sebastián Torreiro')

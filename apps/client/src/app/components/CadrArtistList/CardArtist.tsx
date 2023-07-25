@@ -11,19 +11,22 @@ export interface Artist {
   surname: string;
   artist: boolean;
   username: string;
+  followers: string[];
   profilePhoto: string;
-  favoriteArtists: string[]; // Otra interfaz para los artistas favoritos, si es necesario
+  favoriteArtists: string[];
   email: string;
   coverPhoto: string;
   password: string;
-  songsPurchased: string[]; // Otra interfaz para las canciones compradas, si es necesario
-  songsUplodaded: string[]; // Otra interfaz para las canciones subidas, si es necesario
-  followers: string[];
+  songsPurchased: string[];
+  songsUplodaded: string[];
   createdAt: string;
   updatedAt: string;
-  genre: string;
   __v: number;
-  description: string; // Propiedad "description" agregada
+  description: string;
+  genre: string;
+  albumes: string[];
+  mercadopagoApproved: boolean;
+  paypalApproved: boolean;
 }
 
 export default function CardArtist({ artist }: { artist: Artist }) {
