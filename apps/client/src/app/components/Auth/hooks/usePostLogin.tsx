@@ -1,40 +1,41 @@
 /* eslint-disable prettier/prettier */
-interface ApiResponse {
-  token: string;
-  nombre: string;
-  email: string;
-  id: string;
-}
-
 interface LoginData {
-  username: string;
+  email: string;
   password: string;
 }
 
 interface PostLoginResult {
   ok: boolean;
-  token: string;
+  errorMessage?: string;
+  respuestaApi?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const usePostLogin = async (postRoute: string, data: LoginData): Promise<PostLoginResult> => {
-  try {
-    const responseData: ApiResponse = {
-      token: 'your_token_here',
-      nombre: 'John Doe',
-      email: 'john.doe@example.com',
-      id: '123456789',
-    };
+const usePostLogin =
+  (postRoute: string) =>
+  async (data: LoginData): Promise<PostLoginResult> => {
+    let response: Response | null = null;
 
-    const { token, nombre, email, id } = responseData;
+    try {
+      response = await fetch(postRoute, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-    localStorage.setItem('Token', token);
+      if (!response.ok) {
+        throw new Error('No hay un ok');
+      }
+      const respuestaApi = response != null ? await response.text() : 'No hay mensaje';
+      localStorage.setItem('respuestaApi', respuestaApi);
+      return { ok: true, respuestaApi };
+    } catch (error) {
+      const errorMessage = response != null ? await response.text() : 'No hay mensaje';
+      console.error('El error de fetch operacion es:', error);
+      console.error('El mensaje de server es:', errorMessage);
+      return { ok: false, errorMessage };
+    }
+  };
 
-    const userData = { nombre, email, id };
-    localStorage.setItem('UserData', JSON.stringify(userData));
-
-    return { ok: true, token };
-  } catch (error) {
-    throw new Error('Error occurred during login');
-  }
-};
+export default usePostLogin;
