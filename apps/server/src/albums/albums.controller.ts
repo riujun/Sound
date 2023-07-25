@@ -11,15 +11,13 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
-import { AlbumsService } from './albums.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CreateAlbumDto } from 'src/dto/create-album.dto';
 import { UpdateAlbumDto } from 'src/dto/update-album.dto';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { SongsService } from 'src/songs/songs.service';
 import { UserService } from 'src/user/user.service';
-import { Model } from 'mongoose';
-import { User } from 'src/schemas/user.schema';
+import { AlbumsService } from './albums.service';
 
 @ApiTags('Albums')
 @Controller('albums')
@@ -33,19 +31,17 @@ export class AlbumsController {
   @ApiOperation({ summary: 'Obtener todas los albumes' })
   @Get()
   async findAll(@Res() res) {
-    // try {
-    const albums = await this.albumService.findAll();
-
-    console.log(albums);
-    //   if (!albums) {
-    //     return res
-    //       .sendStatus(HttpStatus.NOT_FOUND)
-    //       .json({ message: 'No se ha encontrado ningun album' });
-    //   }
-    //   return res.status(HttpStatus.OK).json(albums);
-    // } catch (error) {
-    //   return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
-    // }
+    try {
+      const albums = await this.albumService.findAll();
+      if (!albums) {
+        return res
+          .sendStatus(HttpStatus.NOT_FOUND)
+          .json({ message: 'No se ha encontrado ningun album' });
+      }
+      return res.status(HttpStatus.OK).json(albums);
+    } catch (error) {
+      return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR).json(error);
+    }
   }
 
   @ApiParam({ name: 'nombre', description: 'nombre del album' })

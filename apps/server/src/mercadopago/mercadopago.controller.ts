@@ -1,34 +1,17 @@
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Inject,
-  Param,
-  Post,
-  Res,
-} from '@nestjs/common';
+import { Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User } from 'src/schemas/user.schema';
-import { MercadopagoService } from './mercadopago.service';
-import { Model } from 'mongoose';
-import { UserService } from 'src/user/user.service';
-import { UpdateUserDto } from 'src/dto/update-user.dto';
-import { PaymentStatus } from 'src/dto/update-payment-status';
 import { paymentType } from 'src/enums/enums';
+import { User } from 'src/schemas/user.schema';
+import { UserService } from 'src/user/user.service';
 
 @Controller('status')
 export class MercadopagoController {
   constructor(
     @InjectModel(User.name)
-    private mercadopagoService: MercadopagoService,
     private userService: UserService, // private playlistModel: Model<User>
   ) {}
   @Post('/mercadopago/:id')
-  async configureMp(
-    @Param('id') id: string,
-    @Res() res,
-    @Body() updateUserDto: PaymentStatus,
-  ) {
+  async configureMp(@Param('id') id: string, @Res() res) {
     try {
       const user = await this.userService.getById(id);
       if (!user) {
@@ -50,11 +33,7 @@ export class MercadopagoController {
   }
 
   @Post('/paypal/:id')
-  async configurePaypal(
-    @Param('id') id: string,
-    @Res() res,
-    @Body() updateUserDto: PaymentStatus,
-  ) {
+  async configurePaypal(@Param('id') id: string, @Res() res) {
     try {
       const user = await this.userService.getById(id);
       if (!user) {
