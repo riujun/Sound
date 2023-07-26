@@ -13,13 +13,15 @@ export class MercadopagoService {
     });
   }
 
-  async createPayment(items: mercadoItemDto[]): Promise<Preference> {
+  async createPayment(order: mercadoItemDto): Promise<Preference> {
     try {
+
       const user_id = items[0].user_id;
       const id = items[0].id;
 
+
       const preference = {
-        items,
+        items: [order],
         back_urls: {
           success: `${process.env.SELF_DEPLOY}`,
           failure: `${process.env.SELF_DEPLOY}`,

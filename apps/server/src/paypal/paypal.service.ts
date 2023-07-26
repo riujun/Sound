@@ -19,7 +19,7 @@ export class PaypalService {
 
   async createOrder(items: paypalItemDto) {
     const order = {
-      purchase_units: items,
+      purchase_units: [items],
       intent: 'CAPTURE',
       application_context: {
         brand_name: 'SoundWave',

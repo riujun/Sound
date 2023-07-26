@@ -11,9 +11,12 @@ import { MercadopagoService } from '../mercadopago/mercadopago.service';
 import { PaypalService } from '../paypal/paypal.service';
 import { paypalItemDto } from 'src/dto/paypal-item.dto';
 import { mercadoItemDto } from 'src/dto/mercadopago-item.dto';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { SongsService } from 'src/songs/songs.service';
 import { UserService } from 'src/user/user.service';
 
+
+@ApiTags('Pagos')
 @Controller('payment')
 export class PaymentController {
   constructor(
@@ -23,8 +26,9 @@ export class PaymentController {
     private readonly userService: UserService,
   ) {}
 
+  @ApiOperation({ summary: 'Crear un link de pago' })
   @Post('mercadopago')
-  async createPayment(@Body() items: mercadoItemDto[], @Res() res) {
+  async createPayment(@Body() items: mercadoItemDto, @Res() res) {
     try {
       const song = await this.songService.getById(items[0].id);
       const user = await this.userService.getById(items[0].user_id);
@@ -48,6 +52,8 @@ export class PaymentController {
     }
   }
 
+  @ApiOperation({ summary: 'Crear un link de pago' })
+  @ApiParam({ name: '' })
   @Post('paypal/create')
   async createPaypalPayment(@Body() items: paypalItemDto, @Res() res) {
     try {
