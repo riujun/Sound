@@ -3156,18 +3156,6 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
-  /@paypal/checkout-server-sdk@1.0.3:
-    resolution: {integrity: sha512-UEdq8akEdMz0Vs4qoQFU2gMp8PpyE/HKyMwiZuK4vIWUKl8jfd1fWKjQN5cDFm9NkFUIp5U7h++rdMOVj9WMNA==}
-    engines: {node: '>=8'}
-    dependencies:
-      '@paypal/paypalhttp': 1.0.1
-    dev: false
-
-  /@paypal/paypalhttp@1.0.1:
-    resolution: {integrity: sha512-DC7AHxTT7drF6dUi3YaFdPVuT15sIkpD5H2eHmdtFgxM4UanS1o1ZDfMhR9mpxd8o+X6pz2r+EZVRRq+n1cssQ==}
-    engines: {node: '>=4'}
-    dev: false
-
   /@pkgr/utils@2.3.1:
     resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
@@ -3793,7 +3781,7 @@ packages:
       '@storybook/client-logger': 7.0.0
       '@storybook/core-events': 7.0.0
       '@storybook/global': 5.0.0
-      qs: 6.11.1
+      qs: 6.11.2
       telejson: 7.0.4
     dev: true
 
@@ -3804,7 +3792,7 @@ packages:
       '@storybook/client-logger': 7.0.24
       '@storybook/core-events': 7.0.24
       '@storybook/global': 5.0.0
-      qs: 6.11.1
+      qs: 6.11.2
       telejson: 7.0.4
     dev: true
 
@@ -4337,7 +4325,7 @@ packages:
       dequal: 2.0.3
       lodash: 4.17.21
       memoizerific: 1.11.3
-      qs: 6.11.1
+      qs: 6.11.2
       synchronous-promise: 2.0.17
       ts-dedent: 2.2.0
       util-deprecate: 1.0.2
@@ -4357,7 +4345,7 @@ packages:
       dequal: 2.0.3
       lodash: 4.17.21
       memoizerific: 1.11.3
-      qs: 6.11.1
+      qs: 6.11.2
       synchronous-promise: 2.0.17
       ts-dedent: 2.2.0
       util-deprecate: 1.0.2
@@ -4444,7 +4432,7 @@ packages:
     dependencies:
       '@storybook/client-logger': 7.0.24
       memoizerific: 1.11.3
-      qs: 6.11.1
+      qs: 6.11.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: true
@@ -12314,13 +12302,6 @@ packages:
     dependencies:
       side-channel: 1.0.4
 
-  /qs@6.11.1:
-    resolution: {integrity: sha512-0wsrzgTz/kAVIeuxSjnpGC56rzYtr6JT/2BwEvMaPhFIoYa1aGO8LbzuU1R0uUYQkLpWBTOj0l/CLAJB64J6nQ==}
-    engines: {node: '>=0.6'}
-    dependencies:
-      side-channel: 1.0.4
-    dev: true
-
   /qs@6.11.2:
     resolution: {integrity: sha512-tDNIz22aBzCDxLtVH++VnTfzxlfeK5CbqohpSqpJgj1Wg/cQbStNAz3NuqCs5vV+pjBsK4x4pN9HlVh7rcYRiA==}
     engines: {node: '>=0.6'}
@@ -14432,11 +14413,6 @@ packages:
   /uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-    hasBin: true
-    dev: false
-
-  /uuid@8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: false
 

@@ -15,7 +15,6 @@ import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { SongsService } from 'src/songs/songs.service';
 import { UserService } from 'src/user/user.service';
 
-
 @ApiTags('Pagos')
 @Controller('payment')
 export class PaymentController {
@@ -30,15 +29,25 @@ export class PaymentController {
   @Post('mercadopago')
   async createPayment(@Body() items: mercadoItemDto, @Res() res) {
     try {
-      const song = await this.songService.getById(items[0].id);
-      const user = await this.userService.getById(items[0].user_id);
+      console.log('Entrando al try');
+
+      const song = await this.songService.getById(items.id);
+      console.log(song);
+
+      const user = await this.userService.getById(items.user_id);
+      console.log(user);
       const songsPurchased = user.songsPurchased;
+
       if (songsPurchased.includes(song._id)) {
         return res
           .status(HttpStatus.OK)
           .json({ message: 'El usuario ya adquirio esta cancion' });
       }
+      console.log('-------Trying preference-----');
+
       const preference = await this.mercadopagoService.createPayment(items);
+      console.log(preference);
+
       if (!preference) {
         return res
           .status(HttpStatus.BAD_REQUEST)

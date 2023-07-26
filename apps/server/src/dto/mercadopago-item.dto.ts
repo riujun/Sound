@@ -1,4 +1,3 @@
-
 import { ApiProperty } from '@nestjs/swagger';
 import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
@@ -6,12 +5,11 @@ export class mercadoItemDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  title: string;
-
-  @IsString()
   id: string;
 
+  @ApiProperty()
   @IsString()
+  @IsNotEmpty()
   user_id: string;
 
   @ApiProperty()
