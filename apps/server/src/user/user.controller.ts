@@ -80,7 +80,7 @@ export class UserController {
       await this.userService.updateById(id, userClient);
       await this.userService.updateById(followerId, userArtist);
 
-      return res.status(HttpStatus.OK);
+      return res.status(HttpStatus.OK).json({ userClient, userArtist });
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.BAD_GATEWAY);
@@ -115,7 +115,7 @@ export class UserController {
       userArtist.followers = newFollowers;
       await this.userService.updateById(followerId, userArtist);
 
-      return res.status(HttpStatus.OK);
+      return res.status(HttpStatus.OK).json({ userClient, userArtist });
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.BAD_GATEWAY);
