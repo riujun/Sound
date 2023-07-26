@@ -1,10 +1,12 @@
 'use client';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
+import LikeHover from '@/app/assets/LikeHoverMobile.png';
 import LikeOrange from '@/app/assets/Seguir-Like-Orange.png';
 import LikeTransparent from '@/app/assets/Seguir-Like-Transparent.png';
+import { useDataUser } from '@/app/components/Auth/hooks/dataUser';
 export interface Artist {
   _id: string;
   name: string;
@@ -30,8 +32,13 @@ export interface Artist {
 }
 
 export default function CardArtist({ artist }: { artist: Artist }) {
-  const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
+  const [isHovered, setIsHovered] = useState(false);
+  const userData = useDataUser();
+  const userID = userData !== null ? userData._id : '';
+  const [isFollowing, setIsFollowing] = useState(artist.followers.includes(userID));
+  const src = isFollowing ? LikeOrange : LikeTransparent;
+  console.log('estás siguiendo?: ' + (artist.followers.includes(userID) ? 'si' : 'no'));
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -40,13 +47,60 @@ export default function CardArtist({ artist }: { artist: Artist }) {
     setIsHovered(false);
   };
 
+  const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
+    event.stopPropagation();
+
+    const artistID = artist._id;
+
+    if (isFollowing) {
+      // El usuario sigue al artista, hacemos la solicitud POST para dejar de seguir
+      fetch(`http://localhost:4000/user/unfollow/${userID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ artistID }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Actualizamos el estado isFollowing para reflejar el cambio
+          setIsFollowing(false);
+          console.log('Dejaste de seguir al artista');
+        })
+        .catch((error) => {
+          console.error('Error al dejar de seguir al artista:', error);
+        });
+    } else {
+      // El usuario no sigue al artista, hacemos la solicitud POST para seguir
+      fetch(`http://localhost:4000/user/addfollower/${userID}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ artistID }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Actualizamos el estado isFollowing para reflejar el cambio
+          setIsFollowing(true);
+          console.log('Comenzaste a seguir al artista');
+        })
+        .catch((error) => {
+          console.error('Error al seguir al artista:', error);
+        });
+    }
+  };
+
+  const handleCardClick = () => {
+    // Lógica para el clic en el resto del componente
+    router.push('/Perfilartist');
+  };
+
   return (
     <>
       <div
-        className="m-[1%] inline-flex h-[157px] w-[156px] cursor-pointer flex-col items-start justify-start gap-2 rounded-2xl border border-zinc-700 px-4 py-6 md:m-[0.7%] md:h-[213px] md:w-[206px]"
-        onClick={() => {
-          router.push('/Perfilartist');
-        }}
+        className="m-[1%] inline-flex h-[157px] w-[156px] cursor-pointer flex-col items-start justify-start gap-2 rounded-2xl border border-zinc-700 px-4 py-6 hover:shadow-xl md:m-[0.7%] md:h-[213px] md:w-[206px]"
+        onClick={handleCardClick}
       >
         <div className="inline-flex items-center justify-between gap-2 self-stretch">
           <Image
@@ -56,8 +110,12 @@ export default function CardArtist({ artist }: { artist: Artist }) {
             width="49"
             height="49"
           />
-          <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <Image src={isHovered ? LikeOrange : LikeTransparent} alt="seguir" />
+          <div
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onClick={handleImageClick}
+          >
+            <Image src={isHovered ? LikeHover : src} alt="seguir" />
           </div>
         </div>
         <div className="flex flex-col items-start justify-start">
