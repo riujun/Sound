@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 import Loader from '../Loader/Loader';
-import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import type { Album } from './CardAlbum';
 import CardAlbum from './CardAlbum';
 
@@ -117,7 +116,12 @@ export default function Albumes() {
       </div>
       {!showPaginator && (
         <div className="mt-4 flex justify-center">
-          <ButtonCuatro onClick={handleShowMore}>DESCUBRE MÁS ARTISTAS</ButtonCuatro>
+          <button
+            className="h-[48px] w-[340px] rounded-lg bg-orange-500 font-bold hover:bg-orange-400"
+            onClick={handleShowMore}
+          >
+            DESCUBRE MÁS ARTISTAS
+          </button>
         </div>
       )}
       {showPaginator && (

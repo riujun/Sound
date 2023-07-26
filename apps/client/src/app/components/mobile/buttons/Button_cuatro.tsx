@@ -8,7 +8,7 @@ interface ButtonInicioProps {
 export function ButtonCuatro({ children, onClick }: ButtonInicioProps) {
   return (
     <button
-      className="h-[48px] w-[340px] rounded-lg bg-orange-500 font-bold hover:bg-orange-400"
+      className="h-[48px] w-[340px] rounded-lg  bg-orange-500 font-bold hover:bg-orange-400 md:hidden"
       onClick={onClick}
     >
       {children}

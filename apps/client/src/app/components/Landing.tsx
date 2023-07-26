@@ -1,24 +1,23 @@
 /* eslint-disable prettier/prettier */
-'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
+import cuatro from '@/app/assets/Final landing.png';
+import ruedamusical from '@/app/assets/landingpage/1.png';
+import dos from '@/app/assets/landingpage/2.png';
 import Audifonos from '@/app/assets/landingpage/audifonos.png';
 import Mujer from '@/app/assets/landingpage/mujer.png';
 import ola from '@/app/assets/landingpage/ola.png';
-import perrito from '@/app/assets/landingpage/p.jpg';
+import tres from '@/app/assets/Social.png';
 import { ButtonDos } from '@/app/components/desk/Buttons/landing/Button_dos';
 import { ButtonUno } from '@/app/components/desk/Buttons/landing/Button_uno';
 import Header from '@/app/components/header/Header';
 
-import Footer from './footer/footer';
 import { ButtonCuatro } from './mobile/buttons/Button_cuatro';
 import { ButtonTres } from './mobile/buttons/Button_tres';
 export default function Landing() {
-  const router = useRouter();
   return (
-    <div>
+    <div className="w-full">
       <Header />
       <div className="flex flex-col items-center justify-center ">
         <section className="md:gab-10 md:width-[100%] mt-10 flex ">
@@ -33,20 +32,14 @@ export default function Landing() {
               </Link>
             </div>
           </section>
-          <div className=" md:relative md:z-10 md:h-[765.35px] md:w-[680.32px]">
-            <Image src={Audifonos} alt="audifonos" className="" />
+          <div className=" md:relative md:z-10 md:h-[765.35px] md:w-[880.32px]">
+            <Image src={Mujer} alt="audifonos" className="" />
           </div>
         </section>
       </div>
       <section className="relative z-10 mb-10 flex flex-col items-center justify-center gap-5 pt-10 ">
         <ButtonTres>CONOCE MÁS</ButtonTres>
-        <ButtonCuatro
-          onClick={() => {
-            router.push('/login');
-          }}
-        >
-          ¡ÚNETE AHORA!
-        </ButtonCuatro>
+        <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
       </section>
       {/* segunda */}
       <section className="mb-10 flex flex-col items-center justify-evenly">
@@ -58,12 +51,12 @@ export default function Landing() {
           <div className="relative z-10 mt-5 flex items-center ">
             <div className="h-[186px] w-[214px] md:h-[749px] md:w-[864px]">
               <Image
-                className="mt-16 h-[200px] w-[800px] md:mt-12 md:h-[800px] md:w-[864px] "
-                src={Mujer}
+                className="mt-16 h-[200px] w-[740px] md:mt-12 md:h-[800px] md:w-[764px] "
+                src={Audifonos}
                 alt="Mujer"
               />
             </div>
-            <div className="h-[132px] w-[155px] md:w-4">
+            <div className="h-[132px] w-full md:w-4">
               <h3 className=" mt-14 px-2 text-left text-[20px] font-medium leading-[22.4px] text-orange-500 md:hidden md:font-bold">
                 Una plataforma 100% gratis para amantes de la música que busca apoyar al nuevo
                 talento.
@@ -92,13 +85,7 @@ export default function Landing() {
               </p>
             </div>
             <div className="relative z-10 flex justify-center md:bottom-20 md:mt-16 ">
-              <ButtonCuatro
-                onClick={() => {
-                  router.push('/login');
-                }}
-              >
-                ¡ÚNETE AHORA!
-              </ButtonCuatro>
+              <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
               <Link href={`/login`}>
                 <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
               </Link>
@@ -120,44 +107,43 @@ export default function Landing() {
       </div>
 
       <section className=" md:flex md:h-[740px] md:items-center md:justify-evenly">
+        <Image
+          className="relative  hidden h-[735.79px] w-[1540.72px] origin-top-left  md:block"
+          src={ruedamusical}
+          alt="perrito"
+        />
         <div>
-          <div className="flex items-center justify-center gap-2 px-5 md:w-[506px]  md:flex-col">
-            <span className="px-3 text-end text-[20px] font-normal leading-[20px] text-gray-500 md:text-left md:text-[32px] md:leading-[48px]">
+          <div className="relative bottom-20 right-36 w-[592px]">
+            <span className="text-[32px] font-normal leading-[48px] text-black">
               Tú decides el valor de tu música y lo mejor de todo es que recibirás el 100% de las
               ganancias.
               <br />
               <br />
             </span>
-            <Image className="h-[178px] w-[156px] md:hidden" src={perrito} alt="perrito" />
-            <span className="hidden px-3 text-[32px] font-[600px] leading-[20px] text-black md:block md:font-bold md:leading-[48px]">
+            <span className="text-[32px] font-bold leading-[48px] text-black">
               ¡Sí, lo has leído bien, el 100% de cada venta es para ti!
             </span>
+            <div className="relative top-16">
+              <div className="mb-20 flex items-center justify-center ">
+                <Link href={`/login`}>
+                  <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-        <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
       </section>
       <div className="flex items-center justify-center px-10 pt-10 text-center text-[20px] font-semibold text-orange-500 md:hidden">
         ¡Sí, lo has leído bien, el 100% de cada venta es para ti!
       </div>
-      <div className="mb-20 flex items-center justify-center ">
-        <Link href={`/login`}>
-          <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
-        </Link>
-      </div>
+
       <div className="flex items-center justify-center">
-        <ButtonCuatro
-          onClick={() => {
-            router.push('/login');
-          }}
-        >
-          ¡ÚNETE AHORA!
-        </ButtonCuatro>
+        <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
       </div>
 
       {/* curta */}
       <div className=" mt-10 bg-yellow-50 md:flex md:h-[740px] md:flex-col md:items-center md:justify-center">
         <section className="flex items-center justify-evenly gap-20">
-          <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
           <div>
             <div className="flex flex-col  items-start px-7 pt-10 text-[20px] md:w-[643px] md:justify-evenly md:gap-2 md:px-5">
               <span className="text-[20px]  font-bold leading-10 text-orange-500 md:text-[32px]">
@@ -168,17 +154,19 @@ export default function Landing() {
                 Comparte tu talento con el mundo y obtén el 100% de las ganancias sin cargos ocultos
                 ni comisiones abusivas. Valora tu música y benefíciate directamente de tu esfuerzo.
               </span>
-              <div className="pt-20">
+              <div className="pt-20 md:relative md:left-60">
                 <Link href={`/login`}>
                   <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
                 </Link>
               </div>
             </div>
           </div>
+          <Image className="hidden h-[731px] w-[655px]  md:block" src={dos} alt="perrito" />
         </section>
       </div>
 
       <section className=" md:flex md:h-[740px] md:items-center md:justify-evenly">
+        <Image className="hidden h-[711px] w-[636px]  md:block" src={tres} alt="perrito" />
         <div className="ms:justify-evenly flex flex-col md:gap-2">
           <div className="px-5 pt-5 text-end md:w-[575px] md:px-2  md:text-left">
             <span className="text-[20px] font-bold leading-10 text-orange-500 md:text-[32px]">
@@ -190,61 +178,16 @@ export default function Landing() {
               tu música y compartir información sobre tus presentaciones en vivo
             </span>
           </div>
-          <div className="pt-10">
+          <div className="pt-10 md:ml-48">
             <Link href={`/login`}>
               <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
             </Link>
           </div>
         </div>
-        <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
       </section>
-
-      <div className=" mt-10 bg-yellow-50 md:flex md:h-[740px] md:flex-col md:items-center md:justify-center">
-        <section className="flex items-center justify-evenly gap-20">
-          <Image className="hidden h-[410px] w-[559px] md:block" src={perrito} alt="perrito" />
-          <div>
-            <div className="flex flex-col  items-start px-10 pt-10 text-[20px] md:w-[643px] md:justify-evenly md:gap-2">
-              <span className="text-[20px]  font-bold leading-10 text-orange-500 md:text-[32px]">
-                SoundWave Connect
-                <br />
-              </span>
-              <span className="text-[20px] font-normal leading-[17.92px] text-zinc-700 md:text-[26px] md:leading-[42px]">
-                Conéctate y colabora con otros músicos independientes para crear una comunidad
-                sólida y apoyarnos mutuamente en este emocionante viaje musical.
-              </span>
-              <div className="pt-20 text-start">
-                <Link href={`/login`}>
-                  <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <section className="flex h-[280px] flex-col items-center justify-evenly gap-10 bg-white pt-8 md:h-[809px] md:bg-gray-200 ">
-        <h3 className=" mt-10 px-5 text-center text-[20px] font-semibold text-zinc-700 md:w-[755px] md:text-[38px]">
-          Únete de forma gratuita a SoundWave, la comunidad que te llevará a vivir la experiencia de
-          ser un músico exitoso.
-        </h3>
-        <div className="text-center ">
-          <Link href={`/login`}>
-            <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
-          </Link>
-        </div>
-        <div className="mb-12">
-          <ButtonCuatro
-            onClick={() => {
-              router.push('/login');
-            }}
-          >
-            ¡ÚNETE AHORA!
-          </ButtonCuatro>
-        </div>
+      <section className=" ">
+        <Image className="h-[1168px] " src={cuatro} alt="footer" />
       </section>
-      <div className="hidden md:flex">
-        <Footer />
-      </div>
     </div>
   );
 }
