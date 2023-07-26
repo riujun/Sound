@@ -2,6 +2,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
+import { useDataUser } from '@/app/components/Auth/hooks/dataUser';
+
 import Loader from '../Loader/Loader';
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import type { Artist } from './CardArtist';
@@ -18,18 +20,20 @@ export default function CardArtistList({ todos, seguidores, siguiendo }: CardArt
   const [showAll, setShowAll] = useState(true);
   const [isMediumScreen, setIsMediumScreen] = useState(false);
   const [showMyModal, setShowMyModal] = useState(true);
+  const userData = useDataUser();
+  const userID = userData !== null ? userData._id : '';
 
   useEffect(() => {
     const fetchArtists = async (): Promise<void> => {
       try {
         let response;
-
+        console.log('userid: ', userID);
         if (todos) {
           response = await axios.get<Artist[]>('http://localhost:4000/user');
         } else if (seguidores) {
-          response = await axios.get<Artist[]>('http://localhost:4000/seguidores');
+          response = await axios.get<Artist[]>(`http://localhost:4000/user/seguidores/${userID}`);
         } else if (siguiendo) {
-          response = await axios.get<Artist[]>('http://localhost:4000/siguiendo');
+          response = await axios.get<Artist[]>(`http://localhost:4000/user/favoritos/${userID}`);
         } else {
           console.error(
             'Error: Propiedad no válida. Debe proporcionar "todos", "seguidores" o "siguiendo".'
