@@ -11,7 +11,9 @@ import { MercadopagoService } from '../mercadopago/mercadopago.service';
 import { PaypalService } from '../paypal/paypal.service';
 import { paypalItemDto } from 'src/dto/paypal-item.dto';
 import { mercadoItemDto } from 'src/dto/mercadopago-item.dto';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Pagos')
 @Controller('payment')
 export class PaymentController {
   constructor(
@@ -19,8 +21,9 @@ export class PaymentController {
     private readonly paypalService: PaypalService,
   ) {}
 
+  @ApiOperation({ summary: 'Crear un link de pago' })
   @Post('mercadopago')
-  async createPayment(@Body() items: mercadoItemDto[], @Res() res) {
+  async createPayment(@Body() items: mercadoItemDto, @Res() res) {
     try {
       const preference = await this.mercadopagoService.createPayment(items);
       if (!preference) {
@@ -36,6 +39,8 @@ export class PaymentController {
     }
   }
 
+  @ApiOperation({ summary: 'Crear un link de pago' })
+  @ApiParam({ name: '' })
   @Post('paypal/create')
   async createPaypalPayment(@Body() items: paypalItemDto, @Res() res) {
     try {

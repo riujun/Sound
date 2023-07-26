@@ -13,12 +13,12 @@ export class MercadopagoService {
     });
   }
 
-  async createPayment(items: mercadoItemDto[]): Promise<Preference> {
+  async createPayment(order: mercadoItemDto): Promise<Preference> {
     try {
-      console.log(items);
+      console.log(order);
 
       const preference = {
-        items,
+        items: [order],
         back_urls: {
           success: `${process.env.SELF_DEPLOY}`,
           failure: `${process.env.SELF_DEPLOY}`,
