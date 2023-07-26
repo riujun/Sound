@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 export interface UserData {
   id: string;
+  _id: string;
   // Otros campos que pueda tener tu objeto JSON
 }
 

@@ -91,4 +91,11 @@ export class CreateUserDto {
   )
   @IsOptional()
   password?: string;
+  @IsOptional()
+  @IsBoolean()
+  mercadopagoApproved?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  paypalApproved?: boolean;
 }

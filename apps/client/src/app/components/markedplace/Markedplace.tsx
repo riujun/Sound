@@ -1,15 +1,25 @@
 /* eslint-disable prettier/prettier */
 'use client';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { GoKebabHorizontal } from 'react-icons/go';
 
 import compartir from '@/app/assets/compartir.png';
-import subir from '@/app/assets/dw.png';
 import eliminar from '@/app/assets/eliminar.png';
+import subir from '@/app/assets/subir.png';
 
 import { ButtonCreate } from '../Buttons/seccion/Button_Create';
+import AlertMetodoCobro from '../ModalAlerts/AlertMetodoDeCobro';
 
+interface UserData {
+  genre: string;
+  name: string;
+  surname: string;
+  genero: string;
+  description: string;
+  username: string;
+}
 interface Song {
   _id: string;
   name: string;
@@ -26,21 +36,39 @@ interface Song {
 }
 
 export default function Markedplace() {
+  const router = useRouter();
   const [songs, setSongs] = useState<Song[]>([]);
+  const [data, setData] = useState<UserData | null>(null);
   console.log(songs);
+  const [showMyModal, setShowMyModal] = useState(false);
   const [, setSelectedSongIndex] = useState<number | null>(null);
   const colors = ['bg-orange-100', 'bg-white'];
-
+  console.log(data, 'userdata');
+  const handleClose = () => {
+    setShowMyModal(false);
+  };
   const handleSongSelect = (index: number) => {
     setSelectedSongIndex(index);
   };
+  useEffect(() => {
+    const url = `http://localhost:4000/user/64c01b43ffa500e4b825dbb5`;
+
+    console.log(url);
+    fetch(url)
+      .then((response) => response.json())
+      .then((responseData: UserData) => {
+        setData(responseData);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
 
   useEffect(() => {
-    const url = 'http://localhost:4000/user/mysongsuploaded/64befaaaffbe80cc4135f182';
+    const url = `http://localhost:4000/user/mysongsuploaded/64c01b43ffa500e4b825dbb5`;
     fetch(url)
       .then((response) => response.json())
       .then((responseData: { songs: Song[][] }) => {
-        // Flatten the nested arrays to get a single array of songs
         const flattenedSongs = responseData.songs.flat();
         setSongs(flattenedSongs);
       })
@@ -48,6 +76,14 @@ export default function Markedplace() {
         console.error('Error fetching data:', error);
       });
   }, []);
+
+  const checkPagos = () => {
+    if (data.mercadopagoApproved === true || data.paypalApproved === true) {
+      router.push('/uploadmusic');
+    } else {
+      setShowMyModal(true);
+    }
+  };
 
   return (
     <>
@@ -62,8 +98,8 @@ export default function Markedplace() {
             <div className="h-[48px] w-[48px] ">
               <Image src={eliminar} alt="logo" />
             </div>
-            <div className="object-cover">
-              <Image className="" src={subir} alt="logo" />
+            <div className="object-cover text-orange-400">
+              <Image onClick={checkPagos} className=" text-orange-400" src={subir} alt="logo" />
             </div>
           </div>
         </div>
@@ -141,6 +177,7 @@ export default function Markedplace() {
           )}
         </section>
       </div>
+      <AlertMetodoCobro onClose={handleClose} visible={showMyModal} />
     </>
   );
 }

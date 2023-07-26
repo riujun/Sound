@@ -71,6 +71,13 @@ export class User extends Document {
   @Prop()
   @IsOptional()
   description?: string;
+  @Prop({ default: false })
+  @IsOptional()
+  mercadopagoApproved: boolean;
+
+  @Prop({ default: false })
+  @IsOptional()
+  paypalApproved: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
