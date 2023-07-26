@@ -119,9 +119,13 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
                 setShowMyModal(true);
               }}
             >
-              <span className="text-center text-xs font-medium text-zinc-700">
+              <span
+                className="text-center text-xs font-medium text-zinc-700"
+                style={{ whiteSpace: 'nowrap' }}
+              >
                 $ {songs[0].price}
               </span>
+
               <span className="absolute left-1/2 mt-[-8px] h-[30px] w-14 -translate-x-1/2 transform rounded bg-orange-500 pt-2 text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:w-[85px]">
                 COMPRAR
               </span>
