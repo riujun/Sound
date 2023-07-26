@@ -1,17 +1,17 @@
 'use client';
 import axios from 'axios';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
-import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
-
-import Buscador from '../Buscador/Buscador';
 import Loader from '../Loader/Loader';
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import type { Artist } from './CardArtist';
 import CardArtist from './CardArtist';
-
-export default function CardArtistList() {
+interface CardArtistProps {
+  todos: boolean;
+  seguidores: boolean;
+  siguiendo: boolean;
+}
+export default function CardArtistList({ todos, seguidores, siguiendo }: CardArtistProps) {
   // Estado para almacenar la página actual
   const [artists, setArtists] = useState<Artist[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +22,22 @@ export default function CardArtistList() {
   useEffect(() => {
     const fetchArtists = async (): Promise<void> => {
       try {
-        const response = await axios.get<Artist[]>('http://localhost:4000/user');
+        let response;
+
+        if (todos) {
+          response = await axios.get<Artist[]>('http://localhost:4000/user');
+        } else if (seguidores) {
+          response = await axios.get<Artist[]>('http://localhost:4000/seguidores');
+        } else if (siguiendo) {
+          response = await axios.get<Artist[]>('http://localhost:4000/siguiendo');
+        } else {
+          console.error(
+            'Error: Propiedad no válida. Debe proporcionar "todos", "seguidores" o "siguiendo".'
+          );
+          return;
+        }
+
+        // const response = await axios.get<Artist[]>('http://localhost:4000/user');
         setArtists(response.data);
         setShowMyModal(false);
       } catch (error) {
@@ -132,19 +147,7 @@ export default function CardArtistList() {
   };
   return (
     <div className="m-[1%] flex-grow overflow-auto">
-      <div className="flex justify-between pl-3 md:p-6">
-        <div className="hidden w-auto md:block">
-          <Image className="" src={logoMarketPlace} alt="logo market place" />
-        </div>
-        <Buscador />
-      </div>
       <Loader visible={showMyModal} />
-      <div className="flex justify-center p-5">
-        <div className="text-xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
-          {!isMediumScreen && 'Descubre y apoya a nuevo talento musical'}
-          {/* <div className="text-red-600 ">{isDBConnected ? '' : 'Desconectado'}</div> */}
-        </div>
-      </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
       <div
         className={

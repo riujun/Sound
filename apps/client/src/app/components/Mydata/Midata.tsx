@@ -101,7 +101,7 @@ export default function Midata() {
     }));
   };
   return (
-    <div className=" mb-20 w-full">
+    <div className="mb-20 w-full ">
       <h2 className="ml-7  mt-10 text-[32px] font-medium leading-normal text-orange-500">
         Mis datos
       </h2>
@@ -110,7 +110,7 @@ export default function Midata() {
           <div className="flex w-full justify-between px-5">
             <h3 className="text-2xl font-semibold leading-normal text-black">Información básica</h3>
             <div>
-              <div className="flex items-center text-center text-lg font-normal leading-[48px] text-black">
+              <div className="flex cursor-pointer items-center text-center text-lg font-normal leading-[48px] text-black">
                 Editar <FiEdit3 />
               </div>
             </div>
@@ -203,7 +203,7 @@ export default function Midata() {
               <div className="h-[0px] w-[100%] border border-black"></div>
             </div>
           </section>
-          <h2 className=" pl-5 text-2xl font-semibold leading-normal text-black ">
+          <h2 className="pl-5 text-2xl font-semibold leading-normal text-black ">
             Método de cobro
           </h2>
           <div className=" mt-2 h-[0px] w-[100%] border border-gray-400 "></div>
@@ -239,7 +239,7 @@ export default function Midata() {
               </div>
             </div>
           </section>
-          <h2 className=" pl-5 text-2xl font-semibold leading-normal text-black">
+          <h2 className="pl-5 text-2xl font-semibold leading-normal text-black ">
             Información del artista
           </h2>
           <div className="mt-2  h-[0px] w-[100%] border  border-gray-400"></div>
@@ -263,11 +263,11 @@ export default function Midata() {
               onChange={handleChange}
             />
           </div>
-          <div className="hidden  md:block">
-            <div className="mt-10 flex  justify-end gap-5 pr-5 ">
+          <div className="hidden md:block">
+            <div className="mt-10 flex justify-end gap-5 pr-5 ">
               <div className="inline-flex h-12 w-[141px] items-center justify-center gap-2.5 border border-orange-500 p-4 hover:bg-orange-100">
                 <Link href={'/Perfilartist'}>
-                  <div className="shrink grow basis-0 text-center  text-base font-semibold uppercase leading-none text-black">
+                  <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
                     Cancelar
                   </div>
                 </Link>
@@ -283,7 +283,7 @@ export default function Midata() {
             </div>
           </div>
           <div>
-            <div className="flex flex-col items-center  justify-center gap-5 md:hidden">
+            <div className="flex flex-col items-center justify-center gap-5 md:hidden">
               <ButtonCuatro onClick={handleSubmit}>Guardar cambios</ButtonCuatro>
 
               <Link href={'/Perfilartist'}>

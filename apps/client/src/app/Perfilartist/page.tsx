@@ -4,7 +4,7 @@ import HeaderGlobal from '../components/header-global/Header_Global';
 import Markedplace from '../components/markedplace/Markedplace';
 import Menu from '../components/menu/Menu';
 import Perfiluser from '../components/perfilUser/Perfiluser';
-import Tufanbace from '../components/Tufanbase/Tufanbace';
+import Tufanbase from '../components/Tufanbase/Tufanbase';
 
 export default function Page() {
   return (
@@ -15,7 +15,7 @@ export default function Page() {
         <div className="w-full">
           <Perfiluser />
           <Markedplace />
-          <Tufanbace />
+          <Tufanbase />
         </div>
       </div>
     </div>
