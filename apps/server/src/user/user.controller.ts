@@ -450,4 +450,35 @@ export class UserController {
       return res.status(HttpStatus.OK).json({ isFollowing: false });
     }
   }
+
+  @ApiParam({ name: 'userid', description: 'ID del user logueado' })
+  @ApiOperation({ summary: 'Consulta para todos los followers del artista' })
+  @Get('/myfollowers/:userid')
+  async myFollowers(@Param('userid') userId: string, @Res() res) {
+    try {
+      const user = await this.userService.getById(userId);
+      const followers = user.followers;
+      return res.status(HttpStatus.OK).json({ followers });
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(HttpStatus.BAD_GATEWAY)
+        .json({ message: 'Error en el servidor.' });
+    }
+  }
+  @ApiParam({ name: 'userid', description: 'ID del user logueado' })
+  @ApiOperation({ summary: 'Consulta para todos los followers del artista' })
+  @Get('/myfavoritesartists/:userid')
+  async myFavoritesArtists(@Param('userid') userId: string, @Res() res) {
+    try {
+      const user = await this.userService.getById(userId);
+      const favoriteArtists = user.favoriteArtists;
+      return res.status(HttpStatus.OK).json({ favoriteArtists });
+    } catch (error) {
+      console.log(error);
+      return res
+        .status(HttpStatus.BAD_GATEWAY)
+        .json({ message: 'Error en el servidor.' });
+    }
+  }
 }
