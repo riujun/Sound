@@ -1,5 +1,5 @@
 'use client';
-import axios, { type AxiosResponse } from 'axios';
+import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -41,13 +41,9 @@ export default function CardArtist({ artist }: { artist: Artist }) {
   const [isHovered, setIsHovered] = useState(false);
   const userData = useDataUser();
   const userID = userData !== null ? userData._id : '';
-  const [isFollowing, setIsFollowing] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(artist.followers.includes(userID));
   const src = isFollowing ? LikeOrange : LikeTransparent;
-  console.log('userID: ' + userID);
-  console.log('artist._id: ' + artist._id);
-  console.log('estás siguiendo?: ' + (isFollowing ? 'si' : 'no'));
-  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-  console.log('artist.followers: ' + artist.followers);
+
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -56,66 +52,70 @@ export default function CardArtist({ artist }: { artist: Artist }) {
     setIsHovered(false);
   };
 
-  useEffect(() => {
-    // Verificar si el usuario actual sigue al artista al montar el componente o cuando cambien los IDs
-    axios
-      .get<FollowResponse>(`http://localhost:4000/user/isfollowing/${userID}/${artist._id}`)
-      .then((response: AxiosResponse<FollowResponse>) => {
-        setIsFollowing(response.data.isFollowing);
-      })
-      .catch((error) => {
-        console.error('Error al verificar si el usuario sigue al artista:', error);
-      });
-  }, [userID, artist._id]);
+  const handleCardClick = () => {
+    router.push('/Perfilartist');
+  };
 
-  const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
+  const handleImageClick = async (event: React.MouseEvent<HTMLImageElement>) => {
     event.stopPropagation();
 
     const artistID = artist._id;
 
-    if (isFollowing) {
-      // El usuario sigue al artista, hacemos la solicitud POST para dejar de seguir
-      fetch(`http://localhost:4000/user/unfollow/${userID}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ artistID }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // Actualizamos el estado isFollowing para reflejar el cambio
-          setIsFollowing(false);
-          console.log('Dejaste de seguir al artista');
-        })
-        .catch((error) => {
-          console.error('Error al dejar de seguir al artista:', error);
-        });
-    } else {
-      // El usuario no sigue al artista, hacemos la solicitud POST para seguir
-      fetch(`http://localhost:4000/user/addfollower/${userID}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ artistID }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // Actualizamos el estado isFollowing para reflejar el cambio
-          setIsFollowing(true);
-          console.log('Comenzaste a seguir al artista');
-        })
-        .catch((error) => {
-          console.error('Error al seguir al artista:', error);
-        });
+    try {
+      if (isFollowing) {
+        // El usuario sigue al artista, hacemos la solicitud POST para dejar de seguir
+        await axios
+          .post(
+            `http://localhost:4000/user/unfollow/${userID}`,
+            { followerId: artistID },
+            { headers: { 'Content-Type': 'application/json' } }
+          )
+          .then((response) => {
+            setIsFollowing(false);
+            console.log('Dejaste de seguir al artista');
+          })
+          .catch((error) => {
+            console.error('Error en la solicitud de unfollow:', error);
+          });
+      } else {
+        // El usuario no sigue al artista, hacemos la solicitud POST para seguir
+        await axios
+          .post(
+            `http://localhost:4000/user/addfollower/${userID}`,
+            { followerId: artistID },
+            { headers: { 'Content-Type': 'application/json' } }
+          )
+          .then((response) => {
+            setIsFollowing(true);
+            console.log('Comenzaste a seguir al artista');
+          })
+          .catch((error) => {
+            console.error('Error en la solicitud de seguir:', error);
+          });
+      }
+    } catch (error) {
+      console.error('Error al seguir o dejar de seguir al artista:', error);
     }
   };
 
-  const handleCardClick = () => {
-    // Lógica para el clic en el resto del componente
-    router.push('/Perfilartist');
-  };
+  useEffect(() => {
+    console.log(userID, artist._id);
+    const fetchFollow = async (): Promise<void> => {
+      try {
+        const response = await axios.get<FollowResponse>(
+          `http://localhost:4000/user/isfollowing/${userID}/${artist._id}`
+        );
+        setIsFollowing(response.data.isFollowing);
+      } catch (error) {
+        console.error('Error al verificar si el usuario sigue al artista:', error);
+      }
+    };
+
+    fetchFollow().catch((error) => {
+      // Manejar el error aquí si es necesario
+      console.error('Error in fetchFollow:', error);
+    });
+  }, [userID, artist._id]);
 
   return (
     <>
@@ -157,7 +157,6 @@ export default function CardArtist({ artist }: { artist: Artist }) {
               artist.followers ? `${artist.followers.length} Seguidores` : '0 Seguidores'
             }
           </div>
-
           <div className="md:h-px md:w-[171px] md:bg-black"></div>
         </div>
         <div className="h-0 w-0 text-transparent md:h-[106px] md:w-[171px] md:text-xs md:font-normal md:leading-[14px] md:text-zinc-700">
