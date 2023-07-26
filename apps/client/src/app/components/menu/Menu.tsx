@@ -22,10 +22,10 @@ export default function Menu() {
         </button>
         <button
           className={`min-w-full pb-4 pl-[20%] pt-4 text-left ${
-            isCurrentPage('/Mydata') ? 'bg-orange-300' : 'hover:bg-orange-300'
+            isCurrentPage('/Perfilartist') ? 'bg-orange-300' : 'hover:bg-orange-300'
           }`}
           onClick={() => {
-            router.push('/Mydata');
+            router.push('/Perfilartist');
           }}
         >
           Mi perfil SoundWave

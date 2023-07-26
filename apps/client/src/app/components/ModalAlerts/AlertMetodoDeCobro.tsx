@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 'use client';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React, { type MouseEvent } from 'react';
 
 import Alerta from '@/app/assets/Alerta.png';
@@ -11,12 +12,14 @@ interface ModalAlertProps {
 }
 
 export default function AlertMetodoCobro({ visible, onClose }: ModalAlertProps) {
+  const router = useRouter();
   const handleClose = (e: MouseEvent<HTMLButtonElement>) => {
     const { id } = e.currentTarget;
     if (id === 'cancelar') {
       onClose();
     } else if (id === 'datos') {
       onClose();
+      router.push('/Mydata');
     }
   };
 

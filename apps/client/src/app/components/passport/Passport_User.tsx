@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
+import Link from 'next/link';
 import React from 'react';
 
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import { ButtonTres } from '../mobile/buttons/Button_tres';
-
 export default function PassportUser() {
   return (
     <div className=" w-screen">
@@ -22,19 +22,21 @@ export default function PassportUser() {
               className="w-[100%] rounded "
               placeholder="Repetir nueva contraseña"
             />
-            <div className="mb-10 mt-10 flex flex-col items-center justify-center gap-5">
+            <div className="mb-10 mt-10 flex flex-col items-center justify-center gap-5 md:hidden">
               <ButtonTres>Cancelar</ButtonTres>
               <ButtonCuatro> Guardar Contraseña</ButtonCuatro>
             </div>
             <div className="hidden md:block">
               <div className="flex justify-end gap-5">
-                <div className="inline-flex h-12 w-[141px] items-center justify-center gap-2.5 border border-orange-500 p-4">
-                  <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
-                    Cancelar
+                <Link href={'/Perfilartist'}>
+                  <div className="inline-flex h-12 w-[141px] cursor-pointer items-center justify-center gap-2.5 border border-orange-500 p-4 hover:bg-orange-100">
+                    <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
+                      Cancelar
+                    </div>
                   </div>
-                </div>
-                <div className="inline-flex h-12 w-[186px] items-center justify-center gap-2.5 bg-orange-500 p-4">
-                  <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
+                </Link>
+                <div className="inline-flex h-12 w-[186px] items-center justify-center gap-2.5 bg-orange-500 p-4 hover:bg-orange-400">
+                  <div className="shrink grow basis-0 cursor-pointer text-center text-base font-semibold uppercase leading-none text-black">
                     guardar contraseña
                   </div>
                 </div>

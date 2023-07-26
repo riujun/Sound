@@ -1,10 +1,9 @@
 import Image from 'next/image';
 
+import banner from '@/app/assets/banner-upload-music.png';
 import HeaderGlobal from '@/app/components/header-global/Header_Global';
 import Menu from '@/app/components/menu/Menu';
 import SelectForm from '@/app/components/UploadMusic/SelectForm';
-
-import banner from '../../assets/banner-upload-music.png';
 
 export default function page() {
   return (

@@ -1,12 +1,12 @@
 /* eslint-disable prettier/prettier */
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { type MouseEvent } from 'react';
 
 import bell from '@/app/assets/bell.png';
 import exit from '@/app/assets/exit.png';
 import user from '@/app/assets/user.png';
-
 interface ModalAlertProps {
   visible: boolean;
   onClose: () => void;
@@ -29,7 +29,9 @@ export default function AlertMenuOptions({ visible, onClose }: ModalAlertProps) 
         <a href="#" className="block px-4 py-3 text-gray-800 hover:bg-gray-200">
           <div className="flex items-center gap-2">
             <Image className="h-[14px] w-[14px]" src={user} alt="user" />
-            <button>Mis Datos</button>
+            <Link href={'/Mydata'}>
+              <p>Mis Datos</p>
+            </Link>
           </div>
         </a>
         <a href="#" className="block px-4 py-3 text-gray-800 hover:bg-gray-200">
@@ -41,7 +43,9 @@ export default function AlertMenuOptions({ visible, onClose }: ModalAlertProps) 
         <a href="#" className="block px-4 py-3 text-gray-800 hover:bg-gray-200">
           <div className="flex items-center gap-2">
             <Image className="h-[14px] w-[14px]" src={exit} alt="exit" />
-            <button>Cerrar Sesion</button>
+            <Link href={'/'}>
+              <p>Cerrar Sesion</p>
+            </Link>
           </div>
         </a>
       </div>
