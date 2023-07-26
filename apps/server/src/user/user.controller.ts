@@ -57,6 +57,71 @@ export class UserController {
     }
   }
 
+  @ApiOperation({ summary: 'Agregar un follower al usuario.' })
+  @ApiParam({ name: 'id', description: 'ID del user.' })
+  @Post('/addfollower/:id')
+  async addFollower(
+    @Res() res,
+    @Param('id') id: string,
+    @Body('followerId') followerId: string,
+  ) {
+    try {
+      const userClient = await this.userService.getById(id);
+      const userArtist = await this.userService.getById(followerId);
+
+      if (userClient.favoriteArtists.includes(followerId)) {
+        return res
+          .status(HttpStatus.OK)
+          .json({ message: 'El follower ya lo sigue al usuario' });
+      }
+      userClient.favoriteArtists.push(followerId);
+      userArtist.followers.push(id);
+
+      await this.userService.updateById(id, userClient);
+      await this.userService.updateById(followerId, userArtist);
+
+      return res.status(HttpStatus.OK).json({ userClient, userArtist });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.BAD_GATEWAY);
+    }
+  }
+
+  @ApiOperation({ summary: 'Dejar de seguir al usuario.' })
+  @ApiParam({ name: 'id', description: 'ID del user.' })
+  @Post('/unfollow/:id')
+  async unFollow(
+    @Res() res,
+    @Param('id') id: string,
+    @Body('followerId') followerId: string,
+  ) {
+    try {
+      const userClient = await this.userService.getById(id);
+      const userArtist = await this.userService.getById(followerId);
+      if (userClient.favoriteArtists.includes(followerId) === false) {
+        return res
+          .status(HttpStatus.OK)
+          .json({ message: 'El follower no lo sigue al usuario' });
+      }
+
+      const newFavoritesArtist = userClient.favoriteArtists.filter(
+        (id) => id === followerId,
+      );
+      console.log(newFavoritesArtist);
+      userClient.favoriteArtists = newFavoritesArtist;
+      await this.userService.updateById(id, userClient);
+
+      const newFollowers = userArtist.followers.filter((ids) => ids === id);
+      userArtist.followers = newFollowers;
+      await this.userService.updateById(followerId, userArtist);
+
+      return res.status(HttpStatus.OK).json({ userClient, userArtist });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.BAD_GATEWAY);
+    }
+  }
+
   @ApiOperation({ summary: 'Obtener musica comprada' })
   @ApiParam({ name: 'id', description: 'ID del user' })
   @Get('/mysongs/:id')
@@ -367,6 +432,22 @@ export class UserController {
     } catch (error) {
       console.error(error);
       throw new Error('Error uploading descrption: ' + error.message);
+    }
+  }
+  @ApiParam({ name: 'userid', description: 'ID del user logueado' })
+  @ApiParam({ name: 'artistid', description: 'ID del artista' })
+  @ApiOperation({ summary: 'Ver si un usuario esta siguiendo a un artista' })
+  @Get('/isfollowing/:userid/:artistid')
+  async isFollowing(
+    @Param('userid') userId: string,
+    @Param('artistid') artistId: string,
+    @Res() res,
+  ) {
+    const user = await this.userService.getById(userId);
+    if (user.favoriteArtists.includes(artistId)) {
+      return res.status(HttpStatus.OK).json({ isFollowing: true });
+    } else {
+      return res.status(HttpStatus.OK).json({ isFollowing: false });
     }
   }
 }

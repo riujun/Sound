@@ -5,7 +5,7 @@ import { Model } from 'mongoose';
 import { PaginationQueryDto } from 'src/dto/pagination-query.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { User } from '../schemas/user.schema';
-import { ImageType } from '../enums/enums';
+import { ImageType, paymentType } from '../enums/enums';
 
 @Injectable()
 export class UserService {
@@ -29,6 +29,12 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
+  // async getByIdAndSave(usuario: string): Promise<User | null> {
+  //   const user = this.userModel.findById(usuario).exec();
+  //   user.save()
+  //   return
+  // }
+
   async deleteById(id: string): Promise<User | null> {
     return this.userModel.findByIdAndDelete(id).exec();
   }
@@ -39,6 +45,15 @@ export class UserService {
   ): Promise<User | null> {
     return this.userModel
       .findByIdAndUpdate(id, updatedUserData, { new: true })
+      .exec();
+  }
+
+  async updatePaymentById(
+    id: string,
+    paymentType: paymentType,
+  ): Promise<User | null> {
+    return this.userModel
+      .findByIdAndUpdate(id, { [paymentType]: true }, { new: true })
       .exec();
   }
 

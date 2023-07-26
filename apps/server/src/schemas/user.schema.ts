@@ -1,7 +1,8 @@
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types, Schema as MongooseSchema } from 'mongoose';
 import { Song } from './song.schema';
-import { IsOptional } from 'class-validator';
+import { IsArray, IsOptional } from 'class-validator';
+import { Album } from './album.schema';
 
 @Schema({ timestamps: true })
 export class User extends Document {
@@ -24,12 +25,14 @@ export class User extends Document {
   @IsOptional() // Haciendo el campo "username" opcional
   username?: string;
 
-  @Prop()
+  @Prop({ default: null })
   @IsOptional()
   genre?: string;
+
   @IsOptional()
-  @Prop()
-  followers?: number;
+  @Prop({ type: [{ type: Types.ObjectId }] })
+  @IsArray()
+  followers?: string[];
 
   @Prop({
     default:
@@ -41,10 +44,6 @@ export class User extends Document {
   @Prop({ type: [{ type: Types.ObjectId }] })
   @IsOptional() // Haciendo el campo "favoriteArtists" opcional
   favoriteArtists?: string[]; // Array de IDs de artistas favoritos
-
-  @Prop({ type: [{ type: Types.ObjectId }] })
-  @IsOptional() // Haciendo el campo "favoriteArtists" opcional
-  followingArtists?: string[]; // Arreglo de IDs de los artistas seguidos por el usuario
 
   @Prop({ unique: true })
   @IsOptional() // Haciendo el campo "email" opcional
@@ -71,6 +70,16 @@ export class User extends Document {
   @Prop()
   @IsOptional()
   description?: string;
+
+
+
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Album' }] })
+  @IsOptional()
+  albumes: Album[];
+  // @Prop()
+  // @IsOptional()
+
+
   @Prop({ default: false })
   @IsOptional()
   mercadopagoApproved: boolean;

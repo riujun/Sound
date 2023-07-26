@@ -55,7 +55,8 @@ export class CreateUserDto {
   })
   @IsNumber()
   @IsOptional()
-  followers?: number;
+  followers?: [];
+
   @ApiProperty({
     description: 'Responde a si el usuario es artista o no',
     example: true,
@@ -91,6 +92,7 @@ export class CreateUserDto {
   )
   @IsOptional()
   password?: string;
+
   @IsOptional()
   @IsBoolean()
   mercadopagoApproved?: boolean;

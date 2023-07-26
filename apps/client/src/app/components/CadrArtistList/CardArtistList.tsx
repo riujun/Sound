@@ -12,7 +12,7 @@ import CardArtist from './CardArtist';
 
 export default function CardArtistList() {
   // Estado para almacenar la página actual
-  const [artist, setArtist] = useState<Artist[]>([]);
+  const [artists, setArtists] = useState<Artist[]>([]);
   const [isDBConnected, setDBConnected] = useState(false);
   const [hasData, setHasData] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,7 +23,7 @@ export default function CardArtistList() {
     const fetchArtists = async (): Promise<void> => {
       try {
         const response = await axios.get<Artist[]>('http://localhost:4000/user');
-        setArtist(response.data);
+        setArtists(response.data);
         setDBConnected(true);
         setHasData(response.data.length > 0);
       } catch (error) {
@@ -35,7 +35,7 @@ export default function CardArtistList() {
     const fetchData = () => {
       fetchArtists().catch((error) => {
         // Manejar el error aquí si es necesario
-        console.error('Error in fetchData:', error);
+        console.error('Error in fetchArtists:', error);
       });
     };
 
@@ -69,7 +69,7 @@ export default function CardArtistList() {
   if (typeof window !== 'undefined') {
     pageSize = window.innerWidth > 768 ? 10 : 6;
   }
-  const totalItems = Array.isArray(artist) ? artist.length : 0;
+  const totalItems = Array.isArray(artists) ? artists.length : 0;
   // Cálculo del número total de páginas
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   const totalPages = Math.ceil(totalItems / pageSize) || 1; // Cantidad de páginas del paginador
@@ -84,7 +84,7 @@ export default function CardArtistList() {
 
     for (let i = startIndex; i < endIndex; i++) {
       // Pasar parámetros con los datos del Artista
-      cardArtists.push(<CardArtist key={i} artist={artist[i]} />);
+      cardArtists.push(<CardArtist key={i} artist={artists[i]} />);
     }
     return cardArtists;
   };

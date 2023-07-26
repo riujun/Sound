@@ -32,7 +32,7 @@ export class FavoriteArtistsService {
     }
 
     user.favoriteArtists.push(artistId);
-    artist.followingArtists.push(userId); // Agregar el usuario a la lista de seguidores del artista
+    artist.favoriteArtists.push(userId); // Agregar el usuario a la lista de seguidores del artista
 
     await user.save();
     await artist.save();
@@ -53,9 +53,9 @@ export class FavoriteArtistsService {
       user.favoriteArtists.splice(index, 1);
     }
 
-    const followerIndex = artist.followingArtists.indexOf(userId);
+    const followerIndex = artist.favoriteArtists.indexOf(userId);
     if (followerIndex > -1) {
-      artist.followingArtists.splice(followerIndex, 1);
+      artist.favoriteArtists.splice(followerIndex, 1);
     }
 
     await user.save();
