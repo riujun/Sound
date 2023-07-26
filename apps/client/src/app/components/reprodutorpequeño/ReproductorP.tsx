@@ -77,7 +77,6 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
     <div className="w-full md:w-[100%]">
       <audio ref={audioRef} src={songs[0].src} />
 
-      {/* Diseño José */}
       <div className="flex h-14 w-[326px] items-center justify-between border-b border-neutral-400 md:h-[58px] md:w-full md:min-w-[430px] md:max-w-[525px]">
         <div className="relative h-[42px] w-[270px]">
           <div className="absolute left-0 top-[0px] text-2xl font-semibold leading-normal text-black md:text-3xl">
