@@ -122,10 +122,17 @@ export default function Markedplace() {
     <div className="mt-20">
       <div className="flex justify-between">
         <h2 className="pl-5 text-[32px] text-orange-500">Marketplace</h2>
-        <div className="flex justify-between">
-          <Image src={compartir} alt="logo" />
-          <Image src={eliminar} alt="logo" />
-          <Image src={subir} alt="logo" />
+
+        <div className="mr-6 flex items-center gap-3">
+          <div className="">
+            <Image className="object-cover" src={compartir} alt="logo" />
+          </div>
+          <div className="h-[48px] w-[48px] ">
+            <Image src={eliminar} alt="logo" />
+          </div>
+          <div className="object-cover">
+            <Image className="" src={subir} alt="logo" />
+          </div>
         </div>
       </div>
       <div className="border-greey-100 ml-5 flex  w-[98%]  items-center justify-center border-[2px] "></div>
