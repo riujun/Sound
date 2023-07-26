@@ -3,26 +3,46 @@
 'use client';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
-import { IoIosMore, IoIosPodium } from 'react-icons/io';
-import { TbPlayerPlayFilled, TbPlaystationSquare } from 'react-icons/tb';
-import MyModal from '@/app/components/ModalAlerts/AlertMetodoDePago';
+
+// TODAS LAS ALERTAS DEL SITIO - IR BORRANDO A MEDIDA QUE SE UTILIZAN
+// import PagoExitoso from '@/app/components/ModalAlerts/AlertPagoExitoso';
+// import PagoError from '@/app/components/ModalAlerts/AlertPagoError';
+// import FotoPortadaUsuario from '@/app/components/ModalAlerts/AlertFotoPortadaUsuario';
+// import FotoPortadaAlbum from '@/app/components/ModalAlerts/AlertFotoPortadaAlbum';
+// import ArchivoDeAudio from '@/app/components/ModalAlerts/AlertArchivoDeAudio';
+// import AlertEliminarArchivos from '../ModalAlerts/AlertEliminarArchivos';
+// import MetodoDeCobro from '../ModalAlerts/AlertMetodoDeCobro';
+// import AlertMetodoCobro from '../ModalAlerts/AlertMetodoDeCobro';
+// import AlertFelicidades from '../ModalAlerts/AlertFelicidades';
+// import AlertPublicarComentario from '../ModalAlerts/AlertPublicarComentario';
+// import Loader from '@/app/components/Loader/Loader';
 import img from '@/app/assets/landingpage/p.jpg';
-
-interface Song {
-  id: number;
-  title: string;
+import Opciones from '@/app/assets/Opciones.png';
+import Play from '@/app/assets/Play.png';
+import Reproduciendo from '@/app/assets/Reproduciendo.png';
+import Stop from '@/app/assets/Stop.png';
+import type { Artist } from '@/app/components/CadrArtistList/CardArtist';
+import MetodoDePago from '@/app/components/ModalAlerts/AlertMetodoDePago';
+// import AlertSongsOptions from '@/app/components/ModalAlerts/AlertSongsOptions';
+export interface Song {
+  _id: string;
+  name: string;
+  duration: number;
+  user: Artist;
+  coArtist: string;
+  price: number;
+  genre: string;
+  image: string;
+  date: string;
+  album: string;
   src: string;
-  artista: string;
-  price: string;
-  disco: string;
-  duracion: string;
 }
-
 interface ReproductorProps {
   songs: Song[];
+  index: number;
 }
 
-const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
+const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showMyModal, setShowMyModal] = useState(false);
@@ -53,62 +73,78 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs }) => {
     setIsPlaying(!isPlaying);
   };
 
-  // const handleButtonClick = () => {
-  //   setShowMyModal(true);
-  // };
-
   return (
-    <div>
+    <div className="w-full md:w-[100%]">
       <audio ref={audioRef} src={songs[0].src} />
 
-      <div className="flex h-[55px] w-[450px] items-center justify-evenly border-b-[1px] border-black">
-        <h5>{songs[0].id}</h5>
-
-        <div className="flex items-center gap-5">
-          <div>
-            <Image className="h-[42px] w-[42px]" src={img} alt="img" />
+      <div className="flex h-14 w-[326px] items-center justify-between border-b border-neutral-400 md:h-[58px] md:w-full md:min-w-[430px] md:max-w-[525px]">
+        <div className="relative h-[42px] w-[270px]">
+          <div className="absolute left-0 top-[0px] text-2xl font-semibold leading-normal text-black md:text-3xl">
+            {index}
           </div>
-
-          <div>
-            <p className="w-[118px] text-[14px]">{songs[0].title}</p>
-            <p className="text-[12px]">{songs[0].artista}</p>
-          </div>
-        </div>
-
-        <IoIosPodium className={`text-lg ${isPlaying ? 'text-orange-500' : ''}`} />
-
-        <button
-          className="relative px-6 border group"
-          onClick={() => {
-            setShowMyModal(true);
-          }}
-        >
-          <span>{songs[0].price}</span>
-
-          <span className="absolute px-2 text-black transition-opacity duration-300 transform -translate-x-1/2 bg-orange-500 opacity-0 left-1/2 group-hover:opacity-100">
-            Comprar
-          </span>
-        </button>
-
-        <div>
-          <button
-            onClick={() => {
-                handlePlayPause();
-            }}
-          >
-            {isPlaying ? (
-              <TbPlaystationSquare className="text-3xl text-orange-500 cursor-pointer" />
-            ) : (
-              <div className="p-1 border border-orange-500 rounded-full">
-                <TbPlayerPlayFilled className="text-orange-500 cursor-pointer" />
+          <div className="absolute left-[30px] top-[-2px] inline-flex items-center justify-start gap-4 md:left-[35px]">
+            <Image
+              className="h-[33px] w-[33px] rounded object-cover md:h-[42px] md:w-[42px]"
+              src={img}
+              alt="imagen de portada"
+            />
+            <div className="inline-flex flex-col items-start justify-center">
+              <div className="w-[118px] truncate text-base font-semibold text-zinc-700 md:w-[178px]">
+                {songs[0].name}
               </div>
-            )}
-          </button>
+              <div className="w-[118px] truncate text-sm font-medium text-neutral-500 md:w-[178px]">
+                {songs[0]?.user?.name + ' ' + songs[0]?.user?.surname}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <IoIosMore className="cursor-pointer" />
+        <div className="flex items-center justify-start">
+          <div className="mr-[-9px] h-12 w-4 md:m-0 md:h-12 md:w-4">
+            {isPlaying ? <Image src={Reproduciendo} alt="Reproduciendo" /> : ''}
+          </div>
+          <div className="mr-[-9px] h-12 w-12 md:m-0">
+            <button
+              onClick={() => {
+                handlePlayPause();
+              }}
+            >
+              {isPlaying ? <Image src={Stop} alt="Stop" /> : <Image src={Play} alt="Play" />}
+            </button>
+          </div>
+          <div className="inline-flex h-[30px] w-14 items-center justify-center gap-2.5 rounded border border-zinc-700 px-5 py-2 hover:border-orange-500 md:w-[85px]">
+            <button
+              className="group relative text-center text-xs font-medium text-zinc-700"
+              onClick={() => {
+                setShowMyModal(true);
+              }}
+            >
+              <span className="text-center text-xs font-medium text-zinc-700">
+                $ {songs[0].price}
+              </span>
+              <span className="absolute left-1/2 mt-[-8px] h-[30px] w-14 -translate-x-1/2 transform rounded bg-orange-500 pt-2 text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:w-[85px]">
+                COMPRAR
+              </span>
+            </button>
+          </div>
+          <div className="relative m-[-5px] h-8 w-8 md:m-0 md:h-12 md:w-12">
+            <Image className="cursor-pointer" src={Opciones} alt="Opciones" />
+          </div>
+        </div>
       </div>
-      <MyModal onClose={handleClose} visible={showMyModal} />
+      <MetodoDePago onClose={handleClose} visible={showMyModal} />
+      {/* TODAS LAS ALERTAS DEL SITIO - IR BORRANDO A MEDIDA QUE SE UTILIZAN */}
+      {/* <AlertSongsOptions onClose={handleClose} visible={showMyModal} /> */}
+      {/* <Loader onClose={handleClose} visible={showMyModal} /> */}
+      {/* <PagoExitoso onClose={handleClose} visible={showMyModal} /> */}
+      {/* <PagoError onClose={handleClose} visible={showMyModal} /> */}
+      {/* <FotoPortada onClose={handleClose} visible={showMyModal} /> */}
+      {/* <AlertEliminarArchivos onClose={handleClose} visible={showMyModal} /> */}
+      {/* <AlertMetodoCobro onClose={handleClose} visible={showMyModal} /> */}
+      {/* <FotoPortadaAlbum onClose={handleClose} visible={showMyModal} /> */}
+      {/* <ArchivoDeAudio onClose={handleClose} visible={showMyModal} /> */}
+      {/* <AlertFelicidades onClose={handleClose} visible={showMyModal} /> */}
+      {/* <AlertPublicarComentario onClose={handleClose} visible={showMyModal} /> */}
     </div>
   );
 };

@@ -1,241 +1,183 @@
 /* eslint-disable prettier/prettier */
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
-import { FaPlay } from 'react-icons/fa';
-import { IoIosPodium } from 'react-icons/io';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { GoKebabHorizontal } from 'react-icons/go';
 
 import compartir from '@/app/assets/compartir.png';
-import subir from '@/app/assets/dw.png';
 import eliminar from '@/app/assets/eliminar.png';
+import subir from '@/app/assets/subir.png';
 
 import { ButtonCreate } from '../Buttons/seccion/Button_Create';
+import AlertMetodoCobro from '../ModalAlerts/AlertMetodoDeCobro';
 
-interface Song {
-  id: number;
-  title: string;
-  src: string;
-  artista: string;
-  price: string;
-  disco: string;
-  duracion: string;
+interface UserData {
+  genre: string;
+  name: string;
+  surname: string;
+  genero: string;
+  description: string;
+  username: string;
 }
-const songs: Song[] = [
-  {
-    id: 1,
-    title: ' She Dont Give a FO ',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688782116/X2Download.app-Duki_-_She_Don_t_Give_a_FO_ft._Khea_Prod._by_Omar_Varela_azesq4.mp4',
-    artista: 'duki',
-    disco: 'RockStart',
-    duracion: '3.50',
-    price: '$2.4',
-  },
-  {
-    id: 2,
-    title: 'Coco Chanel',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688781959/X2Download.app_-_Eladio_Carri%C3%B3n_ft._Bad_Bunny_-_Coco_Chanel_Visualizer___3MEN2_KBRN_128_kbps_cwayqn.mp3',
-    artista: 'Eladio Carrio',
-    disco: 'Cultura',
-    duracion: '3.30',
-    price: '$6.4',
-  },
-  {
-    id: 3,
-    title: 'Bohemian Rhapsody',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921224/musica/pp24auznir04izrrvnkc.mp4',
-    artista: 'Queen',
-    disco: 'Bohemian Rhapsody',
-    duracion: '5.24',
-    price: '$12.4',
-  },
-  {
-    id: 4,
-    title: 'Seminare',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921396/X2Download.app-_SEMINARE__-_CHARLY_GARC%C3%8DA_%C3%89pica_versi%C3%B3n_bajo_la_lluvia_-_Quilmes_Rock_2004-_480p_d4j89g.mp4',
-    artista: 'CHARLY GARCÍA ',
-    disco: 'Seminare',
-    duracion: '4.41',
-    price: '$8.4',
-  },
-  {
-    id: 5,
-    title: 'Perfecta',
-    src: 'https://audioplayer.madza.dev/Madza-Persistence.mp3',
-    artista: 'Miranda',
-    disco: 'Perfecta',
-    duracion: '3.45',
-    price: '$1.4',
-  },
-  {
-    id: 6,
-    title: 'De Musica Ligera',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921888/musica/X2Download.app-Soda_Stereo_-_De_Musica_Ligera_El_%C3%9Altimo_Concierto_-_480p_uihs9a.mp4',
-    artista: 'Soda Stereo',
-    disco: 'De Musica Ligera',
-    duracion: '4.49',
-    price: '$1.4',
-  },
-  {
-    id: 7,
-    title: 'Seguir Viviendo Sin Tu Amor',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688922018/musica/X2Download.app-Seguir_Viviendo_Sin_Tu_Amor-_480p_ee4slf.mp4',
-    artista: 'Spinetta',
-    disco: 'Sin Tu Amo',
-    duracion: '2.40',
-    price: '$6.4',
-  },
-  {
-    id: 8,
-    title: ' She Dont Give a FO ',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688782116/X2Download.app-Duki_-_She_Don_t_Give_a_FO_ft._Khea_Prod._by_Omar_Varela_azesq4.mp4',
-    artista: 'duki',
-    disco: 'RockStart',
-    duracion: '3.50',
-    price: '$7.4',
-  },
-  {
-    id: 9,
-    title: 'Coco Chanel',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688781959/X2Download.app_-_Eladio_Carri%C3%B3n_ft._Bad_Bunny_-_Coco_Chanel_Visualizer___3MEN2_KBRN_128_kbps_cwayqn.mp3',
-    artista: 'Eladio Carrio',
-    disco: 'Cultura',
-    duracion: '3.30',
-    price: '$3.4',
-  },
-  {
-    id: 10,
-    title: 'Bohemian Rhapsody',
-    src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921224/musica/pp24auznir04izrrvnkc.mp4',
-    artista: 'Queen',
-    disco: 'Bohemian Rhapsody',
-    duracion: '5.24',
-    price: '$3.4',
-  },
-];
+interface Song {
+  _id: string;
+  name: string;
+  duration: number;
+  user: string;
+  coArtist: string;
+  price: number;
+  genre: string;
+  image: string;
+  date: string;
+  album: string;
+  src: string;
+  __v: number;
+}
+
 export default function Markedplace() {
-  const [selectedSongIndex, setSelectedSongIndex] = useState<number | null>(null);
-  const colors = ['bg-orange-200', 'bg-white'];
+  const router = useRouter();
+  const [songs, setSongs] = useState<Song[]>([]);
+  const [data, setData] = useState<UserData | null>(null);
+  console.log(songs);
+  const [showMyModal, setShowMyModal] = useState(false);
+  const [, setSelectedSongIndex] = useState<number | null>(null);
+  const colors = ['bg-orange-100', 'bg-white'];
+  console.log(data, 'userdata');
+  const handleClose = () => {
+    setShowMyModal(false);
+  };
   const handleSongSelect = (index: number) => {
     setSelectedSongIndex(index);
   };
-  return (
-    <div className="mt-20">
-      <div className="flex justify-between">
-        <h2 className="pl-5 text-[32px] text-orange-500">Marketplace</h2>
+  useEffect(() => {
+    const url = `http://localhost:4000/user/64c01b43ffa500e4b825dbb5`;
 
-        <div className="mr-6 flex items-center gap-3">
-          <div className="">
-            <Image className="object-cover" src={compartir} alt="logo" />
-          </div>
-          <div className="h-[48px] w-[48px] ">
-            <Image src={eliminar} alt="logo" />
-          </div>
-          <div className="object-cover">
-            <Image className="" src={subir} alt="logo" />
+    console.log(url);
+    fetch(url)
+      .then((response) => response.json())
+      .then((responseData: UserData) => {
+        setData(responseData);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    const url = `http://localhost:4000/user/mysongsuploaded/64c01b43ffa500e4b825dbb5`;
+    fetch(url)
+      .then((response) => response.json())
+      .then((responseData: { songs: Song[][] }) => {
+        const flattenedSongs = responseData.songs.flat();
+        setSongs(flattenedSongs);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
+  const checkPagos = () => {
+    if (data.mercadopagoApproved === true || data.paypalApproved === true) {
+      router.push('/uploadmusic');
+    } else {
+      setShowMyModal(true);
+    }
+  };
+
+  return (
+    <>
+      <div className="mt-20">
+        <div className="flex justify-between">
+          <h2 className="pl-5 text-[32px] text-orange-500">Marketplace</h2>
+
+          <div className="flex items-center gap-3 pr-5">
+            <div className="">
+              <Image className="object-cover" src={compartir} alt="logo" />
+            </div>
+            <div className="h-[48px] w-[48px] ">
+              <Image src={eliminar} alt="logo" />
+            </div>
+            <div className="object-cover text-orange-400">
+              <Image onClick={checkPagos} className=" text-orange-400" src={subir} alt="logo" />
+            </div>
           </div>
         </div>
-      </div>
-      <div className="border-greey-100 ml-5 flex  w-[98%]  items-center justify-center border-[2px] "></div>
-
-      <section>
-        {songs.length > 0 ? (
-          <div className="flex h-[400px] w-[100%] flex-col">
-            <div className="overflow-x-auto " style={{ maxHeight: '75%' }}>
-              <article className="p-10 text-center">
-                Aquí tienes la lista de tus alucinantes creaciones musicales publicadas en SoundWave
-                Marketplace que van a conquistar los oídos del mundo
-              </article>
-              <div className="inline-block w-full py-2 sm:px-6 lg:px-8">
-                <div className="overflow-hidden">
-                  <table className="w-[100%]">
-                    <thead className="border-b bg-white">
-                      <tr>
-                        <th
-                          scope="col"
-                          className="pb-2 text-left text-sm font-medium text-gray-900"
-                        >
-                          Nombre v
-                        </th>
-                        <th
-                          scope="col"
-                          className="pb-2 text-left text-sm font-medium text-gray-900"
-                        >
-                          Artista v
-                        </th>
-                        <th
-                          scope="col"
-                          className="pb-2 text-left text-sm font-medium text-gray-900 "
-                        >
-                          Disco v
-                        </th>
-                        <th
-                          scope="col"
-                          className="pb-2 text-left text-sm font-medium text-gray-900"
-                        >
-                          Duracion v
-                        </th>
-                        <th
-                          scope="col"
-                          className="pb-2 text-left text-sm font-medium text-gray-900"
-                        ></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {songs.map((song, index) => (
-                        <tr
-                          key={index}
-                          className={`border-b ${colors[index % colors.length]}`}
-                          onClick={() => {
-                            handleSongSelect(index);
-                          }}
-                        >
-                          <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
-                            <div className="flex items-center gap-1">
-                              {selectedSongIndex === index && (
-                                <td className="whitespace-nowrap  text-[8px] text-gray-900">
-                                  <FaPlay />
-                                </td>
-                              )}
-                              <div>{song.title}</div>
-                              {selectedSongIndex === index && (
-                                <td className="whitespace-nowrap  text-[15px] text-gray-900">
-                                  <IoIosPodium />
-                                </td>
-                              )}
-                            </div>
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
-                            {song.artista}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
-                            {song.disco}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
-                            {song.duracion}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
-                            :
-                          </td>
+        <div className="border-greey-100 flex  w-full  items-center justify-center border-[1px] "></div>
+        <div className=" mt-10 flex items-center justify-center">
+          <p className="w-[302px] text-center text-sm font-normal text-black md:w-[40%] md:text-[18px]">
+            Aquí tienes la lista de tus alucinantes creaciones musicales publicadas en SoundWave
+            Marketplace que van a conquistar los oídos del mundo
+          </p>
+        </div>
+        <section className="mt-5 flex w-full">
+          {songs.length > 0 ? (
+            <div className="flex w-full flex-col items-center justify-center px-3">
+              <div className="w-[100%]">
+                <div className=" w-full">
+                  <div className="">
+                    <table className="w-full ">
+                      <thead className="sticky top-0 border-b bg-white">
+                        <tr className="h-12 border-b border-zinc-700 text-left text-xs md:text-lg">
+                          <th scope="col" className="p-[11px] ">
+                            Nombre
+                          </th>
+                          <th scope="col" className="p-[11px]">
+                            Disco
+                          </th>
+                          <th scope="col" className="p-[11px]">
+                            Duracion
+                          </th>
+                          <th scope="col" className="p-[11px]">
+                            Precio
+                          </th>
+                          <th scope="col" className="p-[11px]">
+                            Ventas
+                          </th>
+                          <th scope="col" className="p-[11px]"></th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {songs.map((song, index) => (
+                          <tr
+                            key={index}
+                            className={`whitespace-nowrap border-b border-neutral-400  font-medium ${
+                              colors[index % colors.length]
+                            } text-xs md:text-lg`}
+                            onClick={() => {
+                              handleSongSelect(index);
+                            }}
+                          >
+                            <td className="px-3 py-4 text-sm">{song.name}</td>
+                            <td className="px-3 py-4 text-sm">{song.album}</td>
+                            <td className="px-3 py-4 text-sm">{song.duration}</td>
+                            <td className="px-3 py-4 text-sm text-black">{song.price}</td>
+                            <td className="px-3 py-4 text-sm text-black">
+                              <p>5</p>
+                            </td>
+                            <td className="px-3 py-4">{<GoKebabHorizontal />}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="flex h-[400px] w-full flex-col items-center justify-center gap-20">
-            <h3 className="text-[21px]">
-              ¡Da a conocer tu talento y comienza a vender tus obras musicales en nuestro
-              marketplace!
-            </h3>
-            <section className="flex flex-col items-center gap-10">
-              <ButtonCreate>Cargar Archivo</ButtonCreate>
-            </section>
-          </div>
-        )}
-      </section>
-    </div>
+          ) : (
+            <div className="flex h-[400px] w-full flex-col items-center justify-center gap-20">
+              <h3 className="text-[21px]">
+                ¡Da a conocer tu talento y comienza a vender tus obras musicales en nuestro
+                marketplace!
+              </h3>
+              <section className="flex flex-col items-center gap-10">
+                <ButtonCreate>Cargar Archivo</ButtonCreate>
+              </section>
+            </div>
+          )}
+        </section>
+      </div>
+      <AlertMetodoCobro onClose={handleClose} visible={showMyModal} />
+    </>
   );
 }

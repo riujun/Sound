@@ -15,7 +15,10 @@ export class MercadopagoService {
 
   async createPayment(order: mercadoItemDto): Promise<Preference> {
     try {
-      console.log(order);
+
+      const user_id = items[0].user_id;
+      const id = items[0].id;
+
 
       const preference = {
         items: [order],
@@ -25,6 +28,7 @@ export class MercadopagoService {
           pending: `${process.env.SELF_DEPLOY}`,
         },
         auto_return: 'approved',
+        notification_url: `https://0443-181-169-126-137.ngrok.io/user/addsong?userid=${user_id}&songid=${id}`,
       };
 
       const createdPref = await this.mercadopago.preferences.create(preference);

@@ -4,7 +4,10 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
+import { GoKebabHorizontal } from 'react-icons/go';
 import { IoIosPodium } from 'react-icons/io';
+
+import albun from '@/app/assets/landingpage/p.jpg';
 
 import { ButtonCreate } from '../Buttons/seccion/Button_Create';
 interface Song {
@@ -116,69 +119,55 @@ export default function AlbunDetails() {
   };
   return (
     <div className="mt-20">
-      <section className="flex">
-        <div>
-          <Image
-            className="h-52 w-[206px] rounded-[2.94px]"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpvXGqhhMqb0cucakFq6m7QNh--cPvetEWmOxWi7CIKg&s"
-            alt="img"
-          />
-        </div>
-        <div>
-          <h3 className="text-[32px] font-medium text-orange-500">Latidos de libertad</h3>
-          <p>20</p>
-          <div className="h-[0px] w-[895px] border border-black"></div>
-          <p>Descargas</p>
-          <p>5</p>
-          <p>ventas</p>
-          <p>100.00</p>
-        </div>
-      </section>
+      <div className="px-5">
+        <section className="flex gap-5 ">
+          <div className="w-[206px] ">
+            <Image className="h-52 w-[206px]  rounded-[2.94px]" src={albun} alt="img" />
+          </div>
+          <div className="w-[80%]">
+            <h3 className="text-[32px] font-medium text-orange-500">Latidos de libertad</h3>
+            <p>20</p>
+            <div className="h-[0px] w-[90%] border border-black"></div>
+            <p>Descargas</p>
+            <p>5</p>
+            <p>ventas</p>
+            <p>100.00</p>
+          </div>
+        </section>
+      </div>
+
       <section className="mt-10">
         <section>
           {songs.length > 0 ? (
-            <div className="flex h-[400px] w-[100%] flex-col">
-              <div className="overflow-x-auto " style={{ maxHeight: '75%' }}>
-                <div className="inline-block w-full py-2 sm:px-6 lg:px-8">
-                  <div className="overflow-hidden">
-                    <table className="w-[100%]">
-                      <thead className="border-b bg-white">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900"
-                          >
-                            Nombre v
+            <div className="flex w-full flex-col items-center justify-center px-3">
+              <div className="w-[100%]">
+                <div className=" w-full">
+                  <div className="">
+                    <table className="w-full ">
+                      <thead className="sticky top-0 border-b bg-white">
+                        <tr className="h-12 border-b border-zinc-700 text-left text-xs md:text-lg">
+                          <th scope="col" className="p-[11px] ">
+                            Nombre
                           </th>
-                          <th
-                            scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900"
-                          >
-                            Artista v
+                          <th scope="col" className="p-[11px]">
+                            Precio
                           </th>
-                          <th
-                            scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900 "
-                          >
-                            Disco v
+                          <th scope="col" className="p-[11px]">
+                            Descargas
                           </th>
-                          <th
-                            scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900"
-                          >
-                            Duracion v
+                          <th scope="col" className="p-[11px]">
+                            Ventas
                           </th>
-                          <th
-                            scope="col"
-                            className="pb-2 text-left text-sm font-medium text-gray-900"
-                          ></th>
+                          <th scope="col" className="p-[11px]"></th>
                         </tr>
                       </thead>
                       <tbody>
                         {songs.map((song, index) => (
                           <tr
                             key={index}
-                            className={`border-b ${colors[index % colors.length]}`}
+                            className={`whitespace-nowrap border-b border-neutral-400 text-sm font-medium ${
+                              colors[index % colors.length]
+                            } text-xs md:text-lg`}
                             onClick={() => {
                               handleSongSelect(index);
                             }}
@@ -186,30 +175,23 @@ export default function AlbunDetails() {
                             <td className="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
                               <div className="flex items-center gap-1">
                                 {selectedSongIndex === index && (
-                                  <td className="whitespace-nowrap  text-[8px] text-gray-900">
+                                  <td className="text-[8px]">
                                     <FaPlay />
                                   </td>
                                 )}
                                 <div>{song.title}</div>
                                 {selectedSongIndex === index && (
-                                  <td className="whitespace-nowrap  text-[15px] text-gray-900">
+                                  <td className="text-[15px]">
                                     <IoIosPodium />
                                   </td>
                                 )}
                               </div>
                             </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
-                              {song.artista}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
-                              {song.disco}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
-                              {song.duracion}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm font-light text-gray-900">
-                              :
-                            </td>
+
+                            <td className="px-3 py-4">{song.artista}</td>
+                            <td className="px-3 py-4">{song.disco}</td>
+                            <td className="px-3 py-4">{song.duracion}</td>
+                            <td className="px-3 py-4">{<GoKebabHorizontal />}</td>
                           </tr>
                         ))}
                       </tbody>

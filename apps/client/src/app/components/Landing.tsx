@@ -62,7 +62,7 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="mt-20 flex flex-col gap-5 md:mr-32 md:mt-2 md:flex md:flex-col md:justify-evenly">
+          <div className="mt-20 flex flex-col gap-5 md:mt-2 md:flex md:flex-col md:justify-evenly">
             <div className="z-10 px-7 md:relative md:h-[165px] md:w-[512px]">
               <h4 className="text-[20px] font-medium leading-loose text-orange-500 md:absolute md:left-0 md:top-0 md:w-[490.42px] md:text-[30px] md:font-medium">
                 SoundWave Marketplace

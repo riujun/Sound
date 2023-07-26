@@ -81,4 +81,18 @@ export class AuthJwtController {
       return res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @ApiOperation({ summary: 'Cerrar sesion' })
+  @Post('/logout')
+  async logout(@Res() res, @Body('token') token: string) {
+    try {
+      this.tokenService.deleteToken(token);
+      return res
+        .status(HttpStatus.OK)
+        .json({ message: 'El usuario a cerrado sesion' });
+    } catch (error) {
+      console.log(error);
+      return res.status(HttpStatus.BAD_GATEWAY);
+    }
+  }
 }
