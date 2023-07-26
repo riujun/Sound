@@ -26,7 +26,8 @@ Nuestro objetivo es proporcionar una plataforma que permita a los músicos indep
 
 Front End: Next js, TypeScript y Taildwind css
 Back End: Nest js, TypeScript
-#####Almacenamiento de datos:
+
+#### Almacenamiento de datos:
 Como base de datos utilizamos MongoDB, los archivos de imagenes y sonido son almacenados en Cloudinary.
 
 ### Integraciones:
