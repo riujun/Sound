@@ -56,4 +56,5 @@ Si la app se integra con mercado pago y paypal para poder comprar musica.
 - [Santiago Rodriguez](https://www.linkedin.com/in/santiago-rodriguez62/ 'Santiago Rodriguez')
 
 #### Team Leader:
+
 - [Viktor Krill](https://www.linkedin.com/in/viktordevv/ 'Viktor Krill')

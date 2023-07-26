@@ -3,8 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { type ChangeEvent, useEffect, useRef,useState } from 'react';
-import { FiCamera,FiEdit3 } from 'react-icons/fi';
+import React, { type ChangeEvent, useEffect, useRef, useState } from 'react';
+import { FiCamera, FiEdit3 } from 'react-icons/fi';
 
 import mp from '@/app/assets/pagos/Mercado Pago.png';
 import paypal from '@/app/assets/pagos/Pay Pal.png';
@@ -218,7 +218,9 @@ export default function Midata() {
                 name="paypalApproved"
                 id="paypalCheckbox"
                 checked={userData.paypalApproved}
-                onChange={(e) => { handleCheckboxChange(e, 'paypalApproved'); }}
+                onChange={(e) => {
+                  handleCheckboxChange(e, 'paypalApproved');
+                }}
               />
               <Image src={paypal} alt="paypal" />
             </div>
@@ -229,7 +231,9 @@ export default function Midata() {
                   name="mercadopagoApproved"
                   id="mercadopagoCheckbox"
                   checked={userData.mercadopagoApproved}
-                  onChange={(e) => { handleCheckboxChange(e, 'mercadopagoApproved'); }}
+                  onChange={(e) => {
+                    handleCheckboxChange(e, 'mercadopagoApproved');
+                  }}
                 />
                 <Image src={mp} alt="paypal " />
               </div>

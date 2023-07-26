@@ -3,6 +3,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+import Loader from '../Loader/Loader';
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import type { Album } from './CardAlbum';
 import CardAlbum from './CardAlbum';
@@ -12,20 +13,17 @@ export default function Albumes() {
   const [albums, setAlbums] = useState<Album[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showPaginator, setShowPaginator] = useState(false);
-  const [isDBConnected, setDBConnected] = useState(false);
-  const [hasData, setHasData] = useState(false);
-  // const [isMediumScreen, setIsMediumScreen] = useState(false);
+  const [showMyModal, setShowMyModal] = useState(true);
 
   useEffect(() => {
     const fetchAlbums = async (): Promise<void> => {
       try {
         const response = await axios.get<Album[]>('http://localhost:4000/albums');
         setAlbums(response.data);
-        setDBConnected(true);
-        setHasData(response.data.length > 0);
+        setShowMyModal(false);
       } catch (error) {
         console.error('Error fetching albums:', error);
-        setDBConnected(false);
+        setShowMyModal(false);
       }
     };
 
@@ -33,6 +31,7 @@ export default function Albumes() {
       fetchAlbums().catch((error) => {
         // Manejar el error aquí si es necesario
         console.error('Error in fetchData:', error);
+        setShowMyModal(false);
       });
     };
 
@@ -109,17 +108,16 @@ export default function Albumes() {
       <div className="flex py-5 pl-5 md:pl-7">
         <div className="text-xl font-semibold leading-normal text-zinc-700 lg:text-[32px]">
           Lo nuevo en álbums{' '}
-          <div className="text-red-600 ">{isDBConnected ? '' : 'Desconectado'}</div>
         </div>
       </div>
+      <Loader visible={showMyModal} />
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
       <div className="h-[282px] w-[389px] overflow-x-scroll whitespace-nowrap pl-4 md:h-[359px] md:w-full md:overflow-x-auto md:whitespace-normal">
-        {hasData ? '' : <div className="text-red-600 ">No Data</div>}
         {renderCardAlbumes()}
       </div>
       {!showPaginator && (
-        <div onClick={handleShowMore} className="mt-4 flex justify-center">
-          <ButtonCuatro>DESCUBRE MÁS ARTISTAS</ButtonCuatro>
+        <div className="mt-4 flex justify-center">
+          <ButtonCuatro onClick={handleShowMore}>DESCUBRE MÁS ARTISTAS</ButtonCuatro>
         </div>
       )}
       {showPaginator && (

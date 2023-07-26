@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 
 export interface UserData {
-
   id: string;
 
   _id: string;
