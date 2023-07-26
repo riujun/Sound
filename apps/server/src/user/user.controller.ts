@@ -434,4 +434,20 @@ export class UserController {
       throw new Error('Error uploading descrption: ' + error.message);
     }
   }
+  @ApiParam({ name: 'userid', description: 'ID del user logueado' })
+  @ApiParam({ name: 'artistid', description: 'ID del artista' })
+  @ApiOperation({ summary: 'Ver si un usuario esta siguiendo a un artista' })
+  @Get('/isfollowing/:userid/:artistid')
+  async isFollowing(
+    @Param('userid') userId: string,
+    @Param('artistid') artistId: string,
+    @Res() res,
+  ) {
+    const user = await this.userService.getById(userId);
+    if (user.favoriteArtists.includes(artistId)) {
+      return res.status(HttpStatus.OK).json({ isFollowing: true });
+    } else {
+      return res.status(HttpStatus.OK).json({ isFollowing: false });
+    }
+  }
 }
