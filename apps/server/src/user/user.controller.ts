@@ -66,15 +66,21 @@ export class UserController {
     @Body('followerId') followerId: string,
   ) {
     try {
-      let user = await this.userService.getById(id);
-      if (user.followers.includes(followerId)) {
+      const userClient = await this.userService.getById(id);
+      const userArtist = await this.userService.getById(followerId);
+
+      if (userClient.favoriteArtists.includes(followerId)) {
         return res
           .status(HttpStatus.OK)
           .json({ message: 'El follower ya lo sigue al usuario' });
       }
-      user.followers.push(followerId);
-      user = await this.userService.updateById(id, user);
-      return res.status(HttpStatus.OK).json({ user });
+      userClient.favoriteArtists.push(followerId);
+      userArtist.followers.push(id);
+
+      await this.userService.updateById(id, userClient);
+      await this.userService.updateById(followerId, userArtist);
+
+      return res.status(HttpStatus.OK);
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.BAD_GATEWAY);
@@ -90,16 +96,26 @@ export class UserController {
     @Body('followerId') followerId: string,
   ) {
     try {
-      const user = await this.userService.getById(id);
-      if (user.followers.includes(followerId) === false) {
+      const userClient = await this.userService.getById(id);
+      const userArtist = await this.userService.getById(followerId);
+      if (userClient.favoriteArtists.includes(followerId) === false) {
         return res
           .status(HttpStatus.OK)
           .json({ message: 'El follower no lo sigue al usuario' });
       }
-      const newFollowers = user.followers.filter((id) => id === followerId);
-      user.followers = newFollowers;
-      await this.userService.updateById(id, user);
-      return res.status(HttpStatus.OK).json({ user });
+
+      const newFavoritesArtist = userClient.favoriteArtists.filter(
+        (id) => id === followerId,
+      );
+      console.log(newFavoritesArtist);
+      userClient.favoriteArtists = newFavoritesArtist;
+      await this.userService.updateById(id, userClient);
+
+      const newFollowers = userArtist.followers.filter((ids) => ids === id);
+      userArtist.followers = newFollowers;
+      await this.userService.updateById(followerId, userArtist);
+
+      return res.status(HttpStatus.OK);
     } catch (error) {
       console.log(error);
       return res.status(HttpStatus.BAD_GATEWAY);
