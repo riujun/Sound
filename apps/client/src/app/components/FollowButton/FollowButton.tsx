@@ -2,14 +2,11 @@
 'use client';
 import React, { useState } from 'react';
 
+import CardArtistList from '../CadrArtistList/CardArtistList';
 // import CardArtist from '../CadrArtistList/CardArtist';
-interface FollowButtonProps {
-  followers: number;
-  following: number;
-}
 
-const FollowButton: React.FC<FollowButtonProps> = () => {
-  const [showFollowers, setShowFollowers] = useState(false);
+const FollowButton: React.FC = () => {
+  const [showFollowers, setShowFollowers] = useState(true);
   const [showFollowing, setShowFollowing] = useState(false);
 
   const toggleFollowers = () => {
@@ -46,20 +43,9 @@ const FollowButton: React.FC<FollowButtonProps> = () => {
           </div>
         </div>
       </nav>
-      <section className="ml-10 mt-16">
-        {showFollowers && (
-          <div>
-            {/* <CardArtist />  
-            // <CardArtist />
-            // <CardArtist /> */}
-          </div>
-        )}
-        {showFollowing && (
-          <div>
-            {/* <CardArtist />
-            <CardArtist /> */}
-          </div>
-        )}
+      <section>
+        {showFollowers && <CardArtistList todos={false} siguiendo={false} seguidores={true} />}
+        {showFollowing && <CardArtistList todos={false} siguiendo={true} seguidores={false} />}
       </section>
     </div>
   );
