@@ -12,7 +12,7 @@ Disfruta de la experiencia de escuchar música gratis a través de nuestro repro
 
 Además, SoundWave te ofrece una experiencia social única, donde puedes compartir tus descubrimientos musicales, canciones y álbumes favoritos con amigos y seguidores. Únete a la comunidad de amantes de la música, comparte emociones y comentarios, y mantente al tanto de las últimas noticias y novedades de tus artistas preferidos.
 
-En SoundWave, creemos que la música es un lenguaje universal y un puente entre culturas y personas. Queremos conectar a músicos talentosos con oyentes apasionados y ayudar a forjar relaciones significativas en el mundo musical.
+En SoundWave, creemos que la música es un lenguaje universal y un puente entre culturas y personas. Queremos conectar a músicos talentosos con oyentes apasionados y ayudar a forjar relaciones significativas en el mundo musical
 
 Descarga SoundWave ahora mismo y déjate llevar por la magia de la música independiente. Únete a nuestra comunidad y sé parte del movimiento que impulsa el nuevo talento y la creatividad musical. ¡Juntos, hacemos posible la música del futuro!"
 
