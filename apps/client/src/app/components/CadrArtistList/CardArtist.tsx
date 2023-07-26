@@ -1,12 +1,17 @@
 'use client';
+import axios, { type AxiosResponse } from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import LikeHover from '@/app/assets/LikeHoverMobile.png';
 import LikeOrange from '@/app/assets/Seguir-Like-Orange.png';
 import LikeTransparent from '@/app/assets/Seguir-Like-Transparent.png';
 import { useDataUser } from '@/app/components/Auth/hooks/dataUser';
+
+interface FollowResponse {
+  isFollowing: boolean;
+}
 export interface Artist {
   _id: string;
   name: string;
@@ -36,9 +41,13 @@ export default function CardArtist({ artist }: { artist: Artist }) {
   const [isHovered, setIsHovered] = useState(false);
   const userData = useDataUser();
   const userID = userData !== null ? userData._id : '';
-  const [isFollowing, setIsFollowing] = useState(artist.followers.includes(userID));
+  const [isFollowing, setIsFollowing] = useState(false);
   const src = isFollowing ? LikeOrange : LikeTransparent;
-  console.log('estás siguiendo?: ' + (artist.followers.includes(userID) ? 'si' : 'no'));
+  console.log('userID: ' + userID);
+  console.log('artist._id: ' + artist._id);
+  console.log('estás siguiendo?: ' + (isFollowing ? 'si' : 'no'));
+  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  console.log('artist.followers: ' + artist.followers);
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -46,6 +55,18 @@ export default function CardArtist({ artist }: { artist: Artist }) {
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+
+  useEffect(() => {
+    // Verificar si el usuario actual sigue al artista al montar el componente o cuando cambien los IDs
+    axios
+      .get<FollowResponse>(`http://localhost:4000/user/isfollowing/${userID}/${artist._id}`)
+      .then((response: AxiosResponse<FollowResponse>) => {
+        setIsFollowing(response.data.isFollowing);
+      })
+      .catch((error) => {
+        console.error('Error al verificar si el usuario sigue al artista:', error);
+      });
+  }, [userID, artist._id]);
 
   const handleImageClick = (event: React.MouseEvent<HTMLImageElement>) => {
     event.stopPropagation();
