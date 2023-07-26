@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import logoMarketPlace from '@/app/assets/homePage/logoMarketPlace.png';
 
 import Buscador from '../Buscador/Buscador';
+import Loader from '../Loader/Loader';
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import type { Artist } from './CardArtist';
 import CardArtist from './CardArtist';
@@ -13,34 +14,34 @@ import CardArtist from './CardArtist';
 export default function CardArtistList() {
   // Estado para almacenar la página actual
   const [artists, setArtists] = useState<Artist[]>([]);
-  const [isDBConnected, setDBConnected] = useState(false);
-  const [hasData, setHasData] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [showAll, setShowAll] = useState(true);
   const [isMediumScreen, setIsMediumScreen] = useState(false);
+  const [showMyModal, setShowMyModal] = useState(true);
 
   useEffect(() => {
     const fetchArtists = async (): Promise<void> => {
       try {
         const response = await axios.get<Artist[]>('http://localhost:4000/user');
         setArtists(response.data);
-        setDBConnected(true);
-        setHasData(response.data.length > 0);
+        setShowMyModal(false);
       } catch (error) {
         console.error('Error fetching artist:', error);
-        setDBConnected(false);
+        setShowMyModal(false);
       }
     };
-
     const fetchData = () => {
       fetchArtists().catch((error) => {
         // Manejar el error aquí si es necesario
         console.error('Error in fetchArtists:', error);
+        setShowMyModal(false);
       });
     };
 
     fetchData();
   }, []);
+
+  // isDBConnected && hasData ? setShowMyModal(false) : console.log('Conectado y con datos');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -137,10 +138,11 @@ export default function CardArtistList() {
         </div>
         <Buscador />
       </div>
+      <Loader visible={showMyModal} />
       <div className="flex justify-center p-5">
         <div className="text-xl font-semibold leading-normal text-zinc-700 md:text-[32px]">
           {!isMediumScreen && 'Descubre y apoya a nuevo talento musical'}
-          <div className="text-red-600 ">{isDBConnected ? '' : 'Desconectado'}</div>
+          {/* <div className="text-red-600 ">{isDBConnected ? '' : 'Desconectado'}</div> */}
         </div>
       </div>
       {/* Renderización de los componentes CardArtist correspondientes a la página actual */}
@@ -151,7 +153,7 @@ export default function CardArtistList() {
             : `pl-6 md:h-[485px] md:w-full md:overflow-x-auto md:whitespace-normal md:pl-3`
         }
       >
-        {hasData ? '' : <div className="text-red-600 ">No Data</div>}
+        {/* {hasData ? '' : <div className="text-red-600 ">No Data</div>} */}
         {renderCardArtists()}
       </div>
       {showAll ? (
@@ -197,8 +199,8 @@ export default function CardArtistList() {
           </div>
         </div>
       ) : (
-        <div onClick={handleShowMore} className="mt-4 flex justify-center">
-          <ButtonCuatro>DESCUBRE MÁS</ButtonCuatro>
+        <div className="mt-4 flex justify-center">
+          <ButtonCuatro onClick={handleShowMore}>DESCUBRE MÁS</ButtonCuatro>
         </div>
       )}
     </div>
