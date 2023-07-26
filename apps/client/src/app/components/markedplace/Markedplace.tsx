@@ -98,13 +98,13 @@ export default function Markedplace() {
             <div className="h-[48px] w-[48px] ">
               <Image src={eliminar} alt="logo" />
             </div>
-            <div className="object-cover text-orange-400">
-              <Image onClick={checkPagos} className=" text-orange-400" src={subir} alt="logo" />
+            <div className="cursor-pointer object-cover text-orange-400">
+              <Image onClick={checkPagos} className="text-orange-400 " src={subir} alt="logo" />
             </div>
           </div>
         </div>
         <div className="border-greey-100 flex  w-full  items-center justify-center border-[1px] "></div>
-        <div className=" mt-10 flex items-center justify-center">
+        <div className="mt-10 flex items-center justify-center ">
           <p className="w-[302px] text-center text-sm font-normal text-black md:w-[40%] md:text-[18px]">
             Aquí tienes la lista de tus alucinantes creaciones musicales publicadas en SoundWave
             Marketplace que van a conquistar los oídos del mundo
@@ -114,7 +114,7 @@ export default function Markedplace() {
           {songs.length > 0 ? (
             <div className="flex w-full flex-col items-center justify-center px-3">
               <div className="w-[100%]">
-                <div className=" w-full">
+                <div className="w-full ">
                   <div className="">
                     <table className="w-full ">
                       <thead className="sticky top-0 border-b bg-white">
