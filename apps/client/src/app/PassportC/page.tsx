@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+'use client';
 import React from 'react';
 
 import HeaderGlobal from '../components/header-global/Header_Global';

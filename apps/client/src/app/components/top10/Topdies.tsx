@@ -87,7 +87,7 @@ export default function Topdies() {
           </div>
         </section>
         {!showAll && isSmallScreen && (
-          <div className="flex justify-center mt-4">
+          <div className="mt-4 flex justify-center">
             <ButtonCuatro onClick={handleShowMore}>VER MÁS</ButtonCuatro>
           </div>
         )}

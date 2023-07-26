@@ -71,14 +71,11 @@ export class User extends Document {
   @IsOptional()
   description?: string;
 
-
-
   @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Album' }] })
   @IsOptional()
   albumes: Album[];
   // @Prop()
   // @IsOptional()
-
 
   @Prop({ default: false })
   @IsOptional()

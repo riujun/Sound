@@ -1,10 +1,14 @@
 /* eslint-disable prettier/prettier */
+'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import { ButtonTres } from '../mobile/buttons/Button_tres';
+
 export default function PassportUser() {
+  const router = useRouter();
   return (
     <div className=" w-screen">
       <h2 className="ml-10 mt-16 text-[32px] font-medium leading-normal text-orange-500">
@@ -24,7 +28,14 @@ export default function PassportUser() {
             />
             <div className="mb-10 mt-10 flex flex-col items-center justify-center gap-5 md:hidden">
               <ButtonTres>Cancelar</ButtonTres>
-              <ButtonCuatro> Guardar Contraseña</ButtonCuatro>
+              <ButtonCuatro
+                onClick={() => {
+                  router.push('/login');
+                }}
+              >
+                {' '}
+                Guardar Contraseña
+              </ButtonCuatro>
             </div>
             <div className="hidden md:block">
               <div className="flex justify-end gap-5">

@@ -10,7 +10,7 @@
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   input[type='range']::-webkit-slider-thumb {
-    width: 7px;
+    width: 4px;
     -webkit-appearance: none;
     appearance: none;
     height: 4px;

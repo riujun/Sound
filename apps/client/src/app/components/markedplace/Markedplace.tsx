@@ -8,18 +8,11 @@ import { GoKebabHorizontal } from 'react-icons/go';
 import compartir from '@/app/assets/compartir.png';
 import eliminar from '@/app/assets/eliminar.png';
 import subir from '@/app/assets/subir.png';
+import type { UserData } from '@/app/components/types/user';
 
 import { ButtonCreate } from '../Buttons/seccion/Button_Create';
 import AlertMetodoCobro from '../ModalAlerts/AlertMetodoDeCobro';
 
-interface UserData {
-  genre: string;
-  name: string;
-  surname: string;
-  genero: string;
-  description: string;
-  username: string;
-}
 interface Song {
   _id: string;
   name: string;
@@ -78,7 +71,7 @@ export default function Markedplace() {
   }, []);
 
   const checkPagos = () => {
-    if (data.mercadopagoApproved === true || data.paypalApproved === true) {
+    if (data?.mercadopagoApproved === true || data?.paypalApproved === true) {
       router.push('/uploadmusic');
     } else {
       setShowMyModal(true);

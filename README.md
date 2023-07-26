@@ -28,6 +28,7 @@ Front End: Next js, TypeScript y Taildwind css
 Back End: Nest js, TypeScript
 
 #### Almacenamiento de datos:
+
 Como base de datos utilizamos MongoDB, los archivos de imagenes y sonido son almacenados en Cloudinary.
 
 ### Integraciones:

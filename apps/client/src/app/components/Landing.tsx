@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
+'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import Audifonos from '@/app/assets/landingpage/audifonos.png';
 import Mujer from '@/app/assets/landingpage/mujer.png';
@@ -14,6 +16,7 @@ import Footer from './footer/footer';
 import { ButtonCuatro } from './mobile/buttons/Button_cuatro';
 import { ButtonTres } from './mobile/buttons/Button_tres';
 export default function Landing() {
+  const router = useRouter();
   return (
     <div>
       <Header />
@@ -37,7 +40,13 @@ export default function Landing() {
       </div>
       <section className="relative z-10 mb-10 flex flex-col items-center justify-center gap-5 pt-10 ">
         <ButtonTres>CONOCE MÁS</ButtonTres>
-        <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
+        <ButtonCuatro
+          onClick={() => {
+            router.push('/login');
+          }}
+        >
+          ¡ÚNETE AHORA!
+        </ButtonCuatro>
       </section>
       {/* segunda */}
       <section className="mb-10 flex flex-col items-center justify-evenly">
@@ -83,7 +92,13 @@ export default function Landing() {
               </p>
             </div>
             <div className="relative z-10 flex justify-center md:bottom-20 md:mt-16 ">
-              <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
+              <ButtonCuatro
+                onClick={() => {
+                  router.push('/login');
+                }}
+              >
+                ¡ÚNETE AHORA!
+              </ButtonCuatro>
               <Link href={`/login`}>
                 <ButtonDos>¡ÚNETE AHORA!</ButtonDos>
               </Link>
@@ -130,7 +145,13 @@ export default function Landing() {
         </Link>
       </div>
       <div className="flex items-center justify-center">
-        <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
+        <ButtonCuatro
+          onClick={() => {
+            router.push('/login');
+          }}
+        >
+          ¡ÚNETE AHORA!
+        </ButtonCuatro>
       </div>
 
       {/* curta */}
@@ -212,7 +233,13 @@ export default function Landing() {
           </Link>
         </div>
         <div className="mb-12">
-          <ButtonCuatro>¡ÚNETE AHORA!</ButtonCuatro>
+          <ButtonCuatro
+            onClick={() => {
+              router.push('/login');
+            }}
+          >
+            ¡ÚNETE AHORA!
+          </ButtonCuatro>
         </div>
       </section>
       <div className="hidden md:flex">

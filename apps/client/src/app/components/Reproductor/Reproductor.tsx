@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 
@@ -10,23 +12,14 @@ import ant from '@/app/assets/Anterior.png';
 import img from '@/app/assets/landingpage/p.jpg';
 import repet from '@/app/assets/Repeat.png';
 import next from '@/app/assets/Siguiente.png';
-
-interface Song {
-  id: number;
-  title: string;
-  src: string;
-  artista: string;
-  price: string;
-  disco: string;
-  duracion: string;
-}
+import type { Song } from '@/app/mymusic/playlist';
 
 interface ReproductorProps {
   songs: Song[];
-  onSongSelect: (index: number) => void;
+  onSongSelect: number;
 }
 
-const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect }) => {
+const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect = 0 }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -35,6 +28,12 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [volume, setVolume] = useState(1);
+
+  useEffect(() => {
+    console.log(onSongSelect);
+    setCurrentSongIndex(onSongSelect);
+  }, [onSongSelect]);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const handleResize = () => {
@@ -81,7 +80,10 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
       return;
     }
 
-    audioElement.src = songs[currentSongIndex].src;
+    if (songs[currentSongIndex] && audioElement instanceof HTMLAudioElement) {
+      audioElement.src = songs[currentSongIndex].src;
+    }
+
     audioElement.load();
     setCurrentTime(0);
   }, [currentSongIndex, songs]);
@@ -119,13 +121,11 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   const handleNextSong = () => {
     const nextIndex = (currentSongIndex + 1) % songs.length;
     setCurrentSongIndex(nextIndex);
-    onSongSelect(nextIndex);
   };
 
   const handlePreviousSong = () => {
     const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     setCurrentSongIndex(prevIndex);
-    onSongSelect(prevIndex);
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,7 +164,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
             {isExpanded ? (
               <div className="flex w-full min-w-[350px] flex-col items-center">
                 <div className="h-[310px] w-[310px] cursor-pointer pt-8" onClick={toggleExpanded}>
-                  <Image className="h-full w-full object-cover" src={img} alt="img" />
+                  <Image className="h-full w-full rounded object-cover" src={img} alt="img" />
                 </div>
                 <div className="my-3 flex w-full items-center justify-center gap-4">
                   <button className="mr-2">
@@ -216,7 +216,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                   onClick={toggleExpanded}
                 >
                   <p className="mt-5 flex justify-center text-center">
-                    {songs[currentSongIndex].title} - {songs[currentSongIndex].artista}
+                    {songs[currentSongIndex].name} - {songs[currentSongIndex].user?.name}
                   </p>
                 </div>
               </div>
@@ -225,7 +225,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                 <div className="flex justify-between ">
                   <div className="flex cursor-pointer items-center gap-2" onClick={toggleExpanded}>
                     <div>
-                      <Image className="m-[14px] h-[35px] w-[35px]" src={img} alt="img" />
+                      <Image className="m-[14px] h-[35px] w-[35px] rounded" src={img} alt="img" />
                     </div>
                   </div>
                   <div
@@ -233,10 +233,10 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                     onClick={toggleExpanded}
                   >
                     <div className="mb-[-3px] mt-3 text-base font-medium text-black">
-                      {songs[currentSongIndex].title}
+                      {songs[currentSongIndex].name}
                     </div>
                     <div className="text-[15px] font-medium text-zinc-700">
-                      {songs[currentSongIndex].artista}
+                      {songs[currentSongIndex].name}
                     </div>
                   </div>
                   <div className="m-[14px] flex items-center rounded-full border-[2px] border-orange-500 bg-orange-100 p-2 shadow-md shadow-slate-500">
@@ -275,7 +275,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
           <div className="flex h-[52px] w-[206px] justify-evenly">
             {/* RANDOM */}
             <button className="mr-[5%]" onClick={handleNextSong}>
-              <Image src={random} alt="alt" className="relative top-3 text-[18px]" />
+              <Image src={random} alt="alt" className="relative top-3 rounded text-[18px]" />
             </button>
             {/* ANTERIOR */}
             <button onClick={handlePreviousSong}>
@@ -343,7 +343,7 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
             </div>
           </div>
           <div className="text-center text-sm font-medium text-black">
-            <p className="relative bottom-6 flex">{songs[currentSongIndex].title}</p>
+            <p className="relative bottom-6 flex">{songs[currentSongIndex]?.name}</p>
           </div>
         </section>
       )}

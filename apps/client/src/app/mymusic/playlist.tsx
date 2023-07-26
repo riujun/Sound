@@ -1,223 +1,151 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client';
+import axios from 'axios';
 import Image from 'next/image';
-import { useState } from 'react';
+import { type SetStateAction, useEffect, useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import { IoIosPodium } from 'react-icons/io';
 
 import vector from '@/app/assets/Vector.png';
 
-import Buscador from '../components/Buscador/Buscador';
 import { ButtonCreate } from '../components/Buttons/seccion/Button_Create';
 import Reproductor from '../components/Reproductor/Reproductor';
 
-interface Song {
-  id: number;
-  title: string;
+export interface Song {
+  _id: string;
+  name: string;
+  duration: number;
+  user: User | null;
+  coArtist: string;
+  price: number;
+  genre: string;
+  image: string;
+  date: Date;
+  album: string;
   src: string;
-  artista: string;
-  price: string;
-  disco: string;
-  duracion: string;
+  __v: number;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  surname: string;
+  artist: boolean;
+  username: string;
+  profilePhoto: string;
+  favoriteArtists: string[];
+  email: string;
+  coverPhoto: string;
+  password: string;
+  songsPurchased: SongsPurchased[];
+  songsUplodaded: SongsUplodaded[];
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  description?: string;
+  genre: null | string;
+  albumes: any[];
+  followers: null[];
+  mercadopagoApproved: boolean;
+  paypalApproved: boolean;
+}
+
+export enum SongsPurchased {
+  The64Aefa5Ac86Ee8204Ee39E72 = '64aefa5ac86ee8204ee39e72',
+  The64Aefaa2C86Ee8204Ee39E74 = '64aefaa2c86ee8204ee39e74',
+}
+
+export enum SongsUplodaded {
+  The64Aef870C86Ee8204Ee39E6A = '64aef870c86ee8204ee39e6a',
+  The64Aef8E5C86Ee8204Ee39E6C = '64aef8e5c86ee8204ee39e6c',
+}
+
+const formatTime = (time: number) => {
+  const minutes = Math.floor(time / 60);
+  const seconds = Math.floor(time % 60);
+  return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} Min`;
+};
+
+function findIndexById(array: any[], id: string) {
+  return array.findIndex((obj) => obj._id === id);
 }
 
 export default function PlayList() {
-  const songs: Song[] = [
-    {
-      id: 1,
-      title: ' She Dont Give a FO ',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688782116/X2Download.app-Duki_-_She_Don_t_Give_a_FO_ft._Khea_Prod._by_Omar_Varela_azesq4.mp4',
-      artista: 'duki',
-      disco: 'RockStart',
-      duracion: '3.50',
-      price: '$2.4',
-    },
-    {
-      id: 2,
-      title: 'Coco Chanel',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688781959/X2Download.app_-_Eladio_Carri%C3%B3n_ft._Bad_Bunny_-_Coco_Chanel_Visualizer___3MEN2_KBRN_128_kbps_cwayqn.mp3',
-      artista: 'Eladio Carrio',
-      disco: 'Cultura',
-      duracion: '3.30',
-      price: '$6.4',
-    },
-    {
-      id: 3,
-      title: 'Bohemian Rhapsody',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921224/musica/pp24auznir04izrrvnkc.mp4',
-      artista: 'Queen',
-      disco: 'Bohemian Rhapsody',
-      duracion: '5.24',
-      price: '$12.4',
-    },
-    {
-      id: 4,
-      title: 'Seminare',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921396/X2Download.app-_SEMINARE__-_CHARLY_GARC%C3%8DA_%C3%89pica_versi%C3%B3n_bajo_la_lluvia_-_Quilmes_Rock_2004-_480p_d4j89g.mp4',
-      artista: 'CHARLY GARCÍA ',
-      disco: 'Seminare',
-      duracion: '4.41',
-      price: '$8.4',
-    },
-    {
-      id: 5,
-      title: 'Perfecta',
-      src: 'https://audioplayer.madza.dev/Madza-Persistence.mp3',
-      artista: 'Miranda',
-      disco: 'Perfecta',
-      duracion: '3.45',
-      price: '$1.4',
-    },
-    {
-      id: 6,
-      title: 'De Musica Ligera',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921888/musica/X2Download.app-Soda_Stereo_-_De_Musica_Ligera_El_%C3%9Altimo_Concierto_-_480p_uihs9a.mp4',
-      artista: 'Soda Stereo',
-      disco: 'De Musica Ligera',
-      duracion: '4.49',
-      price: '$1.4',
-    },
-    {
-      id: 7,
-      title: 'Seguir Viviendo Sin Tu Amor',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688922018/musica/X2Download.app-Seguir_Viviendo_Sin_Tu_Amor-_480p_ee4slf.mp4',
-      artista: 'Spinetta',
-      disco: 'Sin Tu Amo',
-      duracion: '2.40',
-      price: '$6.4',
-    },
-    {
-      id: 8,
-      title: ' She Dont Give a FO ',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688782116/X2Download.app-Duki_-_She_Don_t_Give_a_FO_ft._Khea_Prod._by_Omar_Varela_azesq4.mp4',
-      artista: 'duki',
-      disco: 'RockStart',
-      duracion: '3.50',
-      price: '$7.4',
-    },
-    {
-      id: 9,
-      title: 'Coco Chanel',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688781959/X2Download.app_-_Eladio_Carri%C3%B3n_ft._Bad_Bunny_-_Coco_Chanel_Visualizer___3MEN2_KBRN_128_kbps_cwayqn.mp3',
-      artista: 'Eladio Carrio',
-      disco: 'Cultura',
-      duracion: '3.30',
-      price: '$3.4',
-    },
-    {
-      id: 10,
-      title: 'Bohemian Rhapsody',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921224/musica/pp24auznir04izrrvnkc.mp4',
-      artista: 'Queen',
-      disco: 'Bohemian Rhapsody',
-      duracion: '5.24',
-      price: '$3.4',
-    },
-    {
-      id: 11,
-      title: ' She Dont Give a FO ',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688782116/X2Download.app-Duki_-_She_Don_t_Give_a_FO_ft._Khea_Prod._by_Omar_Varela_azesq4.mp4',
-      artista: 'duki',
-      disco: 'RockStart',
-      duracion: '3.50',
-      price: '$2.4',
-    },
-    {
-      id: 12,
-      title: 'Coco Chanel',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688781959/X2Download.app_-_Eladio_Carri%C3%B3n_ft._Bad_Bunny_-_Coco_Chanel_Visualizer___3MEN2_KBRN_128_kbps_cwayqn.mp3',
-      artista: 'Eladio Carrio',
-      disco: 'Cultura',
-      duracion: '3.30',
-      price: '$6.4',
-    },
-    {
-      id: 13,
-      title: 'Bohemian Rhapsody',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921224/musica/pp24auznir04izrrvnkc.mp4',
-      artista: 'Queen',
-      disco: 'Bohemian Rhapsody',
-      duracion: '5.24',
-      price: '$12.4',
-    },
-    {
-      id: 14,
-      title: 'Seminare',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921396/X2Download.app-_SEMINARE__-_CHARLY_GARC%C3%8DA_%C3%89pica_versi%C3%B3n_bajo_la_lluvia_-_Quilmes_Rock_2004-_480p_d4j89g.mp4',
-      artista: 'CHARLY GARCÍA ',
-      disco: 'Seminare',
-      duracion: '4.41',
-      price: '$8.4',
-    },
-    {
-      id: 15,
-      title: 'Perfecta',
-      src: 'https://audioplayer.madza.dev/Madza-Persistence.mp3',
-      artista: 'Miranda',
-      disco: 'Perfecta',
-      duracion: '3.45',
-      price: '$1.4',
-    },
-    {
-      id: 16,
-      title: 'De Musica Ligera',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921888/musica/X2Download.app-Soda_Stereo_-_De_Musica_Ligera_El_%C3%9Altimo_Concierto_-_480p_uihs9a.mp4',
-      artista: 'Soda Stereo',
-      disco: 'De Musica Ligera',
-      duracion: '4.49',
-      price: '$1.4',
-    },
-    {
-      id: 17,
-      title: 'Seguir Viviendo Sin Tu Amor',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688922018/musica/X2Download.app-Seguir_Viviendo_Sin_Tu_Amor-_480p_ee4slf.mp4',
-      artista: 'Spinetta',
-      disco: 'Sin Tu Amo',
-      duracion: '2.40',
-      price: '$6.4',
-    },
-    {
-      id: 18,
-      title: ' She Dont Give a FO ',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688782116/X2Download.app-Duki_-_She_Don_t_Give_a_FO_ft._Khea_Prod._by_Omar_Varela_azesq4.mp4',
-      artista: 'duki',
-      disco: 'RockStart',
-      duracion: '3.50',
-      price: '$7.4',
-    },
-    {
-      id: 19,
-      title: 'Coco Chanel',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688781959/X2Download.app_-_Eladio_Carri%C3%B3n_ft._Bad_Bunny_-_Coco_Chanel_Visualizer___3MEN2_KBRN_128_kbps_cwayqn.mp3',
-      artista: 'Eladio Carrio',
-      disco: 'Cultura',
-      duracion: '3.30',
-      price: '$3.4',
-    },
-    {
-      id: 20,
-      title: 'Bohemian Rhapsody',
-      src: 'https://res.cloudinary.com/dmxriftxk/video/upload/v1688921224/musica/pp24auznir04izrrvnkc.mp4',
-      artista: 'Queen',
-      disco: 'Bohemian Rhapsody',
-      duracion: '5.24',
-      price: '$3.4',
-    },
-  ];
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [songs, setSongs] = useState<Song[]>([]);
 
-  const [selectedSongIndex, setSelectedSongIndex] = useState<number | null>(null);
+  useEffect(() => {
+    const fetchSongs = async (): Promise<void> => {
+      try {
+        const response = await axios.get<Song[]>('http://localhost:4000/songs?limit=10');
+        setSongs(response.data);
+      } catch (error) {
+        console.error('Error fetching songs:', error);
+      }
+    };
+
+    const fetchData = () => {
+      fetchSongs().catch((error) => {
+        // Manejar el error aquí si es necesario
+        console.error('Error in fetchData:', error);
+      });
+    };
+
+    fetchData();
+  }, []);
+
+  const [selectedSongIndex, setSelectedSongIndex] = useState<number>(1);
   const colors = ['bg-orange-100', 'bg-white'];
 
-  const handleSongSelect = (index: number) => {
-    setSelectedSongIndex(index);
+  const handleSongSelect = (id: string, indexVisto: SetStateAction<number>) => {
+    const index = findIndexById(songs, id);
+    console.log('[CAMBIO-SONG]', index);
+    setSelectedSongIndex(indexVisto);
   };
 
+  const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredSongs = songs.filter((song) =>
+    song.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  console.log('Song', songs);
   return (
     <>
       <div className="m-8 flex justify-between">
         <div className="hidden w-auto md:block">
           <div className="text-[32px] font-bold leading-normal text-orange-500">Mi Música</div>
         </div>
-        <Buscador />
+        <div className="mt-4 w-[97%] items-center md:mt-2 md:w-[50%]">
+          <div className="relative flex h-12 overflow-auto rounded-full border border-gray-500 bg-white focus-within:shadow-lg">
+            <div className="grid h-full w-12 place-items-center text-gray-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+            <input
+              className="peer w-[100%] border-none pr-2 text-sm text-gray-600  outline-none"
+              type="text"
+              id="search"
+              placeholder="¿Qué quieres escuchar hoy?"
+              value={searchTerm}
+              onChange={handleSearchTermChange}
+            />
+          </div>
+        </div>
       </div>
       {songs.length > 0 ? (
         <div className="m-[1%] flex flex-grow flex-col">
@@ -242,14 +170,14 @@ export default function PlayList() {
                     </tr>
                   </thead>
                   <tbody>
-                    {songs.map((song, index) => (
+                    {filteredSongs.map((song, index) => (
                       <tr
-                        key={index}
+                        key={song._id}
                         className={`whitespace-nowrap border-b border-neutral-400 text-sm font-medium ${
                           colors[index % colors.length]
                         }`}
                         onClick={() => {
-                          handleSongSelect(index);
+                          handleSongSelect(song._id, index);
                         }}
                       >
                         <td className="px-3 py-4 ">
@@ -259,7 +187,7 @@ export default function PlayList() {
                                 <FaPlay />
                               </td>
                             )}
-                            <div>{song.title}</div>
+                            <div>{song.name}</div>
                             {selectedSongIndex === index && (
                               <td className="text-[15px]">
                                 <IoIosPodium />
@@ -267,9 +195,9 @@ export default function PlayList() {
                             )}
                           </div>
                         </td>
-                        <td className="px-3 py-4">{song.artista}</td>
-                        <td className="px-3 py-4">{song.disco}</td>
-                        <td className="px-3 py-4">{song.duracion}</td>
+                        <td className="px-3 py-4">{song.user?.username}</td>
+                        <td className="px-3 py-4">{song.album}</td>
+                        <td className="px-3 py-4">{formatTime(song.duration)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -283,27 +211,34 @@ export default function PlayList() {
               <div className="">
                 <table className="w-[98%]">
                   <tbody>
-                    {songs.map((song, index) => (
+                    {filteredSongs.map((song, index) => (
                       <tr
-                        key={index}
-                        className={`whitespace-nowrap border-b border-neutral-400 text-sm font-medium`}
+                        key={song._id}
+                        className={`whitespace-nowrap border-b border-neutral-400 text-sm font-medium ${
+                          colors[index % colors.length]
+                        }`}
                         onClick={() => {
-                          handleSongSelect(index);
+                          handleSongSelect(song._id, index);
                         }}
                       >
                         <td className="px-3 py-4 ">
                           <div className="flex items-center gap-1">
-                            <div>{song.title}</div>
-                            <div>{song.artista}</div>
+                            {selectedSongIndex === index && (
+                              <td className="text-[8px]">
+                                <FaPlay />
+                              </td>
+                            )}
+                            <div>{song.name}</div>
+                            {selectedSongIndex === index && (
+                              <td className="text-[15px]">
+                                <IoIosPodium />
+                              </td>
+                            )}
                           </div>
                         </td>
-                        <td className="text-[15px]">
-                          <IoIosPodium />
-                        </td>
-                        <td className="text-[8px]">
-                          <FaPlay />
-                        </td>
-                        <td className="px-3 py-4">{song.duracion}</td>
+                        <td className="px-3 py-4">{song.user?.username}</td>
+                        <td className="px-3 py-4">{song.album}</td>
+                        <td className="px-3 py-4">{formatTime(song.duration)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -313,7 +248,7 @@ export default function PlayList() {
           </div>
 
           <nav className="flex items-center justify-center pt-20">
-            <Reproductor songs={songs} onSongSelect={handleSongSelect} />
+            <Reproductor songs={songs} onSongSelect={selectedSongIndex} />
           </nav>
         </div>
       ) : (
