@@ -95,7 +95,7 @@ export default function PlayList() {
     fetchData();
   }, []);
 
-  const [selectedSongIndex, setSelectedSongIndex] = useState<number>(1);
+  const [selectedSongIndex, setSelectedSongIndex] = useState<number>(0);
   const colors = ['bg-orange-100', 'bg-white'];
 
   const handleSongSelect = (id: string, indexVisto: SetStateAction<number>) => {
@@ -111,7 +111,7 @@ export default function PlayList() {
   const filteredSongs = songs.filter((song) =>
     song.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  console.log('Song', songs);
+  console.log('Song', songs[0].album);
   return (
     <>
       <div className="m-8 flex justify-between">
