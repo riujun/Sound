@@ -453,12 +453,17 @@ export class UserController {
 
   @ApiParam({ name: 'userid', description: 'ID del user logueado' })
   @ApiOperation({ summary: 'Consulta para todos los followers del artista' })
-  @Get('/myfollowers/:userid')
+  @Get('/seguidores/:userid')
   async myFollowers(@Param('userid') userId: string, @Res() res) {
     try {
       const user = await this.userService.getById(userId);
-      const followers = user.followers;
-      return res.status(HttpStatus.OK).json({ followers });
+      const followersId = user.followers;
+      const followers = [];
+      for (let i = 0; i < followersId.length; i++) {
+        const follower = await this.userService.getById(followersId[i]);
+        followers.push(follower);
+      }
+      return res.status(HttpStatus.OK).json(followers);
     } catch (error) {
       console.log(error);
       return res
@@ -466,14 +471,20 @@ export class UserController {
         .json({ message: 'Error en el servidor.' });
     }
   }
+
   @ApiParam({ name: 'userid', description: 'ID del user logueado' })
   @ApiOperation({ summary: 'Consulta para todos los followers del artista' })
-  @Get('/myfavoritesartists/:userid')
+  @Get('/favoritos/:userid')
   async myFavoritesArtists(@Param('userid') userId: string, @Res() res) {
     try {
       const user = await this.userService.getById(userId);
-      const favoriteArtists = user.favoriteArtists;
-      return res.status(HttpStatus.OK).json({ favoriteArtists });
+      const favoriteArtistsId = user.favoriteArtists;
+      const favorites = [];
+      for (let i = 0; i < favoriteArtistsId.length; i++) {
+        const favorite = await this.userService.getById(favoriteArtistsId[i]);
+        favorites.push(favorite);
+      }
+      return res.status(HttpStatus.OK).json(favorites);
     } catch (error) {
       console.log(error);
       return res
