@@ -16,8 +16,6 @@ export default function Topdies() {
   const [showMyModal, setShowMyModal] = useState<boolean>(true); // Explicitly specify boolean type
   const idUser = useDataUsuario(); // You might need to provide a type for idUser based on your hook's return type.
 
-  console.log(idUser, 'usuariodata');
-
   useEffect(() => {
     const fetchSongs = async (): Promise<void> => {
       try {
@@ -64,8 +62,6 @@ export default function Topdies() {
   const halfIndex = Math.ceil(visibleSongs.length / 2);
   const firstHalf = visibleSongs.slice(0, halfIndex);
   const secondHalf = visibleSongs.slice(halfIndex);
-
-  console.log(secondHalf, 'que es');
 
   const handlePayment = async (song: Song): Promise<void> => {
     try {
