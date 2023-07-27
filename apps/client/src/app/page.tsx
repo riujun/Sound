@@ -5,8 +5,8 @@ export default async function LandingPage() {
   useStore.setState({ name: 'PEPERONI' });
 
   return (
-    <main>
+    <>
       <Landing />
-    </main>
+    </>
   );
 }
