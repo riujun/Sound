@@ -7,11 +7,17 @@ import { useEffect, useState } from 'react';
 import LikeHover from '@/app/assets/LikeHoverMobile.png';
 import LikeOrange from '@/app/assets/Seguir-Like-Orange.png';
 import LikeTransparent from '@/app/assets/Seguir-Like-Transparent.png';
-import { useDataUser } from '@/app/components/Auth/hooks/dataUser';
+// import { useDataUser } from '@/app/components/Auth/hooks/dataUser';
 
 interface FollowResponse {
   isFollowing: boolean;
 }
+
+interface CardArtistProps {
+  data: Artist;
+  userID: string;
+}
+
 export interface Artist {
   _id: string;
   name: string;
@@ -36,14 +42,11 @@ export interface Artist {
   paypalApproved: boolean;
 }
 
-export default function CardArtist({ artist }: { artist: Artist }) {
+export default function CardArtist({ data, userID }: CardArtistProps) {
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
-  const userData = useDataUser();
-  const userID = userData !== null ? userData._id : '';
-  const [isFollowing, setIsFollowing] = useState(artist.followers.includes(userID));
+  const [isFollowing, setIsFollowing] = useState(data.followers.includes(userID));
   const src = isFollowing ? LikeOrange : LikeTransparent;
-
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -59,11 +62,12 @@ export default function CardArtist({ artist }: { artist: Artist }) {
   const handleImageClick = async (event: React.MouseEvent<HTMLImageElement>) => {
     event.stopPropagation();
 
-    const artistID = artist._id;
+    const artistID = data._id;
 
     try {
       if (isFollowing) {
         // El usuario sigue al artista, hacemos la solicitud POST para dejar de seguir
+        console.log(userID, artistID);
         await axios
           .post(
             `http://localhost:4000/user/unfollow/${userID}`,
@@ -99,11 +103,11 @@ export default function CardArtist({ artist }: { artist: Artist }) {
   };
 
   useEffect(() => {
-    console.log(userID, artist._id);
+    // console.log(userID, artist._id);
     const fetchFollow = async (): Promise<void> => {
       try {
         const response = await axios.get<FollowResponse>(
-          `http://localhost:4000/user/isfollowing/${userID}/${artist._id}`
+          `http://localhost:4000/user/isfollowing/${userID}/${data._id}`
         );
         setIsFollowing(response.data.isFollowing);
       } catch (error) {
@@ -115,7 +119,7 @@ export default function CardArtist({ artist }: { artist: Artist }) {
       // Manejar el error aquí si es necesario
       console.error('Error in fetchFollow:', error);
     });
-  }, [userID, artist._id]);
+  }, [userID, data._id]);
 
   return (
     <>
@@ -127,7 +131,7 @@ export default function CardArtist({ artist }: { artist: Artist }) {
           <Image
             alt="imagen artista"
             className="rounded-full"
-            src={artist.profilePhoto}
+            src={data.profilePhoto}
             width="49"
             height="49"
           />
@@ -141,12 +145,12 @@ export default function CardArtist({ artist }: { artist: Artist }) {
         </div>
         <div className="flex flex-col items-start justify-start">
           <div className="max-w-[130px] truncate text-[16px] font-semibold leading-tight text-zinc-700 md:max-w-[180px]">
-            {artist.name} {artist.surname}
+            {data.name} {data.surname}
           </div>
           <div className="max-w-[130px] truncate text-[11px] font-medium text-neutral-500 md:max-w-[180px]">
             {
               // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-              artist.genre ?? 'Género'
+              data.genre ?? 'Género'
             }
           </div>
         </div>
@@ -154,13 +158,13 @@ export default function CardArtist({ artist }: { artist: Artist }) {
           <div className="text-[9.639604568481445px] font-semibold text-zinc-700">
             {
               // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-              artist.followers ? `${artist.followers.length} Seguidores` : '0 Seguidores'
+              data.followers ? `${data.followers.length} Seguidores` : '0 Seguidores'
             }
           </div>
           <div className="md:h-px md:w-[171px] md:bg-black"></div>
         </div>
         <div className="h-0 w-0 text-transparent md:h-[106px] md:w-[171px] md:text-xs md:font-normal md:leading-[14px] md:text-zinc-700">
-          <p className="m-0 line-clamp-4">{artist.description ?? 'Descripción del artista'}</p>
+          <p className="m-0 line-clamp-4">{data.description ?? 'Descripción del artista'}</p>
         </div>
       </div>
     </>

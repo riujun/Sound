@@ -10,9 +10,32 @@ import HeaderGlobal from '@/app/components/header-global/Header_Global';
 import Menu from '@/app/components/menu/Menu';
 import Top from '@/app/components/top10/Topdies';
 // import { useStore } from '@/app/store';
-
+interface RespuestaApi {
+  _id: string;
+}
 function Home() {
   const [isMediumScreen, setIsMediumScreen] = useState(false);
+
+  // Estado para almacenar el valor de userId
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Obtener el valor del Local Storage
+    const respuestaApiStr = localStorage.getItem('respuestaApi');
+
+    // Convertir el valor de vuelta a un objeto JSON y asegurar su tipo con la interfaz
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const respuestaApi: RespuestaApi | null =
+      respuestaApiStr != null ? JSON.parse(respuestaApiStr) : null;
+
+    // Acceder al campo _id si respuestaApi no es nulo
+    const newUserId = respuestaApi != null ? respuestaApi._id : null;
+
+    // Actualizar el estado con el nuevo valor de userId
+    setUserId(newUserId);
+
+    console.log('El valor del campo _id en el Local Storage es:', newUserId);
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -47,7 +70,7 @@ function Home() {
               {!isMediumScreen && 'Descubre y apoya a nuevo talento musical'}
             </div>
           </div>
-          <CardArtistList todos={true} seguidores={false} siguiendo={false} />
+          <CardArtistList todos={true} seguidores={false} siguiendo={false} userId={userId ?? ''} />
           <div className="mx-4 my-10 h-px bg-black"></div>
           <Top />
           <Albumes />

@@ -1,23 +1,40 @@
 /* eslint-disable prettier/prettier */
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+// import dataUsuario from '@/app/components/hook/DataUser';
 import CardArtistList from '../CadrArtistList/CardArtistList';
 // import CardArtist from '../CadrArtistList/CardArtist';
-
+interface RespuestaApi {
+  _id: string;
+}
 const FollowButton: React.FC = () => {
-  const [showFollowers, setShowFollowers] = useState(true);
+  const [showFollowers, setShowFollowers] = useState(false);
   const [showFollowing, setShowFollowing] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const toggleFollowers = () => {
-    setShowFollowers(!showFollowers);
+  const showFollowersList = () => {
+    console.log('Mostrar lista de seguidores');
+    setShowFollowers(true);
     setShowFollowing(false);
   };
 
-  const toggleFollowing = () => {
-    setShowFollowing(!showFollowing);
+  const showFollowingList = () => {
+    console.log('Mostrar lista de seguidos');
     setShowFollowers(false);
+    setShowFollowing(true);
   };
+
+  // Estado para almacenar el valor de userId
+
+  useEffect(() => {
+    const respuestaApiStr = localStorage.getItem('respuestaApi');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const respuestaApi: RespuestaApi | null =
+      respuestaApiStr != null ? JSON.parse(respuestaApiStr) : null;
+    const newUserId = respuestaApi != null ? respuestaApi._id : null;
+    setUserId(newUserId);
+  }, []);
 
   return (
     <div className="mt-16">
@@ -26,26 +43,30 @@ const FollowButton: React.FC = () => {
           <div className="ml-3 ">
             <button
               className={
-                showFollowers ? 'rounded-[7px] bg-white px-10 py-[3px]  ' : 'px-10 py-[3px]'
+                showFollowing ? 'rounded-[7px] bg-white px-10 py-[3px]  ' : 'px-10 py-[3px]'
               }
-              onClick={toggleFollowers}
+              onClick={showFollowingList}
             >
               Siguiendo
             </button>
           </div>
           <div className="mr-3">
             <button
-              className={showFollowing ? 'rounded-[7px] bg-white px-10 py-[3px]' : 'px-10 py-[3px]'}
-              onClick={toggleFollowing}
+              className={showFollowers ? 'rounded-[7px] bg-white px-10 py-[3px]' : 'px-10 py-[3px]'}
+              onClick={showFollowersList}
             >
               Seguidores
             </button>
           </div>
         </div>
       </nav>
-      <section>
-        {showFollowers && <CardArtistList todos={false} siguiendo={false} seguidores={true} />}
-        {showFollowing && <CardArtistList todos={false} siguiendo={true} seguidores={false} />}
+      <section className="min-h-[280px]">
+        {showFollowers && (
+          <CardArtistList todos={false} seguidores={true} siguiendo={false} userId={userId ?? ''} />
+        )}
+        {showFollowing && (
+          <CardArtistList todos={false} seguidores={false} siguiendo={true} userId={userId ?? ''} />
+        )}
       </section>
     </div>
   );

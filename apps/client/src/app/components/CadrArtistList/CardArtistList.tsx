@@ -2,8 +2,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-import { useDataUser } from '@/app/components/Auth/hooks/dataUser';
-
+// import type { FetchedUserData } from '@/app/components/hook/DataUser';
 import Loader from '../Loader/Loader';
 import { ButtonCuatro } from '../mobile/buttons/Button_cuatro';
 import type { Artist } from './CardArtist';
@@ -12,28 +11,26 @@ interface CardArtistProps {
   todos: boolean;
   seguidores: boolean;
   siguiendo: boolean;
+  userId: string;
 }
-export default function CardArtistList({ todos, seguidores, siguiendo }: CardArtistProps) {
+export default function CardArtistList({ todos, seguidores, siguiendo, userId }: CardArtistProps) {
   // Estado para almacenar la página actual
   const [artists, setArtists] = useState<Artist[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [showAll, setShowAll] = useState(true);
   const [isMediumScreen, setIsMediumScreen] = useState(false);
   const [showMyModal, setShowMyModal] = useState(true);
-  const userData = useDataUser();
-  const userID = userData !== null ? userData._id : '';
 
   useEffect(() => {
     const fetchArtists = async (): Promise<void> => {
       try {
         let response;
-        console.log('userid: ', userID);
         if (todos) {
           response = await axios.get<Artist[]>('http://localhost:4000/user');
         } else if (seguidores) {
-          response = await axios.get<Artist[]>(`http://localhost:4000/user/seguidores/${userID}`);
+          response = await axios.get<Artist[]>(`http://localhost:4000/user/seguidores/${userId}`);
         } else if (siguiendo) {
-          response = await axios.get<Artist[]>(`http://localhost:4000/user/favoritos/${userID}`);
+          response = await axios.get<Artist[]>(`http://localhost:4000/user/favoritos/${userId}`);
         } else {
           console.error(
             'Error: Propiedad no válida. Debe proporcionar "todos", "seguidores" o "siguiendo".'
@@ -104,7 +101,7 @@ export default function CardArtistList({ todos, seguidores, siguiendo }: CardArt
 
     for (let i = startIndex; i < endIndex; i++) {
       // Pasar parámetros con los datos del Artista
-      cardArtists.push(<CardArtist key={i} artist={artists[i]} />);
+      cardArtists.push(<CardArtist key={i} data={artists[i]} userID={userId} />);
     }
     return cardArtists;
   };
