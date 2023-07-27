@@ -9,7 +9,6 @@ import { TbPlayerPauseFilled, TbPlayerPlayFilled } from 'react-icons/tb';
 
 import random from '@/app/assets/Aleatorio.png';
 import ant from '@/app/assets/Anterior.png';
-import img from '@/app/assets/landingpage/p.jpg';
 import repet from '@/app/assets/Repeat.png';
 import next from '@/app/assets/Siguiente.png';
 import type { Song } from '@/app/mymusic/playlist';
@@ -164,7 +163,13 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
             {isExpanded ? (
               <div className="flex w-full min-w-[350px] flex-col items-center">
                 <div className="h-[310px] w-[310px] cursor-pointer pt-8" onClick={toggleExpanded}>
-                  <Image className="h-full w-full rounded object-cover" src={img} alt="img" />
+                  <Image
+                    className="h-full w-full rounded object-cover"
+                    src={songs[currentSongIndex].image}
+                    alt="img"
+                    width={30}
+                    height={30}
+                  />
                 </div>
                 <div className="my-3 flex w-full items-center justify-center gap-4">
                   <button className="mr-2">
@@ -225,7 +230,13 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                 <div className="flex justify-between ">
                   <div className="flex cursor-pointer items-center gap-2" onClick={toggleExpanded}>
                     <div>
-                      <Image className="m-[14px] h-[35px] w-[35px] rounded" src={img} alt="img" />
+                      <Image
+                        className="m-[14px] h-[35px] w-[35px] rounded object-cover"
+                        src={songs[currentSongIndex].image}
+                        alt="img"
+                        width={250}
+                        height={250}
+                      />
                     </div>
                   </div>
                   <div
@@ -310,7 +321,13 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
           <div className="relative bottom-2 w-[100%]">
             <div className="ml-10 flex items-center justify-center gap-3">
               <div className="ml-[-10px] mt-[-15px] flex h-[60px] w-[120px]">
-                <Image className="h-full w-full object-cover" src={img} alt="img" />
+                <Image
+                  className="h-full w-full object-cover"
+                  src={songs[currentSongIndex].image}
+                  alt="img"
+                  width={60}
+                  height={60}
+                />
               </div>
               <div className="jusify-center ml-[1%] mt-[-7px] flex text-sm font-semibold text-zinc-700">
                 <span className="">{formatTime(currentTime)}</span>

@@ -87,7 +87,7 @@ export default function Midata() {
     })
       .then((response) => response.json())
       .then((data: UserData) => {
-        router.push('/Perfilartist');
+        router.push('/myprofile');
       })
       .catch((error) => {
         console.error('Error updating user data:', error);
@@ -266,7 +266,7 @@ export default function Midata() {
           <div className="hidden md:block">
             <div className="mt-10 flex justify-end gap-5 pr-5 ">
               <div className="inline-flex h-12 w-[141px] items-center justify-center gap-2.5 border border-orange-500 p-4 hover:bg-orange-100">
-                <Link href={'/Perfilartist'}>
+                <Link href={'/myprofile'}>
                   <div className="shrink grow basis-0 text-center text-base font-semibold uppercase leading-none text-black">
                     Cancelar
                   </div>
@@ -286,7 +286,7 @@ export default function Midata() {
             <div className="flex flex-col items-center justify-center gap-5 md:hidden">
               <ButtonCuatro onClick={handleSubmit}>Guardar cambios</ButtonCuatro>
 
-              <Link href={'/Perfilartist'}>
+              <Link href={'/myprofile'}>
                 <ButtonTres>Cancelar</ButtonTres>
               </Link>
             </div>

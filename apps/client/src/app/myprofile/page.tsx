@@ -1,12 +1,10 @@
-'use client';
 /* eslint-disable prettier/prettier */
-// import { useRouter } from 'next/navigation';
 
 import HeaderGlobal from '../components/header-global/Header_Global';
-import MarketplaceArtist from '../components/markedplace/MarketplaceArtist';
+import Markedplace from '../components/markedplace/Markedplace';
 import Menu from '../components/menu/Menu';
-import ProfileArtist from '../components/ProfileArtist/ProfileArtist';
-import TufanbaseArtist from '../components/Tufanbase/TufanbaseArtist';
+import Perfiluser from '../components/perfilUser/Perfiluser';
+import Tufanbase from '../components/Tufanbase/Tufanbase';
 
 export default function Page() {
   return (
@@ -15,10 +13,10 @@ export default function Page() {
       <div className="flex ">
         <Menu />
         <div className="w-full">
-          <ProfileArtist />
-          <MarketplaceArtist />
+          <Perfiluser />
+          <Markedplace />
           {/* <Albums /> falta */}
-          <TufanbaseArtist />
+          <Tufanbase />
         </div>
       </div>
     </div>

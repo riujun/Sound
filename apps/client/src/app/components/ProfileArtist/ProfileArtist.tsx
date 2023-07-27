@@ -8,62 +8,27 @@ import { FaCamera } from 'react-icons/fa';
 import { FiEdit3 } from 'react-icons/fi';
 
 import type { Artist } from '../CadrArtistList/CardArtist';
-interface RespuestaApi {
-  _id: string;
-}
 
-export default function Perfiluser() {
-  const [data, setData] = useState<Artist | null>(null);
-
-  // Estado para almacenar el valor de userId
-  const [userId, setUserId] = useState<string | null>(null);
+const ProfileArtist = () => {
+  const [respuestaGuardada, setRespuestaGuardada] = useState<Artist | null>(null);
 
   useEffect(() => {
-    // Obtener el valor del Local Storage
-    const respuestaApiStr = localStorage.getItem('respuestaApi');
-
-    // Convertir el valor de vuelta a un objeto JSON y asegurar su tipo con la interfaz
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const respuestaApi: RespuestaApi | null =
-      respuestaApiStr != null ? JSON.parse(respuestaApiStr) : null;
-
-    // Acceder al campo _id si respuestaApi no es nulo
-    const newUserId = respuestaApi != null ? respuestaApi._id : null;
-
-    // Actualizar el estado con el nuevo valor de userId
-    setUserId(newUserId);
-
-    console.log('El valor del campo _id en el Local Storage es:', newUserId);
+    // Recuperar los datos del Local Storage al cargar el componente
+    const respuestaApi = localStorage.getItem('dataArtistLS');
+    if (respuestaApi != null) {
+      const dataArtist: Artist = JSON.parse(respuestaApi) as Artist; // Explicitly type as UserData
+      setRespuestaGuardada(dataArtist);
+    }
   }, []);
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    const url = `http://localhost:4000/user/${userId}`;
-
-    console.log(url);
-    fetch(url)
-      .then((response) => response.json())
-      .then((responseData: Artist) => {
-        setData(responseData);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
-
-  // const handleImageChange = (event) => {
-  //   const file = event.target.files[0];
-  //   setProfileImage(file);
-  //   onratechange(file);
-  // };
   return (
-    <div>
-      {data != null && (
-        <>
+    <>
+      {respuestaGuardada != null && (
+        <div>
           <div className="h-[208px] w-[100%] bg-green-100  md:h-[352px]">
             <Image
               className="h-[100%] w-[100%] object-cover"
-              src={data.coverPhoto}
+              src={respuestaGuardada.coverPhoto}
               alt="portada"
               width={1200}
               height={352}
@@ -75,7 +40,7 @@ export default function Perfiluser() {
                 <label htmlFor="profile-photo" className="h-[127] w-[127px] cursor-pointer">
                   <Image
                     className="h-[127] w-[127px] rounded-[100%] object-cover"
-                    src={data.profilePhoto}
+                    src={respuestaGuardada.profilePhoto}
                     alt="usuario"
                     width={120}
                     height={127}
@@ -91,8 +56,10 @@ export default function Perfiluser() {
                   style={{ display: 'none' }}
                   // onChange={handleImageChange}
                 />
-                <h2 className="font-none text-[24px] ">{data.username}</h2>
-                <p>{data.genre}</p>
+                <h2 className="font-none text-[24px] ">
+                  {respuestaGuardada.name} {respuestaGuardada.surname}
+                </h2>
+                <p>{respuestaGuardada.genre}</p>
               </div>
             </div>
             <div className=" relative right-7 hidden h-[0px] w-[131px] border border-gray-500 md:block md:rotate-90"></div>
@@ -108,11 +75,14 @@ export default function Perfiluser() {
                   </Link>
                 </div>
               </div>
-              <p className="text-[21px] font-medium text-black">{data.description}</p>
+              <p className="text-[21px] font-medium text-black">{respuestaGuardada.description}</p>
             </div>
           </div>
-        </>
+        </div>
       )}
-    </div>
+      ;
+    </>
   );
-}
+};
+
+export default ProfileArtist;

@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 interface User {
   _id: string;
@@ -39,13 +40,19 @@ export default function CardAlbum({ album }: { album: Album }) {
   // album.user && album.user.name !== '' && album.user.surname !== ''
   //   ? `${album.user.name} ${album.user.surname}`
   //   : 'Nombre del Artista';
-
+  const router = useRouter();
   const artistName =
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     album.user && album.user.name !== '' && album.user.surname !== ''
       ? `${album.user.name} ${album.user.surname}`
       : 'Nombre del Artista';
 
+  const handleCardClick = () => {
+    localStorage.setItem('dataAlbumLS', JSON.stringify(album));
+    const url = `/detailalbun`;
+    // Pass the dataString as a query parameter to PerfilArtist page
+    router.push(url);
+  };
   useEffect(() => {
     const checkImageUrlValidity = async () => {
       try {
@@ -69,7 +76,10 @@ export default function CardAlbum({ album }: { album: Album }) {
   }, [album.imagen]);
   return (
     <>
-      <div className="m-[0.8%] inline-flex h-[261px] w-[156px] flex-col items-start justify-start gap-4 md:h-[319px] md:w-[206px]">
+      <div
+        className="m-[0.8%] inline-flex h-[261px] w-[156px] cursor-pointer flex-col items-start justify-start gap-4 hover:shadow-xl md:h-[319px] md:w-[206px]"
+        onClick={handleCardClick}
+      >
         {isValidImageUrl ? (
           <Image
             alt="tapa del album"

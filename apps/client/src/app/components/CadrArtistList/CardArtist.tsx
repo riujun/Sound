@@ -56,7 +56,10 @@ export default function CardArtist({ data, userID }: CardArtistProps) {
   };
 
   const handleCardClick = () => {
-    router.push('/Perfilartist');
+    localStorage.setItem('dataArtistLS', JSON.stringify(data));
+    const url = `/Perfilartist`;
+    // Pass the dataString as a query parameter to PerfilArtist page
+    router.push(url);
   };
 
   const handleImageClick = async (event: React.MouseEvent<HTMLImageElement>) => {
@@ -67,7 +70,6 @@ export default function CardArtist({ data, userID }: CardArtistProps) {
     try {
       if (isFollowing) {
         // El usuario sigue al artista, hacemos la solicitud POST para dejar de seguir
-        console.log(userID, artistID);
         await axios
           .post(
             `http://localhost:4000/user/unfollow/${userID}`,
@@ -120,22 +122,24 @@ export default function CardArtist({ data, userID }: CardArtistProps) {
       console.error('Error in fetchFollow:', error);
     });
   }, [userID, data._id]);
-
   return (
     <>
       <div
         className="m-[1%] inline-flex h-[157px] w-[156px] cursor-pointer flex-col items-start justify-start gap-2 rounded-2xl border border-zinc-700 px-4 py-6 hover:shadow-xl md:m-[0.7%] md:h-[213px] md:w-[206px]"
         onClick={handleCardClick}
       >
-        <div className="inline-flex items-center justify-between gap-2 self-stretch">
-          <Image
-            alt="imagen artista"
-            className="rounded-full"
-            src={data.profilePhoto}
-            width="49"
-            height="49"
-          />
+        <div className="inline-flex items-center justify-between gap-2 self-stretch object-cover">
+          <div className="image-container">
+            <Image
+              alt="imagen artista"
+              className="rounded-full object-cover"
+              src={data.profilePhoto}
+              width="49"
+              height="49"
+            />
+          </div>
           <div
+            className="image-container"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onClick={handleImageClick}

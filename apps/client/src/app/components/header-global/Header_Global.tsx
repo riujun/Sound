@@ -76,7 +76,7 @@ export default function HeaderGlobal() {
                               {' '}
                               <button>Mi musica</button>
                             </Link>
-                            <Link href={'/Perfilartist'}>
+                            <Link href={'/myprofile'}>
                               <button>Mi Perfil SoundWave</button>
                             </Link>
                           </div>
