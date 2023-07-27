@@ -343,7 +343,7 @@ export class UserController {
     @Res() res,
   ) {
     try {
-      if (notificationData) {
+      if (notificationData.type === 'payment') {
         const data = await this.mercadopago.payment.findById(
           notificationData.data.id,
         );
