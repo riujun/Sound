@@ -3,6 +3,7 @@ import Menu from '@/app/components/menu/Menu';
 import Publicador from '@/app/components/Social/Publicador';
 import { useStore } from '@/app/store';
 
+import VerPublicaciones from '../components/publications/VerPublicaciones';
 import SocialHeader from '../components/Social/SocialHeader';
 
 function social() {
@@ -15,10 +16,11 @@ function social() {
         <div className="flex flex-grow flex-col">
           <SocialHeader />
           <Publicador />
+          <VerPublicaciones />
           {/* FOOTER */}
-          <div className="mb-3 ml-7 text-[11px]">
+          {/* <div className="mb-3 ml-7 text-[11px]">
             © 2023 SoundWave | Todos los Derechos Reservados
-          </div>
+          </div> */}
         </div>
       </div>
     </>
