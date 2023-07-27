@@ -1,15 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsString,
-  MinLength,
-  Matches,
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
-  IsBoolean,
+  IsNumber,
   IsOptional,
+  IsString,
+  Matches,
+  MinLength,
 } from 'class-validator';
 
 export class CreateUserDto {
+  @IsString()
+  @IsOptional()
+  googleId?: string;
+
   @ApiProperty({
     description: 'Nombre del Usuario',
     example: 'Juan',
@@ -18,29 +23,49 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
   @ApiProperty({
     description: 'Apellido del usuario',
     example: 'faino',
     required: false,
   })
   @IsString()
-  @IsNotEmpty()
-  surname: string;
+  @IsOptional()
+  surname?: string;
+
   @ApiProperty({
     description: 'Nombre de Usuario',
     example: 'Juan21',
-    required: true,
+    required: false,
   })
   @IsString()
-  @IsNotEmpty()
-  username: string;
+  @IsOptional()
+  username?: string;
+
+  @ApiProperty({
+    description: 'Genero del artista',
+    example: true,
+  })
+  @IsString()
+  @IsOptional()
+  genre?: string;
+
+  @ApiProperty({
+    description: 'Cantidad de seguidores',
+  })
+  @IsNumber()
+  @IsOptional()
+  followers?: [];
+
   @ApiProperty({
     description: 'Responde a si el usuario es artista o no',
     example: true,
     required: false,
   })
   @IsBoolean()
-  artist: boolean;
+  @IsOptional()
+  artist?: boolean;
+
   @ApiProperty({
     description: 'Email del usuario',
     example: 'pedro@123.com',
@@ -49,10 +74,11 @@ export class CreateUserDto {
   @IsEmail()
   @IsNotEmpty()
   email: string;
+
   @ApiProperty({
     description: 'Contraseña del usuario',
     example: 'passwordD1!',
-    required: true,
+    required: false,
   })
   @IsNotEmpty()
   @IsString()
@@ -64,5 +90,14 @@ export class CreateUserDto {
         'La contraseña debe contener al menos una letra minúscula, una letra mayúscula, un número y un carácter especial.',
     },
   )
-  password: string;
+  @IsOptional()
+  password?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  mercadopagoApproved?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  paypalApproved?: boolean;
 }

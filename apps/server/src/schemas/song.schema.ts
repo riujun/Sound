@@ -1,11 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, HydratedDocument, Types } from 'mongoose';
 import { User } from './user.schema';
-import * as autoIncrement from 'mongoose-plugin-autoinc';
 
 export type SongDocument = HydratedDocument<Song>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Song extends Document {
   @Prop({ required: true })
   name: string;
@@ -25,5 +24,7 @@ export class Song extends Document {
   date: Date;
   @Prop({ required: true })
   album: string;
+  @Prop()
+  src: string;
 }
 export const SongSchema = SchemaFactory.createForClass(Song);

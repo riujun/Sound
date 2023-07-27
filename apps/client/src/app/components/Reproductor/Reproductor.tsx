@@ -1,29 +1,24 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 /* eslint-disable react/prop-types */
 /* eslint-disable prettier/prettier */
 
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
-import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import { HiStop } from 'react-icons/hi2';
-import { TbPlayerPlayFilled } from 'react-icons/tb';
+import { TbPlayerPauseFilled, TbPlayerPlayFilled } from 'react-icons/tb';
 
-import rendom from '@/app/assets/Aleatorio.png';
+import random from '@/app/assets/Aleatorio.png';
 import ant from '@/app/assets/Anterior.png';
-import img from '@/app/assets/landingpage/p.jpg';
 import repet from '@/app/assets/Repeat.png';
 import next from '@/app/assets/Siguiente.png';
-
-interface Song {
-  title: string;
-  src: string;
-}
+import type { Song } from '@/app/mymusic/playlist';
 
 interface ReproductorProps {
   songs: Song[];
-  onSongSelect: (index: number) => void;
+  onSongSelect: number;
 }
 
-const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect }) => {
+const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect = 0 }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,21 +27,33 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   const [isMobile, setIsMobile] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [volume, setVolume] = useState(1);
+
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Definir el ancho máximo para considerar como dispositivo móvil
-    };
+    console.log(onSongSelect);
+    setCurrentSongIndex(onSongSelect);
+  }, [onSongSelect]);
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Verificar el tamaño inicial de la pantalla
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768); // Definir el ancho máximo para considerar como dispositivo móvil
+      };
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+      window.addEventListener('resize', handleResize);
+      handleResize(); // Verificar el tamaño inicial de la pantalla
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, []);
 
   useEffect(() => {
     const audioElement = audioRef.current;
+
+    if (audioElement == null) {
+      return;
+    }
 
     const handleLoadedData = () => {
       setDuration(audioElement.duration);
@@ -67,22 +74,42 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
 
   useEffect(() => {
     const audioElement = audioRef.current;
-    audioElement.src = songs[currentSongIndex].src;
+
+    if (audioElement == null) {
+      return;
+    }
+
+    if (songs[currentSongIndex] && audioElement instanceof HTMLAudioElement) {
+      audioElement.src = songs[currentSongIndex].src;
+    }
+
     audioElement.load();
     setCurrentTime(0);
   }, [currentSongIndex, songs]);
 
   useEffect(() => {
     const audioElement = audioRef.current;
-
+    if (audioElement == null) {
+      return;
+    }
     if (isPlaying) {
       void audioElement.play();
     } else {
       audioElement.pause();
     }
-  }, [isPlaying]);
+
+    if (isExpanded) {
+      window.scrollTo(0, document.body.scrollHeight);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [isPlaying, isExpanded]);
+
   useEffect(() => {
     const audioElement = audioRef.current;
+    if (audioElement == null) {
+      return;
+    }
     audioElement.volume = volume;
   }, [volume]);
 
@@ -93,17 +120,18 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   const handleNextSong = () => {
     const nextIndex = (currentSongIndex + 1) % songs.length;
     setCurrentSongIndex(nextIndex);
-    onSongSelect(nextIndex);
   };
 
   const handlePreviousSong = () => {
     const prevIndex = (currentSongIndex - 1 + songs.length) % songs.length;
     setCurrentSongIndex(prevIndex);
-    onSongSelect(prevIndex);
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = parseFloat(e.target.value);
+    if (audioRef.current == null) {
+      return;
+    }
     audioRef.current.currentTime = time;
     setCurrentTime(time);
   };
@@ -121,46 +149,49 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
   };
 
   return (
-    <div>
+    <div className="fixed bottom-4 flex w-7/12 justify-center">
       <audio ref={audioRef} />
       {isMobile ? (
+        // REPRODUCTOR PEQUEÑO
         <section
-          className={`bg-orange-200 ${
-            isExpanded ? 'h-[473px] w-[328px]' : 'h-[70px] w-[328px]'
-          } mb-20 rounded border-[1px]`}
+          className={`mx-[5%] mb-7 bg-[#FFE1CC] ${
+            isExpanded ? 'h-[483px] w-[388px]' : 'h-[64px] w-[388px]'
+          } rounded border-[1px]`}
+          style={{ boxShadow: '0px 0px 6px 3px rgba(0,0,0,0.3)' }}
         >
-          <div className="flex flex-col items-center justify-center">
-            <div className=" flex  justify-end">
-              <button
-                className={`flex justify-end bg-orange-200 ${isExpanded ? '' : 'hidden'}`}
-                onClick={toggleExpanded}
-              >
-                <BsChevronDown />
-              </button>
-            </div>
+          <div>
             {isExpanded ? (
-              <div className="flex flex-col items-center ">
-                <div className="mt-5">
-                  <Image className="h-[288px] w-[280px]" src={img} alt="img" />
+              <div className="flex w-full min-w-[350px] flex-col items-center">
+                <div className="h-[310px] w-[310px] cursor-pointer pt-8" onClick={toggleExpanded}>
+                  <Image
+                    className="h-full w-full rounded object-cover"
+                    src={songs[currentSongIndex].image}
+                    alt="img"
+                    width={30}
+                    height={30}
+                  />
                 </div>
-                <div className="mt-5 flex items-center justify-center">
+                <div className="my-3 flex w-full items-center justify-center gap-4">
                   <button className="mr-2">
-                    <Image src={rendom} alt="alt" className=" mr-2" />
+                    <Image src={random} alt="alt" className="mr-2 " />
                   </button>
                   <button className="mr-5" onClick={handlePreviousSong}>
-                    <Image src={ant} alt="alt" className=" " />
+                    <Image src={ant} alt="alt" className="" />
                   </button>
-                  <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full border-[3px] border-orange-400 bg-orange-100 p-6 ">
+                  <button
+                    className="relative bottom-2 mt-4 h-[60px] w-[60px] rounded-full border-[2px] border-orange-500 bg-[#FFF0E6] shadow-md shadow-slate-500"
+                    onClick={handlePlayPause}
+                  >
                     {isPlaying ? (
-                      <button onClick={handlePlayPause}>
-                        <HiStop />
-                      </button>
+                      <div className="flex items-center justify-center">
+                        <TbPlayerPauseFilled />
+                      </div>
                     ) : (
-                      <button onClick={handlePlayPause}>
+                      <div className="flex items-center justify-center">
                         <TbPlayerPlayFilled />
-                      </button>
+                      </div>
                     )}
-                  </div>
+                  </button>
                   <button className="ml-5" onClick={handleNextSong}>
                     <Image src={next} alt="alt" className="" />
                   </button>
@@ -168,10 +199,12 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                     <Image src={repet} alt="alt" className="ml-2" />
                   </button>
                 </div>
-                <div className="flex items-center justify-center">
-                  <span>{formatTime(currentTime)}</span>
+                <div className="flex items-center justify-center gap-4 overflow-hidden">
+                  <div className="text-xs font-semibold text-zinc-700">
+                    <span>{formatTime(currentTime)}</span>
+                  </div>
                   <input
-                    className="w-[204px]"
+                    className="h-1 w-[204px] cursor-pointer appearance-none overflow-hidden rounded-lg bg-gray-300 outline outline-1 outline-gray-400"
                     type="range"
                     min={0}
                     max={duration}
@@ -179,41 +212,59 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
                     step={0.01}
                     onChange={handleSeek}
                   />
-                  <span>{formatTime(duration)}</span>
+                  <div className="text-xs font-semibold text-zinc-700">
+                    <span>{formatTime(duration)}</span>
+                  </div>
                 </div>
-                <p className="mt-5">{songs[currentSongIndex].title}</p>
+                <div
+                  className="mt-[-6px] w-full cursor-pointer text-base font-medium text-black"
+                  onClick={toggleExpanded}
+                >
+                  <p className="mt-5 flex justify-center text-center">
+                    {songs[currentSongIndex].name} - {songs[currentSongIndex].user?.name}
+                  </p>
+                </div>
               </div>
             ) : (
-              <div className="h-[70px] w-full  ">
-                <div className="relative bottom-3 right-3 w-[328px]">
-                  <button className=" relative flex w-full justify-end  " onClick={toggleExpanded}>
-                    <BsChevronUp className="bg-orange-200" />
-                  </button>
-                </div>
+              <div className="w-full min-w-[350px]">
                 <div className="flex justify-between ">
-                  <div className="flex items-center gap-2">
+                  <div className="flex cursor-pointer items-center gap-2" onClick={toggleExpanded}>
                     <div>
-                      <Image className="ml-2 h-[32px] w-[32px]" src={img} alt="img" />
+                      <Image
+                        className="m-[14px] h-[35px] w-[35px] rounded object-cover"
+                        src={songs[currentSongIndex].image}
+                        alt="img"
+                        width={250}
+                        height={250}
+                      />
                     </div>
-                    <span>{songs[currentSongIndex].title}</span>
                   </div>
-                  <div>
-                    <div className="mr-2 flex items-center rounded-full border-[2px] border-orange-500 p-2">
-                      {isPlaying ? (
-                        <button onClick={handlePlayPause}>
-                          <HiStop />
-                        </button>
-                      ) : (
-                        <button onClick={handlePlayPause}>
-                          <TbPlayerPlayFilled />
-                        </button>
-                      )}
+                  <div
+                    className="ml-4 flex w-full cursor-pointer flex-col"
+                    onClick={toggleExpanded}
+                  >
+                    <div className="mb-[-3px] mt-3 text-base font-medium text-black">
+                      {songs[currentSongIndex].name}
                     </div>
+                    <div className="text-[15px] font-medium text-zinc-700">
+                      {songs[currentSongIndex].name}
+                    </div>
+                  </div>
+                  <div className="m-[14px] flex items-center rounded-full border-[2px] border-orange-500 bg-orange-100 p-2 shadow-md shadow-slate-500">
+                    {isPlaying ? (
+                      <button onClick={handlePlayPause}>
+                        <TbPlayerPauseFilled />
+                      </button>
+                    ) : (
+                      <button onClick={handlePlayPause}>
+                        <TbPlayerPlayFilled />
+                      </button>
+                    )}
                   </div>
                 </div>
-                <div className="flex items-center justify-start ">
+                <div className="mb-8 mt-[-4px] flex h-20">
                   <input
-                    className="w-[90%] "
+                    className="h-1 w-[100%] cursor-pointer appearance-none overflow-hidden rounded-lg bg-[#FFE1CC]"
                     type="range"
                     min={0}
                     max={duration}
@@ -227,69 +278,90 @@ const ReproductorResponsive: React.FC<ReproductorProps> = ({ songs, onSongSelect
           </div>
         </section>
       ) : (
-        <section className="flex h-[100px] w-[800px] flex-col items-center justify-center rounded-3xl border-2 border-orange-400 bg-orange-100">
+        // REPRODUCTOR GRANDE
+        <section
+          className="mb-6 flex h-[100px] w-full flex-col items-center justify-center rounded-3xl border-2 border-orange-500 bg-[#FFE1CC] opacity-80 hover:opacity-100"
+          style={{ boxShadow: '0px -10px 10px 0px rgba(0,0,0,0.2)' }}
+        >
           <div className="flex h-[52px] w-[206px] justify-evenly">
-            <button className="mr-2" onClick={handleNextSong}>
-              <Image src={rendom} alt="alt" className="relative top-5 text-[18px]" />
+            {/* RANDOM */}
+            <button className="mr-[5%]" onClick={handleNextSong}>
+              <Image src={random} alt="alt" className="relative top-3 rounded text-[18px]" />
             </button>
+            {/* ANTERIOR */}
             <button onClick={handlePreviousSong}>
-              <Image src={ant} alt="alt" className="relative top-5 text-[18px]" />
+              <Image src={ant} alt="alt" className="relative top-3 text-[18px]" />
             </button>
+            {/* PLAY / STOP */}
             <button
-              className="relative bottom-2 h-[60px] w-[60px] rounded-full border-[4px] border-orange-400 bg-orange-300"
+              className="relative bottom-2 h-[60px] w-[60px] rounded-full border-[2px] border-orange-500 bg-[#FFF0E6]"
               onClick={handlePlayPause}
+              style={{ boxShadow: '0px -10px 10px 0px rgba(0,0,0,0.2)' }}
             >
               {isPlaying ? (
                 <div className="flex items-center justify-center">
-                  <HiStop />
+                  <TbPlayerPauseFilled />
                 </div>
               ) : (
                 <div className="flex items-center justify-center">
-                  <TbPlayerPlayFilled className="text-[18px]" />
+                  <TbPlayerPlayFilled />
                 </div>
               )}
             </button>
+            {/* SIGUIENTE */}
             <button onClick={handleNextSong}>
-              <Image src={next} alt="alt" className="relative top-5 text-[18px]" />
+              <Image src={next} alt="alt" className="relative top-3 text-[18px]" />
             </button>
-            <button className="ml-2">
-              <Image src={repet} alt="alt" className="relative top-5  text-[18px]" />
+            {/* REPETIR */}
+            <button className="ml-[5%]">
+              <Image src={repet} alt="alt" className="relative top-3  text-[18px]" />
             </button>
           </div>
-
-          <div className="relative bottom-2">
-            <div className="flex items-center gap-3">
-              <div>
-                <Image className="h-[62px] w-[62px]" src={img} alt="img" />
+          {/* CONTENEDOR IMAGEN | RANGO REPR | RANGO VOL */}
+          <div className="relative bottom-2 w-[100%]">
+            <div className="ml-10 flex items-center justify-center gap-3">
+              <div className="ml-[-10px] mt-[-15px] flex h-[60px] w-[120px]">
+                <Image
+                  className="h-full w-full object-cover"
+                  src={songs[currentSongIndex].image}
+                  alt="img"
+                  width={60}
+                  height={60}
+                />
               </div>
-              <div>
+              <div className="jusify-center ml-[1%] mt-[-7px] flex text-sm font-semibold text-zinc-700">
+                <span className="">{formatTime(currentTime)}</span>
+              </div>
+              <div className="mt-[-7px] flex w-full">
                 <input
-                  className="w-[447px]"
+                  className="h-1 w-full cursor-pointer appearance-none overflow-hidden rounded-lg bg-gray-300 outline outline-1 outline-gray-400"
                   type="range"
-                  min={0}
+                  min="0"
+                  step="0.1"
                   max={duration}
                   value={currentTime}
-                  step={0.01}
                   onChange={handleSeek}
                 />
-                <span>{formatTime(currentTime)}</span> / <span>{formatTime(duration)}</span>
               </div>
-              <div>
-                <div>
-                  <input
-                    className="w-[100px]   "
-                    type="range"
-                    min={0}
-                    max={1}
-                    step={0.01}
-                    value={volume}
-                    onChange={handleVolumeChange}
-                  />
-                </div>
+              <div className="jusify-center ml-[1%] mt-[-7px] flex text-sm font-semibold text-zinc-700">
+                <span>{formatTime(duration)}</span>
+              </div>
+              <div className="mt-[-7px] flex w-[25%]">
+                <input
+                  className="h-1 w-[70%] cursor-pointer appearance-none overflow-hidden rounded-lg bg-gray-300 outline outline-1 outline-gray-400"
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.01}
+                  value={volume}
+                  onChange={handleVolumeChange}
+                />
               </div>
             </div>
           </div>
-          <p className="relative bottom-5">{songs[currentSongIndex].title}</p>
+          <div className="text-center text-sm font-medium text-black">
+            <p className="relative bottom-6 flex">{songs[currentSongIndex]?.name}</p>
+          </div>
         </section>
       )}
     </div>

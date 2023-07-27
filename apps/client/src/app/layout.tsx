@@ -3,8 +3,6 @@ import './globals.css';
 import { Glory } from 'next/font/google';
 import React from 'react';
 
-import { NextAuthProvider } from './providers';
-
 const glory = Glory({ subsets: ['latin'] });
 
 export const metadata = {
@@ -15,9 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body className={glory.className}>
-        <NextAuthProvider>{children}</NextAuthProvider>
-      </body>
+      <body className={`${glory.className} w-full`}>{children}</body>
     </html>
   );
 }
