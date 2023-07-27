@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useDataUser } from '@/app/components/Auth/hooks/dataUser';
 
-interface FetchedUserData {
+export interface FetchedUserData {
   _id: string;
   name: string;
   surname: string;
