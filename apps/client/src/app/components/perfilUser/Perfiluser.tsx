@@ -49,7 +49,7 @@ export default function Perfiluser() {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [data]);
 
   // const handleImageChange = (event) => {
   //   const file = event.target.files[0];
@@ -89,7 +89,7 @@ export default function Perfiluser() {
                   id="profile-photo"
                   accept="image/*"
                   style={{ display: 'none' }}
-                  // onChange={handleImageChange}
+                // onChange={handleImageChange}
                 />
                 <h2 className="font-none text-[24px] ">{data.username}</h2>
                 <p>{data.genre}</p>
