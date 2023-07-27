@@ -32,11 +32,11 @@ export default function Markedplace() {
   const router = useRouter();
   const [songs, setSongs] = useState<Song[]>([]);
   const [data, setData] = useState<UserData | null>(null);
-  console.log(songs);
+
   const [showMyModal, setShowMyModal] = useState(false);
   const [, setSelectedSongIndex] = useState<number | null>(null);
   const colors = ['bg-orange-100', 'bg-white'];
-  console.log(data, 'userdata');
+
   const handleClose = () => {
     setShowMyModal(false);
   };

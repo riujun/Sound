@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-'use client';
-import axios from 'axios';
-import Image from 'next/image';
-import { type SetStateAction, useEffect, useState } from 'react';
-import { FaPlay } from 'react-icons/fa';
-import { IoIosPodium } from 'react-icons/io';
+// Deshabilitar las reglas de TypeScript para el acceso no seguro a miembros y asignaciones no seguras
 
-import vector from '@/app/assets/Vector.png';
+'use client'; // No se puede determinar con precisión el propósito de esta declaración, parece un error tipográfico, podría ser 'use strict';
 
-import { ButtonCreate } from '../components/Buttons/seccion/Button_Create';
-import Reproductor from '../components/Reproductor/Reproductor';
+import axios from 'axios'; // Importar la biblioteca axios para hacer solicitudes HTTP
+import Image from 'next/image'; // Importar la biblioteca Image de Next.js para mostrar imágenes de manera optimizada
+import { type SetStateAction, useEffect, useState } from 'react'; // Importar React hooks necesarios
+import { FaPlay } from 'react-icons/fa'; // Importar el ícono de reproducción de la biblioteca react-icons
+import { IoIosPodium } from 'react-icons/io'; // Importar el ícono de podium de la biblioteca react-icons
 
+import vector from '@/app/assets/Vector.png'; // Importar una imagen local llamada 'Vector.png'
+
+import { ButtonCreate } from '../components/Buttons/seccion/Button_Create'; // Importar el componente ButtonCreate de la ubicación proporcionada
+import Reproductor from '../components/Reproductor/Reproductor'; // Importar el componente Reproductor de la ubicación proporcionada
+
+// Definir la interfaz para representar una canción
 export interface Song {
   _id: string;
   name: string;
@@ -27,6 +31,7 @@ export interface Song {
   __v: number;
 }
 
+// Definir la interfaz para representar un usuario
 export interface User {
   _id: string;
   name: string;
@@ -38,8 +43,8 @@ export interface User {
   email: string;
   coverPhoto: string;
   password: string;
-  songsPurchased: SongsPurchased[];
-  songsUplodaded: SongsUplodaded[];
+  songsPurchased: [];
+  songsUplodaded: [];
   createdAt: Date;
   updatedAt: Date;
   __v: number;
@@ -50,41 +55,45 @@ export interface User {
   mercadopagoApproved: boolean;
   paypalApproved: boolean;
 }
-
-export enum SongsPurchased {
-  The64Aefa5Ac86Ee8204Ee39E72 = '64aefa5ac86ee8204ee39e72',
-  The64Aefaa2C86Ee8204Ee39E74 = '64aefaa2c86ee8204ee39e74',
+interface PlayListProps {
+  userId: string;
 }
-
-export enum SongsUplodaded {
-  The64Aef870C86Ee8204Ee39E6A = '64aef870c86ee8204ee39e6a',
-  The64Aef8E5C86Ee8204Ee39E6C = '64aef8e5c86ee8204ee39e6c',
-}
-
+// Función para formatear el tiempo en formato 'mm:ss'
 const formatTime = (time: number) => {
   const minutes = Math.floor(time / 60);
   const seconds = Math.floor(time % 60);
   return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} Min`;
 };
 
+// Función para encontrar el índice de un elemento por su ID en un array de objetos
 function findIndexById(array: any[], id: string) {
   return array.findIndex((obj) => obj._id === id);
 }
 
-export default function PlayList() {
+// Componente principal PlayList
+export default function PlayList({ userId }: PlayListProps) {
+  // Estado para almacenar el término de búsqueda de canciones
   const [searchTerm, setSearchTerm] = useState<string>('');
+  // Estado para almacenar la lista de canciones recuperadas del servidor
   const [songs, setSongs] = useState<Song[]>([]);
 
+  // Efecto para cargar las canciones del servidor al montar el componente
   useEffect(() => {
     const fetchSongs = async (): Promise<void> => {
       try {
-        const response = await axios.get<Song[]>('http://localhost:4000/songs?limit=10');
-        setSongs(response.data);
+        console.log('userId en playlist: ', userId);
+        const response = await axios.get<{ songs: Song[][] }>(
+          `http://localhost:4000/user/mysongs/${userId}`
+        );
+        const songsArray = response.data.songs.flatMap((group) => group); // Flatten the nested arrays to get all songs
+        setSongs(songsArray);
+        console.log('response.data user mysongs : ', response.data.songs);
       } catch (error) {
         console.error('Error fetching songs:', error);
       }
     };
 
+    // Función interna para invocar la función de carga de canciones y manejar errores
     const fetchData = () => {
       fetchSongs().catch((error) => {
         // Manejar el error aquí si es necesario
@@ -92,26 +101,36 @@ export default function PlayList() {
       });
     };
 
+    // Llamar a la función de carga de datos
     fetchData();
-  }, []);
+  }, []); // El array de dependencias vacío asegura que este efecto se ejecute solo una vez al montar el componente
 
+  // Estado para almacenar el índice de la canción seleccionada
   const [selectedSongIndex, setSelectedSongIndex] = useState<number>(0);
+
+  // Lista de colores para alternar en la tabla de canciones
   const colors = ['bg-orange-100', 'bg-white'];
 
+  // Función para manejar la selección de una canción en la lista
   const handleSongSelect = (id: string, indexVisto: SetStateAction<number>) => {
     const index = findIndexById(songs, id);
     console.log('[CAMBIO-SONG]', index);
-    setSelectedSongIndex(indexVisto);
+    setSelectedSongIndex(index); // Actualizar el estado selectedSongIndex con el índice clickeado
   };
 
+  // Función para manejar cambios en el término de búsqueda
   const handleSearchTermChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
+  // Filtrar las canciones según el término de búsqueda
   const filteredSongs = songs.filter((song) =>
     song.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const handlePlayPause = () => {
+    console.log('playpause');
+  };
   return (
     <>
       <div className="m-8 flex justify-between">
@@ -180,7 +199,7 @@ export default function PlayList() {
                           handleSongSelect(song._id, index);
                         }}
                       >
-                        <td className="px-3 py-4 ">
+                        <td className="cursor-pointer px-3 py-4" onClick={handlePlayPause}>
                           <div className="flex items-center gap-1">
                             {selectedSongIndex === index && (
                               <td className="text-[8px]">
