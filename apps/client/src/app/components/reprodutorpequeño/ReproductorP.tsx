@@ -22,7 +22,7 @@ import Play from '@/app/assets/Play.png';
 import Reproduciendo from '@/app/assets/Reproduciendo.png';
 import Stop from '@/app/assets/Stop.png';
 import type { Artist } from '@/app/components/CadrArtistList/CardArtist';
-import MetodoDePago from '@/app/components/ModalAlerts/AlertMetodoDePago';
+
 // import AlertSongsOptions from '@/app/components/ModalAlerts/AlertSongsOptions';
 export interface Song {
   _id: string;
@@ -40,16 +40,11 @@ export interface Song {
 interface ReproductorProps {
   songs: Song[];
   index: number;
+  handlePayment: (song: Song) => void; // Accept handlePayment function as a prop
 }
-
-const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
+const ReproductorP: React.FC<ReproductorProps> = ({ songs, index, handlePayment }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showMyModal, setShowMyModal] = useState(false);
-
-  const handleClose = () => {
-    setShowMyModal(false);
-  };
 
   useEffect(() => {
     const audioElement = audioRef.current;
@@ -115,9 +110,7 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
           <div className="inline-flex h-[30px] w-14 items-center justify-center gap-2.5 rounded border border-zinc-700 px-5 py-2 hover:border-orange-500 md:w-[85px]">
             <button
               className="group relative text-center text-xs font-medium text-zinc-700"
-              onClick={() => {
-                setShowMyModal(true);
-              }}
+              onClick={() => { handlePayment(songs[0]); }} // Use handlePayment function here
             >
               <span
                 className="text-center text-xs font-medium text-zinc-700"
@@ -125,7 +118,6 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
               >
                 $ {songs[0].price}
               </span>
-
               <span className="absolute left-1/2 mt-[-8px] h-[30px] w-14 -translate-x-1/2 transform rounded bg-orange-500 pt-2 text-black opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:w-[85px]">
                 COMPRAR
               </span>
@@ -136,19 +128,6 @@ const ReproductorP: React.FC<ReproductorProps> = ({ songs, index }) => {
           </div>
         </div>
       </div>
-      <MetodoDePago onClose={handleClose} visible={showMyModal} />
-      {/* TODAS LAS ALERTAS DEL SITIO - IR BORRANDO A MEDIDA QUE SE UTILIZAN */}
-      {/* <AlertSongsOptions onClose={handleClose} visible={showMyModal} /> */}
-      {/* <Loader onClose={handleClose} visible={showMyModal} /> */}
-      {/* <PagoExitoso onClose={handleClose} visible={showMyModal} /> */}
-      {/* <PagoError onClose={handleClose} visible={showMyModal} /> */}
-      {/* <FotoPortada onClose={handleClose} visible={showMyModal} /> */}
-      {/* <AlertEliminarArchivos onClose={handleClose} visible={showMyModal} /> */}
-      {/* <AlertMetodoCobro onClose={handleClose} visible={showMyModal} /> */}
-      {/* <FotoPortadaAlbum onClose={handleClose} visible={showMyModal} /> */}
-      {/* <ArchivoDeAudio onClose={handleClose} visible={showMyModal} /> */}
-      {/* <AlertFelicidades onClose={handleClose} visible={showMyModal} /> */}
-      {/* <AlertPublicarComentario onClose={handleClose} visible={showMyModal} /> */}
     </div>
   );
 };
