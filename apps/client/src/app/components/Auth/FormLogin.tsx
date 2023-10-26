@@ -10,6 +10,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 import { AiFillApple, AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { BiLogoFacebook } from 'react-icons/bi';
 import { FaGoogle, FaTwitter } from 'react-icons/fa';
+
 import * as yup from 'yup';
 
 import logo from '@/app/assets/landingpage/soundwave.png';

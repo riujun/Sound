@@ -98,14 +98,14 @@ export class PlaylistController {
 
   @ApiOperation({ summary: 'Agregar una canción a una playlist' })
   @ApiParam({ name: 'id', description: 'ID de la playlist' })
-  @ApiBody({ type: String })
+  @ApiBody({ type: String }) // Cambiado a 'ObjectId' si es necesario
   @Put('/songadd/:id')
   async addSongToPlaylist(@Param('id') id: string, @Body() body) {
     const playlist: PlaylistDocument = await this.playlistModel.findOne({
       _id: id,
     });
     if (!playlist) throw new NotFoundException('Playlist Not Found');
-    const songId: ObjectId = body.songId;
+    const songId: any = body.songId; // Cambiado a 'Song' si es necesario
     const playlistCheck: boolean = playlist.songs.includes(songId);
     if (playlistCheck)
       throw new ConflictException('The song is already in the playlist');
@@ -123,13 +123,13 @@ export class PlaylistController {
       _id: id,
     });
     if (!playlist) throw new NotFoundException('Playlist Not Found');
-    const songId: ObjectId = body.songId;
+    const songId: any = body.songId;
     const playlistCheck: boolean = playlist.songs.includes(songId);
     if (!playlistCheck)
       throw new ConflictException('The song is not in the playlist');
 
     const indexToRemove = playlist.songs.findIndex(
-      (song: ObjectId) => song === songId,
+      (song: any) => song === songId,
     );
     playlist.songs.splice(indexToRemove, 1);
     await playlist.save();

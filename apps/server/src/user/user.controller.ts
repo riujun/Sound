@@ -27,7 +27,7 @@ import { ImageType } from 'src/enums/enums';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
-  private mercadopago: any;
+  // private mercadopago: any;
   constructor(
     private readonly userService: UserService,
     private readonly songService: SongsService,
@@ -38,10 +38,10 @@ export class UserController {
       api_key: this.configService.get<string>('cloudinary.apiKey'),
       api_secret: this.configService.get<string>('cloudinary.apiSecret'),
     });
-    this.mercadopago = require('mercadopago');
-    this.mercadopago.configure({
-      access_token: process.env.ACCESS_TOKEN,
-    });
+    // this.mercadopago = require('mercadopago');
+    // this.mercadopago.configure({
+    //   access_token: process.env.ACCESS_TOKEN,
+    // });
   }
 
   @ApiOperation({ summary: 'Obtener todos los usuarios.' })
@@ -342,50 +342,50 @@ export class UserController {
     }
   }
 
-  @Post('/addsong')
-  async addSong(
-    @Query('userid') userId: string,
-    @Query('songid') songId: string,
-    @Body() notificationData: any,
-    @Res() res,
-  ) {
-    try {
-      if (notificationData.type === 'payment') {
-        const data = await this.mercadopago.payment.findById(
-          notificationData.data.id,
-        );
-        console.log(data.response.status);
-        if (data.response.status === 'approved') {
-          const song = await this.songService.getById(songId);
-          if (!song) {
-            return res
-              .status(HttpStatus.BAD_REQUEST)
-              .json({ message: `La canción con id:${songId} no existe` });
-          }
-          const user = await this.userService.getById(userId);
-          if (!user) {
-            return res
-              .status(HttpStatus.BAD_REQUEST)
-              .json({ message: `El user con id:${userId} no existe` });
-          }
+  // @Post('/addsong')
+  // async addSong(
+  //   @Query('userid') userId: string,
+  //   @Query('songid') songId: string,
+  //   @Body() notificationData: any,
+  //   @Res() res,
+  // ) {
+  //   try {
+  //     if (notificationData.type === 'payment') {
+  //       const data = await this.mercadopago.payment.findById(
+  //         notificationData.data.id,
+  //       );
+  //       console.log(data.response.status);
+  //       if (data.response.status === 'approved') {
+  //         const song = await this.songService.getById(songId);
+  //         if (!song) {
+  //           return res
+  //             .status(HttpStatus.BAD_REQUEST)
+  //             .json({ message: `La canción con id:${songId} no existe` });
+  //         }
+  //         const user = await this.userService.getById(userId);
+  //         if (!user) {
+  //           return res
+  //             .status(HttpStatus.BAD_REQUEST)
+  //             .json({ message: `El user con id:${userId} no existe` });
+  //         }
 
-          user.songsPurchased.push(song);
-          const userUpdate = await this.userService.updateById(userId, user);
+  //         user.songsPurchased.push(song);
+  //         const userUpdate = await this.userService.updateById(userId, user);
 
-          return res.status(HttpStatus.OK).json({
-            userUpdate,
-            song,
-            message: `La canción con id:${songId} ha sido agregada a las canciones del usuario.`,
-          });
-        }
-      }
-    } catch (error) {
-      console.log(error);
-      return res
-        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .json({ error: 'Ocurrió un error al procesar la solicitud.' });
-    }
-  }
+  //         return res.status(HttpStatus.OK).json({
+  //           userUpdate,
+  //           song,
+  //           message: `La canción con id:${songId} ha sido agregada a las canciones del usuario.`,
+  //         });
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res
+  //       .status(HttpStatus.INTERNAL_SERVER_ERROR)
+  //       .json({ error: 'Ocurrió un error al procesar la solicitud.' });
+  //   }
+  // }
 
   @Put('/coverPhoto/:id')
   @UseInterceptors(FileInterceptor('file'))
